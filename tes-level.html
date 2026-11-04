@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="id" data-title-en="Free English Level Test — Elevaree Academy">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tes Level Bahasa Inggris Gratis — Elevaree Academy</title>
+  <meta name="description" content="Tes level bahasa Inggris online gratis dari Elevaree Academy. Jawab soal singkat, ketahui level CEFR kamu (A1–C1), dan dapatkan rekomendasi program yang cocok." />
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('elv-theme');
+        if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', t);
+        if (localStorage.getItem('elv-lang') === 'en') document.documentElement.lang = 'en';
+      } catch (e) { document.documentElement.setAttribute('data-theme', 'light'); }
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="reg lv">
+  <div class="reg-bg" aria-hidden="true"><span></span><span></span></div>
+
+  <header class="reg-head">
+    <a href="index.html" class="logo" aria-label="Elevaree Academy — beranda">
+      <svg class="logo__mark" viewBox="0 0 32 32" aria-hidden="true"><path d="M6 22 L16 10 L26 22" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="16" cy="26.5" r="2.6" fill="currentColor"/></svg>
+      <span>ELEVAREE</span>
+    </a>
+    <p class="reg-head__step js-count" aria-live="polite"><span data-en="Level test">Tes level</span></p>
+    <div class="reg-head__right">
+      <div class="lang" role="group" aria-label="Bahasa / Language">
+        <button class="lang__btn is-active" data-lang="id" aria-pressed="true">ID</button>
+        <button class="lang__btn" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+      <button class="theme-btn" aria-label="Ganti mode gelap/terang" data-en-label="Toggle dark/light mode">
+        <svg class="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+        <svg class="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+      <a href="index.html" class="reg-exit" aria-label="Keluar dari tes" data-en-label="Leave the test">
+        <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </a>
+    </div>
+    <div class="reg-progress" aria-hidden="true"><span></span></div>
+  </header>
+
+  <main class="reg-main">
+    <div class="lv-wrap">
+
+      <!-- 1. PEMBUKA -->
+      <section class="reg-step lv-view" data-view="intro" aria-labelledby="lv-h-intro">
+        <p class="reg-eyebrow"><span>CEFR</span> <span data-en="Free level test">Tes level gratis</span></p>
+        <h1 class="reg-title" id="lv-h-intro" data-en="What's your English level?">Seberapa jauh bahasa Inggrismu?</h1>
+        <p class="reg-sub" data-en="Answer a few short questions. You'll get your level (A1–C1) and the programme that fits you best. No sign-up needed.">Jawab beberapa soal singkat. Kamu akan tahu levelmu (A1–C1) dan program yang paling cocok. Tanpa daftar akun.</p>
+
+        <ul class="lv-meta">
+          <li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg><span class="js-meta-time">±5 menit</span></li>
+          <li><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg><span class="js-meta-q">20 soal</span></li>
+          <li><svg viewBox="0 0 24 24"><path d="M12 2.5 19.5 6v5.5c0 4.6-3.2 8.6-7.5 10-4.3-1.4-7.5-5.4-7.5-10V6z"/><path d="m9 12 2 2 4-4"/></svg><span data-en="Free, nothing is saved on our server">Gratis, tidak disimpan di server kami</span></li>
+        </ul>
+
+        <fieldset class="reg-field">
+          <legend data-en="Who is taking the test?">Siapa yang akan tes?</legend>
+          <div class="lv-choices js-aud" role="radiogroup"></div>
+        </fieldset>
+
+        <fieldset class="reg-field js-goal-wrap" hidden>
+          <legend data-en="What's your main goal?">Apa tujuan utamamu?</legend>
+          <div class="lv-choices js-goal" role="radiogroup"></div>
+        </fieldset>
+
+        <div class="lv-nav">
+          <button type="button" class="btn btn--maroon js-start" disabled>
+            <span data-en="Start the test">Mulai tes</span>
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+          <p class="lv-hint js-start-hint" data-en="Choose who is taking the test first.">Pilih dulu siapa yang akan tes.</p>
+        </div>
+      </section>
+
+      <!-- 2. SOAL -->
+      <section class="reg-step lv-view" data-view="quiz" aria-labelledby="lv-q" hidden>
+        <div class="lv-qhead">
+          <span class="lv-badge js-skill"></span>
+          <span class="lv-qn js-qn"></span>
+        </div>
+        <div class="lv-passage js-passage" hidden></div>
+        <h1 class="lv-q" id="lv-q" tabindex="-1"></h1>
+        <div class="lv-opts js-opts" role="radiogroup" aria-labelledby="lv-q"></div>
+        <p class="lv-hint lv-hint--keys" data-en="Tip: press 1–4 to choose, Enter to continue.">Tips: tekan 1–4 untuk memilih, Enter untuk lanjut.</p>
+        <div class="lv-nav">
+          <button type="button" class="btn btn--maroon js-next" disabled>
+            <span class="js-next-label" data-en="Continue">Lanjut</span>
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+      </section>
+
+      <!-- 3. HASIL -->
+      <section class="reg-step lv-view" data-view="result" aria-labelledby="lv-h-res" hidden>
+        <p class="reg-eyebrow"><span>✓</span> <span data-en="Your result">Hasil tes kamu</span></p>
+        <div class="lv-hero">
+          <div class="lv-ring" role="img" aria-label="">
+            <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="lv-ring__bg" cx="60" cy="60" r="54"/><circle class="lv-ring__fg" cx="60" cy="60" r="54"/></svg>
+            <div><b class="js-lv">B1</b><small class="js-score">13/20</small></div>
+          </div>
+          <div>
+            <h1 class="reg-title lv-rtitle" id="lv-h-res" tabindex="-1"></h1>
+            <p class="reg-sub js-rdesc"></p>
+          </div>
+        </div>
+
+        <div class="lv-skills js-skills"></div>
+
+        <div class="lv-rec js-rec"></div>
+
+        <div class="lv-actions">
+          <a href="#" class="btn btn--outline btn--sm js-wa"><span data-en="Discuss my result on WhatsApp">Konsultasikan hasil via WhatsApp</span></a>
+          <button type="button" class="btn btn--outline btn--sm js-retake"><span data-en="Retake the test">Ulangi tes</span></button>
+        </div>
+        <p class="reg-note" data-en="This is an indicative placement, not an official certificate. Your teacher will confirm your level in the first session.">Ini hasil penempatan awal, bukan sertifikat resmi. Tutor akan memastikan levelmu di pertemuan pertama.</p>
+      </section>
+
+    </div>
+  </main>
+
+  <div class="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/batches.js"></script>
+  <script src="js/tes-level.js"></script>
+</body>
+</html>

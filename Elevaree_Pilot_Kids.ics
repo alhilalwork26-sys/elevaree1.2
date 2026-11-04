@@ -1,0 +1,47 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Elevaree.Academy//Pilot Kids//ID
+CALSCALE:GREGORIAN
+X-WR-CALNAME:Elevaree Pilot Kids
+X-WR-TIMEZONE:Asia/Jakarta
+BEGIN:VEVENT
+UID:elevaree-pilot-01@elevaree
+DTSTAMP:20260929T000000Z
+DTSTART;VALUE=DATE:20261001
+DTEND;VALUE=DATE:20261011
+SUMMARY:Elevaree - Persiapan Pilot (kurikulum, harga, materi penawaran)
+DESCRIPTION:Siapkan kurikulum 8 minggu, tentukan harga pilot, dan buat materi penawaran untuk orang tua.
+END:VEVENT
+BEGIN:VEVENT
+UID:elevaree-pilot-02@elevaree
+DTSTAMP:20260929T000000Z
+DTSTART;VALUE=DATE:20261012
+DTEND;VALUE=DATE:20261019
+SUMMARY:Elevaree - Hubungi 15 orang tua + tes penempatan
+DESCRIPTION:Japri satu per satu (bukan broadcast) ke orang tua alumni kelas gratis. Lakukan tes penempatan 10-15 menit per anak.
+END:VEVENT
+BEGIN:VEVENT
+UID:elevaree-pilot-03@elevaree
+DTSTAMP:20260929T000000Z
+DTSTART;VALUE=DATE:20261019
+DTEND;VALUE=DATE:20261020
+SUMMARY:Elevaree - Kelas Pilot Kids dimulai
+DESCRIPTION:Hari pertama kelas pilot berbayar (8 minggu, 2x seminggu, 60 menit).
+END:VEVENT
+BEGIN:VEVENT
+UID:elevaree-pilot-04@elevaree
+DTSTAMP:20260929T000000Z
+DTSTART;VALUE=DATE:20261214
+DTEND;VALUE=DATE:20261215
+SUMMARY:Elevaree - Show Day + Evaluasi Pilot
+DESCRIPTION:Anak presentasi singkat dalam bahasa Inggris, orang tua menonton. Evaluasi metrik: konversi, kehadiran, retensi, referral, testimoni.
+END:VEVENT
+BEGIN:VEVENT
+UID:elevaree-pilot-05@elevaree
+DTSTAMP:20260929T000000Z
+DTSTART;VALUE=DATE:20261215
+DTEND;VALUE=DATE:20270101
+SUMMARY:Elevaree - Penawaran program lanjutan / holiday camp
+DESCRIPTION:Tawarkan program lanjutan atau holiday camp selama libur sekolah.
+END:VEVENT
+END:VCALENDAR

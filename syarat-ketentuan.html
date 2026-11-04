@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="id" data-title-en="Terms &amp; Conditions — Elevaree Academy" data-desc-en="Terms and conditions for Elevaree Academy courses.">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Syarat &amp; Ketentuan — Elevaree Academy</title>
+  <meta name="description" content="Syarat dan ketentuan layanan kursus Elevaree Academy." />
+  <script>
+    // pasang tema & bahasa sebelum halaman tampil, supaya tidak berkedip
+    (function () {
+      try {
+        var t = localStorage.getItem('elv-theme');
+        if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', t);
+        var l = localStorage.getItem('elv-lang');
+        if (l === 'en') document.documentElement.lang = 'en';
+      } catch (e) { document.documentElement.setAttribute('data-theme', 'light'); }
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="page-legal">
+  <div class="scroll-progress" aria-hidden="true"></div>
+
+  <!-- ================= NAV ================= -->
+  <header class="nav">
+    <div class="container nav__inner">
+      <a href="index.html#beranda" class="logo" aria-label="Elevaree Academy">
+        <svg class="logo__mark" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M6 22 L16 10 L26 22" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="16" cy="26.5" r="2.6" fill="currentColor"/>
+        </svg>
+        <span>ELEVAREE</span>
+      </a>
+
+      <nav class="nav__links" aria-label="Navigasi utama">
+        <a href="index.html#beranda" data-en="Home">Beranda</a>
+
+        <div class="dd">
+          <button class="dd__btn" aria-expanded="false" aria-haspopup="true">
+            <span data-en="Programs">Program</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="dd__panel">
+            <a href="english-for-kids.html" class="dd__item"><i class="dot bg-mustard"></i><span><b>English for Kids</b><small data-en="Ages 7–12, learn through play">Usia 7–12, belajar sambil bermain</small></span></a>
+            <a href="english-for-teens.html" class="dd__item"><i class="dot bg-lime"></i><span><b>English for Teens</b><small data-en="Ages 13–17, discussion &amp; presentation">Usia 13–17, diskusi &amp; presentasi</small></span></a>
+            <a href="general-english.html" class="dd__item"><i class="dot bg-sage"></i><span><b>General English</b><small data-en="Everyday conversation for adults">Percakapan sehari-hari untuk dewasa</small></span></a>
+            <a href="ielts-toefl-prep.html" class="dd__item"><i class="dot bg-peach"></i><span><b>IELTS &amp; TOEFL Prep</b><small data-en="For scholarship seekers">Untuk pencari beasiswa</small></span></a>
+            <a href="business-english.html" class="dd__item"><i class="dot bg-lilac"></i><span><b>Business English</b><small data-en="Meetings, emails &amp; job interviews">Meeting, email &amp; interview kerja</small></span></a>
+          </div>
+        </div>
+
+        <a href="tes-level.html" data-en="Level Test">Tes Level</a>
+        <a href="index.html#kelas" data-en="Classes">Kelas</a>
+        <a href="index.html#alur" data-en="How It Works">Alur Belajar</a>
+        <a href="index.html#testimoni" data-en="Stories">Testimoni</a>
+        <a href="index.html#faq">FAQ</a>
+        <a href="tentang.html" data-en="About">Tentang</a>
+      </nav>
+
+      <div class="nav__right">
+        <div class="lang" role="group" aria-label="Bahasa / Language">
+          <button class="lang__btn is-active" data-lang="id" aria-pressed="true">ID</button>
+          <button class="lang__btn" data-lang="en" aria-pressed="false">EN</button>
+        </div>
+        <button class="theme-btn" aria-label="Ganti mode gelap/terang" data-en-label="Toggle dark/light mode">
+          <svg class="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+          <svg class="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        </button>
+        <a href="daftar.html" data-trial class="btn btn--maroon btn--sm nav__cta" data-en="Join a Class">Daftar Kelas</a>
+        <button class="nav__toggle" aria-label="Buka menu" aria-expanded="false"><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <main class="legal-page">
+    <section class="pd-hero">
+      <div class="container">
+        <nav class="crumbs fade-in" style="--d:.05s" aria-label="Breadcrumb"><a href="index.html" data-en="Home">Beranda</a><span class="crumbs__sep" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></span><b aria-current="page" data-en="Terms &amp; Conditions">Syarat &amp; Ketentuan</b></nav>
+        <header class="legal__head">
+          <h1 class="hero__title legal__title"><span class="line"><span data-en="Terms &amp; Conditions">Syarat &amp; Ketentuan</span></span></h1>
+          <p class="legal__meta fade-in" style="--d:.4s"><span data-en="Last updated:">Terakhir diperbarui:</span> <span data-en="1 November 2026">1 November 2026</span></p>
+        </header>
+        <div class="legal">
+          <aside class="legal__toc">
+            <b data-en="Contents">Daftar isi</b>
+            <ol><li><a href="#s1"><span data-en="About these terms">Tentang ketentuan ini</span></a></li><li><a href="#s2"><span data-en="Our service">Layanan</span></a></li><li><a href="#s3"><span data-en="Registration and placement test">Pendaftaran dan tes penempatan</span></a></li><li><a href="#s4"><span data-en="Schedule and attendance">Jadwal dan kehadiran</span></a></li><li><a href="#s5"><span data-en="Fees and payment">Biaya dan pembayaran</span></a></li><li><a href="#s6"><span data-en="Cancellation and refunds">Pembatalan dan pengembalian dana</span></a></li><li><a href="#s7"><span data-en="Underage learners">Peserta di bawah umur</span></a></li><li><a href="#s8"><span data-en="Class conduct">Etika kelas</span></a></li><li><a href="#s9"><span data-en="Materials and copyright">Materi dan hak cipta</span></a></li><li><a href="#s10"><span data-en="Limitation of liability">Batasan tanggung jawab</span></a></li><li><a href="#s11"><span data-en="Changes to these terms">Perubahan ketentuan</span></a></li><li><a href="#s12"><span data-en="Governing law">Hukum yang berlaku</span></a></li><li><a href="#s13"><span data-en="Contact us">Hubungi kami</span></a></li></ol>
+            <a href="kebijakan-privasi.html" class="legal__other"><span data-en="Read the Privacy Policy">Baca Kebijakan Privasi</span> <svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+          </aside>
+          <article class="legal__body"><section class="legal__sec" id="s1"><h2><span class="legal__n">01</span><span data-en="About these terms">Tentang ketentuan ini</span></h2><p data-en="By using this website or registering for a class with Elevaree Academy, you agree to the following terms.">Dengan menggunakan website ini atau mendaftar kelas di Elevaree Academy, kamu menyetujui syarat dan ketentuan berikut.</p></section><section class="legal__sec" id="s2"><h2><span class="legal__n">02</span><span data-en="Our service">Layanan</span></h2><p data-en="Elevaree provides online English courses held live over video call. Details of each programme are on its programme page.">Elevaree menyediakan kursus bahasa Inggris online yang berlangsung live lewat video call. Rincian tiap program tersedia di halaman program masing-masing.</p></section><section class="legal__sec" id="s3"><h2><span class="legal__n">03</span><span data-en="Registration and placement test">Pendaftaran dan tes penempatan</span></h2><ul><li><span data-en="The information you provide when registering must be accurate and up to date.">Data yang kamu berikan saat pendaftaran harus benar dan terbaru.</span></li><li><span data-en="The placement test is used to determine the right class level.">Tes penempatan dipakai untuk menentukan level kelas yang sesuai.</span></li><li><span data-en="The first trial class is free of charge.">Kelas percobaan pertama tidak dipungut biaya.</span></li></ul></section><section class="legal__sec" id="s4"><h2><span class="legal__n">04</span><span data-en="Schedule and attendance">Jadwal dan kehadiran</span></h2><ul><li><span data-en="Class schedules are agreed at registration.">Jadwal kelas disepakati bersama saat pendaftaran.</span></li><li><span data-en="Learners should join on time with a working device and connection.">Peserta diharapkan hadir tepat waktu dengan perangkat dan koneksi yang siap.</span></li><li><span data-en="Rules for rescheduling and make-up sessions are shared at registration.">Ketentuan perubahan jadwal dan sesi pengganti disampaikan saat pendaftaran.</span></li></ul></section><section class="legal__sec" id="s5"><h2><span class="legal__n">05</span><span data-en="Fees and payment">Biaya dan pembayaran</span></h2><p data-en="Fees and payment methods are shared before paid classes begin. The applicable price is the one confirmed in writing by our team.">Biaya dan cara pembayaran diinformasikan sebelum kelas berbayar dimulai. Harga yang berlaku adalah harga yang dikonfirmasi tim kami secara tertulis.</p></section><section class="legal__sec" id="s6"><h2><span class="legal__n">06</span><span data-en="Cancellation and refunds">Pembatalan dan pengembalian dana</span></h2><p data-en="Cancellation and refund terms for each programme are provided in writing before payment.">Ketentuan pembatalan dan pengembalian dana untuk tiap program disampaikan secara tertulis sebelum pembayaran.</p></section><section class="legal__sec" id="s7"><h2><span class="legal__n">07</span><span data-en="Underage learners">Peserta di bawah umur</span></h2><p data-en="Learners under 18 are registered by, and are the responsibility of, a parent or guardian, including preparing the device and connection.">Peserta di bawah 18 tahun didaftarkan dan menjadi tanggung jawab orang tua atau wali, termasuk dalam menyiapkan perangkat dan koneksi.</p></section><section class="legal__sec" id="s8"><h2><span class="legal__n">08</span><span data-en="Class conduct">Etika kelas</span></h2><ul><li><span data-en="Be respectful to teachers and fellow learners.">Bersikap sopan kepada guru dan sesama peserta.</span></li><li><span data-en="Do not record or share class recordings without permission.">Tidak merekam atau menyebarkan rekaman kelas tanpa izin.</span></li><li><span data-en="Do not share class links with others.">Tidak membagikan tautan kelas kepada orang lain.</span></li></ul></section><section class="legal__sec" id="s9"><h2><span class="legal__n">09</span><span data-en="Materials and copyright">Materi dan hak cipta</span></h2><p data-en="Learning materials are for the learner&#x27;s personal use and may not be sold or distributed without permission.">Materi belajar disediakan untuk penggunaan pribadi peserta dan tidak boleh diperjualbelikan atau disebarluaskan tanpa izin.</p></section><section class="legal__sec" id="s10"><h2><span class="legal__n">10</span><span data-en="Limitation of liability">Batasan tanggung jawab</span></h2><ul><li><span data-en="We are not responsible for disruptions caused by the learner&#x27;s device or internet connection.">Kami tidak bertanggung jawab atas gangguan yang disebabkan perangkat atau koneksi internet peserta.</span></li><li><span data-en="Learning outcomes depend on the learner&#x27;s effort and attendance.">Hasil belajar dipengaruhi oleh usaha dan kehadiran peserta.</span></li><li><span data-en="For test-preparation programmes, we do not guarantee a specific score.">Untuk program persiapan tes, kami tidak menjamin skor tertentu.</span></li></ul></section><section class="legal__sec" id="s11"><h2><span class="legal__n">11</span><span data-en="Changes to these terms">Perubahan ketentuan</span></h2><p data-en="These terms may be updated from time to time. The last-updated date is shown at the top of this page.">Ketentuan ini dapat diperbarui sewaktu-waktu. Tanggal pembaruan terakhir tercantum di bagian atas halaman.</p></section><section class="legal__sec" id="s12"><h2><span class="legal__n">12</span><span data-en="Governing law">Hukum yang berlaku</span></h2><p data-en="These terms are governed by the laws of the Republic of Indonesia. Disputes will first be resolved through discussion in good faith.">Ketentuan ini tunduk pada hukum Republik Indonesia. Perselisihan diupayakan diselesaikan secara musyawarah terlebih dahulu.</p></section><section class="legal__sec" id="s13"><h2><span class="legal__n">13</span><span data-en="Contact us">Hubungi kami</span></h2><p data-en="Email: hello@elevaree.academy · WhatsApp: +62 8xx-xxxx-xxxx">Email: hello@elevaree.academy · WhatsApp: +62 8xx-xxxx-xxxx</p></section></article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer" id="kontak">
+    <div class="container">
+      <div class="footer__top" data-reveal>
+        <a href="index.html#beranda" class="logo logo--lg" aria-label="Elevaree Academy">
+          <svg class="logo__mark" viewBox="0 0 32 32" aria-hidden="true">
+            <path d="M6 22 L16 10 L26 22" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="16" cy="26.5" r="2.6" fill="currentColor"/>
+          </svg>
+          <span>ELEVAREE</span>
+        </a>
+        <div class="footer__pitch">
+          <p data-en="We believe anyone can speak English with confidence — kids, teens, students, and professionals. Learning is online, results are real.">Kami percaya siapa pun bisa berani bicara bahasa Inggris — anak, remaja, mahasiswa, hingga profesional. Belajarnya online, hasilnya nyata.</p>
+          <a href="#kontak" data-wa="other" class="btn btn--maroon btn--sm"><span data-en="Chat on WhatsApp">Chat via WhatsApp</span>
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer__grid">
+        <div class="footer__news" data-reveal>
+          <b data-en="News &amp; Learning Tips">Kabar &amp; Tips Belajar</b>
+          <p data-en="English learning tips, scholarship info, and new classes — straight to your inbox.">Tips belajar bahasa Inggris, info beasiswa, dan kelas terbaru, langsung ke email kamu.</p>
+          <form class="newsletter" novalidate>
+            <input type="email" placeholder="Masukkan email kamu" data-en-ph="Enter your email" aria-label="Email" required />
+            <button type="submit" aria-label="Kirim"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          </form>
+          <p class="newsletter__msg" role="status" aria-live="polite"></p>
+        </div>
+        <div data-reveal style="--delay:.06s">
+          <b data-en="Links">Tautan</b>
+          <a href="index.html#beranda" data-en="Home">Beranda</a><a href="index.html#program" data-en="Programs">Program</a><a href="index.html#kelas" data-en="Classes">Kelas</a><a href="index.html#alur" data-en="How It Works">Alur Belajar</a><a href="index.html#faq">FAQ</a><a href="tes-level.html" data-en="Level Test">Tes Level</a><a href="tentang.html" data-en="About Us">Tentang Kami</a><a href="daftar.html" data-en="Register">Daftar</a>
+        </div>
+        <div data-reveal style="--delay:.12s">
+          <b data-en="Programs">Program</b>
+          <a href="english-for-kids.html">English for Kids</a><a href="english-for-teens.html">English for Teens</a><a href="general-english.html">General English</a><a href="ielts-toefl-prep.html">IELTS &amp; TOEFL Prep</a><a href="business-english.html">Business English</a>
+        </div>
+        <div data-reveal style="--delay:.18s">
+          <b data-en="Contact Us">Hubungi Kami</b>
+          <a href="#" data-en="100% online classes">Kelas 100% online</a>
+          <a href="#">hello@elevaree.academy</a>
+          <a href="#kontak" data-wa="other">WhatsApp: +62 8xx-xxxx-xxxx</a>
+          <div class="socials">
+            <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor"/></svg></a>
+            <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M14 3c.5 2.8 2.4 4.6 5 5"/></svg></a>
+            <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24"><rect x="2.5" y="5.5" width="19" height="13" rx="4"/><path d="m10 9.5 5 2.5-5 2.5z" fill="currentColor"/></svg></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <span>© <span id="year">2026</span> Elevaree Academy</span>
+        <span><a href="kebijakan-privasi.html" data-en="Privacy Policy">Kebijakan Privasi</a> · <a href="syarat-ketentuan.html" data-en="Terms &amp; Conditions">Syarat &amp; Ketentuan</a></span>
+      </div>
+    </div>
+    <div class="footer__word" aria-hidden="true">elevaree</div>
+  </footer>
+
+  <!-- ================= TOMBOL WHATSAPP MELAYANG ================= -->
+  <div class="wa-float">
+    <div class="wa-pop" id="wa-pop" role="dialog" aria-label="Chat WhatsApp" aria-hidden="true">
+      <div class="wa-pop__head">
+        <span class="wa-pop__avatar">
+          <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 22 L16 10 L26 22" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="16" cy="26.5" r="2.6" fill="currentColor"/></svg>
+        </span>
+        <div><b>Elevaree Academy</b><small data-en="Ask us anything">Tanya apa saja ke tim kami</small></div>
+        <button type="button" class="wa-pop__close" aria-label="Tutup" data-en-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      </div>
+      <div class="wa-pop__body">
+        <p class="wa-bubble" data-en="Hi! 👋 What would you like to ask about?">Halo! 👋 Mau tanya tentang apa?</p>
+        <div class="wa-quick">
+          <button type="button" data-wa="kids" data-en="Classes for kids">Kelas untuk anak</button>
+          <button type="button" data-wa="teens" data-en="Classes for teens">Kelas untuk remaja</button>
+          <button type="button" data-wa="ielts" data-en="IELTS/TOEFL for scholarships">IELTS/TOEFL untuk beasiswa</button>
+          <button type="button" data-wa="business">Business English</button>
+          <button type="button" data-wa="price" data-en="Prices &amp; promos">Harga &amp; promo</button>
+          <button type="button" data-wa="other" data-en="Something else">Pertanyaan lain</button>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="wa-btn" aria-expanded="false" aria-controls="wa-pop" aria-label="Chat lewat WhatsApp" data-en-label="Chat on WhatsApp">
+      <svg class="wa-ico" viewBox="0 0 24 24"><path d="M20 11.6a8.3 8.3 0 0 1-12.3 7.2L3.5 20l1.3-4A8.3 8.3 0 1 1 20 11.6z"/><path d="M9 8.3c-.3.9.1 2.4 1.5 3.8s2.9 1.9 3.8 1.6l.9-1.2-1.6-.9-.8.6a4.6 4.6 0 0 1-2.1-2.1l.6-.8-.9-1.6z"/></svg>
+      <span class="wa-btn__label" data-en="Ask on WhatsApp">Tanya via WhatsApp</span>
+    </button>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/batches.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,663 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Elevaree Academy — Kursus Bahasa Inggris Online</title>
+  <meta name="description" content="Kursus bahasa Inggris online dengan kelas live bersama guru, untuk anak, remaja, dewasa, pencari beasiswa, dan pekerja." />
+  <script>
+    // pasang tema & bahasa sebelum halaman tampil, supaya tidak berkedip
+    (function () {
+      try {
+        var t = localStorage.getItem('elv-theme');
+        if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', t);
+        var l = localStorage.getItem('elv-lang');
+        if (l === 'en') document.documentElement.lang = 'en';
+      } catch (e) { document.documentElement.setAttribute('data-theme', 'light'); }
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="scroll-progress" aria-hidden="true"></div>
+
+  <!-- ================= NAV ================= -->
+  <header class="nav">
+    <div class="container nav__inner">
+      <a href="#beranda" class="logo" aria-label="Elevaree Academy">
+        <svg class="logo__mark" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M6 22 L16 10 L26 22" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="16" cy="26.5" r="2.6" fill="currentColor"/>
+        </svg>
+        <span>ELEVAREE</span>
+      </a>
+
+      <nav class="nav__links" aria-label="Navigasi utama">
+        <a href="#beranda" class="is-active" data-en="Home">Beranda</a>
+
+        <div class="dd">
+          <button class="dd__btn" aria-expanded="false" aria-haspopup="true">
+            <span data-en="Programs">Program</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="dd__panel">
+            <a href="english-for-kids.html" class="dd__item"><i class="dot bg-mustard"></i><span><b>English for Kids</b><small data-en="Ages 7–12, learn through play">Usia 7–12, belajar sambil bermain</small></span></a>
+            <a href="english-for-teens.html" class="dd__item"><i class="dot bg-lime"></i><span><b>English for Teens</b><small data-en="Ages 13–17, discussion &amp; presentation">Usia 13–17, diskusi &amp; presentasi</small></span></a>
+            <a href="general-english.html" class="dd__item"><i class="dot bg-sage"></i><span><b>General English</b><small data-en="Everyday conversation for adults">Percakapan sehari-hari untuk dewasa</small></span></a>
+            <a href="ielts-toefl-prep.html" class="dd__item"><i class="dot bg-peach"></i><span><b>IELTS &amp; TOEFL Prep</b><small data-en="For scholarship seekers">Untuk pencari beasiswa</small></span></a>
+            <a href="business-english.html" class="dd__item"><i class="dot bg-lilac"></i><span><b>Business English</b><small data-en="Meetings, emails &amp; job interviews">Meeting, email &amp; interview kerja</small></span></a>
+          </div>
+        </div>
+
+        <a href="tes-level.html" data-en="Level Test">Tes Level</a>
+        <a href="#kelas" data-en="Classes">Kelas</a>
+        <a href="#alur" data-en="How It Works">Alur Belajar</a>
+        <a href="#testimoni" data-en="Stories">Testimoni</a>
+        <a href="#faq">FAQ</a>
+        <a href="tentang.html" data-en="About">Tentang</a>
+      </nav>
+
+      <div class="nav__right">
+        <div class="lang" role="group" aria-label="Bahasa / Language">
+          <button class="lang__btn is-active" data-lang="id" aria-pressed="true">ID</button>
+          <button class="lang__btn" data-lang="en" aria-pressed="false">EN</button>
+        </div>
+        <button class="theme-btn" aria-label="Ganti mode gelap/terang" data-en-label="Toggle dark/light mode">
+          <svg class="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+          <svg class="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        </button>
+        <a href="daftar.html" data-trial class="btn btn--maroon btn--sm nav__cta" data-en="Join a Class">Daftar Kelas</a>
+        <button class="nav__toggle" aria-label="Buka menu" aria-expanded="false"><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ================= HERO ================= -->
+    <section class="hero" id="beranda">
+      <div class="container">
+        <div class="hero__panel">
+          <div class="hero__copy">
+            <div class="pill-badge fade-in" style="--d:.1s">
+              <span class="avatars avatars--xs">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=64&h=64&fit=crop&crop=faces" alt="" />
+                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=64&h=64&fit=crop&crop=faces" alt="" />
+                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=64&h=64&fit=crop&crop=faces" alt="" />
+              </span>
+              <span data-en="<b>★ 4.9</b> from our learners"><b>★ 4.9</b> dari peserta kami</span>
+            </div>
+
+            <h1 class="hero__title">
+              <span class="line"><span data-en="Speak English">Berani Bicara</span></span>
+              <span class="line"><span><span data-en="with">Bahasa</span> <em class="scribble"><span data-en="Confidence">Inggris</span><svg viewBox="0 0 220 24" preserveAspectRatio="none" aria-hidden="true"><path d="M3 15 C 50 4, 110 4, 217 12 M 20 20 C 80 13, 140 14, 200 18"/></svg></em></span></span>
+              <span class="line"><span data-en="from Anywhere">dari Mana Saja</span></span>
+            </h1>
+
+            <p class="hero__lead fade-in" style="--d:.7s" data-en="Online English courses with live classes and real teachers — for kids, teens, adults, scholarship seekers, and professionals. Learn from home, see real results.">
+              Kursus bahasa Inggris online dengan kelas live bersama guru — untuk anak, remaja,
+              dewasa, pencari beasiswa, dan pekerja. Belajar dari rumah, hasilnya terasa nyata.
+            </p>
+
+            <div class="hero__actions fade-in" style="--d:.85s">
+              <a href="daftar.html?paket=trial" data-trial data-free class="btn btn--maroon"><span data-en="Try a Free Class">Coba Kelas Gratis</span>
+                <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+              <a href="#program" class="link-arrow" data-en="See programs">Lihat program</a>
+            </div>
+          </div>
+
+          <div class="hero__collage">
+            <div class="tile tile--lilac tile--a" data-depth="10">
+              <img src="assets/img/kid-boy.png" alt="Anak laki-laki tersenyum memamerkan otot, tanda percaya diri" />
+            </div>
+            <div class="tile tile--lime tile--b" data-depth="16">
+              <img src="assets/img/worker-woman.png" alt="Pekerja profesional tersenyum" />
+            </div>
+            <div class="tile tile--butter tile--c" data-depth="13">
+              <img src="assets/img/scholar-man.png" alt="Pemuda bertopi, pencari beasiswa" />
+            </div>
+
+            <span class="rec-dot" data-depth="22" aria-hidden="true"></span>
+
+            <div class="chip chip--live" data-depth="20">
+              <span class="chip__icon"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="3"/><path d="m16 10.5 5-3v9l-5-3"/></svg></span>
+              <span><b data-en="Live Class">Kelas Live</b><small data-en="via video call">lewat video call</small></span>
+            </div>
+
+            <svg class="doodle doodle--bulb" data-depth="26" viewBox="0 0 48 48" aria-hidden="true">
+              <path d="M24 10a10 10 0 0 0-6 18v4h12v-4a10 10 0 0 0-6-18zM19 36h10M21 40h6"/>
+              <path d="M24 2v3M9 9l2 2M39 9l-2 2M4 22h3M44 22h-3"/>
+            </svg>
+
+            <div class="sticker" data-depth="18" aria-hidden="true">
+              <svg viewBox="0 0 120 120">
+                <defs><path id="circlePath" d="M60 60 m-44 0 a44 44 0 1 1 88 0 a44 44 0 1 1 -88 0"/></defs>
+                <text><textPath href="#circlePath" data-en="100% ONLINE • LEARN FROM HOME • 100% ONLINE •">100% ONLINE • BELAJAR DARI RUMAH • 100% ONLINE •</textPath></text>
+              </svg>
+              <span>★</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="marquee" aria-label="Materi yang dipelajari">
+        <div class="marquee__track">
+          <span>✦ Speaking</span><span>✦ Conversation</span><span>✦ Grammar</span><span>✦ IELTS</span>
+          <span>✦ TOEFL</span><span>✦ Business English</span><span>✦ Job Interview</span><span>✦ Public Speaking</span>
+          <span aria-hidden="true">✦ Speaking</span><span aria-hidden="true">✦ Conversation</span><span aria-hidden="true">✦ Grammar</span><span aria-hidden="true">✦ IELTS</span>
+          <span aria-hidden="true">✦ TOEFL</span><span aria-hidden="true">✦ Business English</span><span aria-hidden="true">✦ Job Interview</span><span aria-hidden="true">✦ Public Speaking</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PROGRAM ================= -->
+    <section class="section" id="program">
+      <div class="container">
+        <div class="head-split">
+          <p class="eyebrow" data-reveal data-en="Programs">Program</p>
+          <div>
+            <h2 class="h2" data-reveal style="--delay:.06s" data-en="One Place for<br/>Every Learning Goal">Satu Tempat, untuk<br/>Setiap Tujuan Belajar</h2>
+            <div class="filters" role="tablist" data-reveal style="--delay:.12s">
+              <button class="filter is-active" data-filter="all" role="tab" aria-selected="true" data-en="All">Semua</button>
+              <button class="filter" data-filter="young" role="tab" aria-selected="false" data-en="Kids &amp; Teens">Anak &amp; Remaja</button>
+              <button class="filter" data-filter="adult" role="tab" aria-selected="false" data-en="Adults &amp; Professionals">Dewasa &amp; Pekerja</button>
+              <button class="filter" data-filter="scholar" role="tab" aria-selected="false" data-en="Scholarship">Beasiswa</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- slider program: bergeser otomatis, bisa digeser/diseret -->
+      <div class="prog-slider" data-reveal>
+        <div class="prog-track" tabindex="0" aria-label="Daftar program, geser ke samping" data-en-label="Program list, swipe sideways">
+          <article class="course course--big" data-cat="young">
+            <div class="course__art bg-mustard">
+              <a href="english-for-kids.html" class="course__link" aria-label="Detail English for Kids" data-en-label="English for Kids details"></a>
+              <div class="course__text">
+                <span class="course__tag" data-en="Ages 7–12">Usia 7–12 tahun</span>
+                <h3>English for Kids</h3>
+                <p data-en="Learn through play, speak up early">Belajar sambil bermain, berani bicara sejak dini</p>
+              </div>
+              <img src="assets/img/kids-trio.png" alt="Tiga anak duduk bersama dan tertawa" loading="lazy" />
+              <a href="#kontak" data-trial data-program="kids" class="course__cta"><span data-en="Start learning">Mulai belajar</span> <svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+            </div>
+            <div class="course__meta">
+              <div><a href="english-for-kids.html" class="course__name"><b>English for Kids</b></a><span data-en="Kids 7–12">Anak 7–12 tahun</span></div>
+              <ul><li data-en="Live class">Kelas live</li><li>Show Day</li></ul>
+            </div>
+          </article>
+
+          <article class="course" data-cat="young">
+            <div class="course__art bg-lime">
+              <a href="english-for-teens.html" class="course__link" aria-label="Detail English for Teens" data-en-label="English for Teens details"></a>
+              <div class="course__text">
+                <h3>English<br/>for Teens</h3>
+                <p data-en="Discussion, presentation &amp; conversation">Diskusi, presentasi, dan percakapan</p>
+              </div>
+              <img src="assets/img/teen-girl.png" alt="Remaja perempuan tersenyum saat belajar" loading="lazy" />
+            </div>
+            <div class="course__meta">
+              <div><a href="english-for-teens.html" class="course__name"><b>English for Teens</b></a><span data-en="Teens 13–17">Remaja 13–17 tahun</span></div>
+              <ul><li data-en="Live class">Kelas live</li><li>Speaking</li></ul>
+            </div>
+          </article>
+
+          <article class="course" data-cat="adult">
+            <div class="course__art bg-sage">
+              <a href="general-english.html" class="course__link" aria-label="Detail General English" data-en-label="General English details"></a>
+              <div class="course__text">
+                <h3>General<br/>English</h3>
+                <p data-en="Chat with ease, every day">Lancar ngobrol untuk sehari-hari</p>
+              </div>
+              <img src="assets/img/adult-man.png" alt="Pria dewasa berkacamata" loading="lazy" />
+            </div>
+            <div class="course__meta">
+              <div><a href="general-english.html" class="course__name"><b>General English</b></a><span data-en="For adults">Untuk dewasa</span></div>
+              <ul><li data-en="Live class">Kelas live</li><li>Conversation</li></ul>
+            </div>
+          </article>
+
+          <article class="course course--big" data-cat="scholar">
+            <div class="course__art bg-peach">
+              <a href="ielts-toefl-prep.html" class="course__link" aria-label="Detail IELTS &amp; TOEFL Prep" data-en-label="IELTS &amp; TOEFL Prep details"></a>
+              <div class="course__text">
+                <span class="course__tag" data-en="For scholarship seekers">Untuk pencari beasiswa</span>
+                <h3>IELTS &amp; TOEFL Prep</h3>
+                <p data-en="Test strategy, mock tests &amp; feedback">Strategi tes, latihan simulasi, dan feedback</p>
+              </div>
+              <img src="assets/img/scholar-man.png" alt="Pemuda bertopi, pencari beasiswa" loading="lazy" />
+              <a href="#kontak" data-trial data-program="ielts" class="course__cta"><span data-en="Start learning">Mulai belajar</span> <svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+            </div>
+            <div class="course__meta">
+              <div><a href="ielts-toefl-prep.html" class="course__name"><b>IELTS &amp; TOEFL Prep</b></a><span data-en="Students &amp; scholarship applicants">Mahasiswa &amp; calon penerima beasiswa</span></div>
+              <ul><li data-en="Live class">Kelas live</li><li data-en="Mock tests">Simulasi tes</li></ul>
+            </div>
+          </article>
+
+          <article class="course course--big" data-cat="adult">
+            <div class="course__art bg-lilac">
+              <a href="business-english.html" class="course__link" aria-label="Detail Business English" data-en-label="Business English details"></a>
+              <div class="course__text">
+                <span class="course__tag" data-en="For professionals">Untuk pekerja</span>
+                <h3>Business English</h3>
+                <p data-en="Meetings, emails, presentations &amp; job interviews">Meeting, email, presentasi, hingga interview kerja</p>
+              </div>
+              <img src="assets/img/worker-woman.png" alt="Pekerja profesional tersenyum" loading="lazy" />
+              <a href="#kontak" data-trial data-program="business" class="course__cta"><span data-en="Start learning">Mulai belajar</span> <svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+            </div>
+            <div class="course__meta">
+              <div><a href="business-english.html" class="course__name"><b>Business English</b></a><span data-en="Employees, professionals &amp; job seekers">Karyawan, profesional &amp; pencari kerja</span></div>
+              <ul><li data-en="Live class">Kelas live</li><li data-en="Professional">Profesional</li></ul>
+            </div>
+          </article>
+
+          <!-- kartu ajakan konsultasi -->
+          <article class="course help-card" data-cat="help">
+            <span class="help-card__icon"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 20 12z"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.3 2.4c-.5.2-.8.6-.8 1.1v.5M12 16.5h.01"/></svg></span>
+            <h3 data-en="Not sure where to start?">Belum yakin mulai dari mana?</h3>
+            <p data-en="Tell us your goal — we'll recommend the right program and level for you, or for your child.">Ceritakan tujuanmu — kami bantu rekomendasikan program dan level yang paling pas, untukmu atau anakmu.</p>
+            <a href="#kontak" data-trial data-program="unsure" class="help-card__link"><span data-en="Free consultation">Konsultasi gratis</span> <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </article>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="prog-controls">
+          <div class="prog-dots" role="tablist" aria-label="Pilih slide"></div>
+          <div class="slider-nav">
+            <button class="round-btn" data-prog="-1" aria-label="Sebelumnya" data-en-label="Previous"><svg viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+            <button class="round-btn round-btn--fill" data-prog="1" aria-label="Berikutnya" data-en-label="Next"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= KATALOG KELAS ================= -->
+    <section class="section section--soft" id="kelas">
+      <div class="container">
+        <div class="head-split">
+          <p class="eyebrow" data-reveal data-en="Classes">Kelas</p>
+          <div>
+            <h2 class="h2" data-reveal style="--delay:.06s" data-en="Most Popular<br/>Classes">Kelas Paling<br/>Diminati</h2>
+            <div class="filters" role="tablist" data-reveal style="--delay:.12s">
+              <button class="filter cat-tab is-active" data-cat="all" role="tab" aria-selected="true" data-en="All Classes">Semua Kelas</button>
+              <button class="filter cat-tab" data-cat="kids" role="tab" aria-selected="false" data-en="Kids">Anak</button>
+              <button class="filter cat-tab" data-cat="teens" role="tab" aria-selected="false" data-en="Teens">Remaja</button>
+              <button class="filter cat-tab" data-cat="adult" role="tab" aria-selected="false" data-en="Adults">Dewasa</button>
+              <button class="filter cat-tab" data-cat="scholar" role="tab" aria-selected="false" data-en="Scholarship">Beasiswa</button>
+              <button class="filter cat-tab" data-cat="work" role="tab" aria-selected="false" data-en="Professionals">Pekerja</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- diisi oleh js/main.js dari data kelas -->
+      <div class="catalog" data-reveal>
+        <div class="catalog__track"></div>
+      </div>
+
+      <div class="container center" data-reveal>
+        <a href="#kontak" data-wa="schedule" class="btn btn--outline btn--sm"><span data-en="Ask about the full schedule">Tanya jadwal lengkap</span>
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- ================= ALUR BELAJAR ================= -->
+    <section class="section" id="alur">
+      <div class="container">
+        <div class="head-split">
+          <p class="eyebrow" data-reveal data-en="How it works">Alur belajar</p>
+          <h2 class="h2" data-reveal style="--delay:.06s" data-en="Your Path to<br/>Speaking English Fluently">Jalanmu Menuju<br/>Lancar Bahasa Inggris</h2>
+        </div>
+
+        <div class="journey">
+          <ol class="journey__steps">
+            <li class="jstep is-active" data-jstep="0">
+              <span class="jstep__icon"><svg viewBox="0 0 24 24"><rect x="5" y="3.5" width="14" height="17" rx="3"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></span>
+              <div>
+                <span class="jstep__label">STEP 01</span>
+                <h3 data-en="Sign Up &amp; Placement Test">Daftar &amp; Tes Penempatan</h3>
+                <p data-en="Pick a program that fits your goal, then take a short online test so you land in the right level.">Pilih program sesuai tujuanmu, lalu ikuti tes singkat online supaya masuk ke level yang tepat.</p>
+                <span class="jstep__chip" data-en="✓ Level matched to you">✓ Level sesuai kemampuan</span>
+              </div>
+            </li>
+            <li class="jstep" data-jstep="1">
+              <span class="jstep__icon"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="3"/><path d="m16 10.5 5-3v9l-5-3"/></svg></span>
+              <div>
+                <span class="jstep__label">STEP 02</span>
+                <h3 data-en="Learn Live with a Teacher">Belajar Live Bersama Guru</h3>
+                <p data-en="Join interactive video-call classes — discussion, role-play, and plenty of speaking practice.">Ikuti kelas interaktif lewat video call — diskusi, role-play, dan banyak latihan bicara.</p>
+                <span class="jstep__chip" data-en="✓ Live, not pre-recorded">✓ Live, bukan rekaman</span>
+              </div>
+            </li>
+            <li class="jstep" data-jstep="2">
+              <span class="jstep__icon"><svg viewBox="0 0 24 24"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg></span>
+              <div>
+                <span class="jstep__label">STEP 03</span>
+                <h3 data-en="Final Evaluation">Evaluasi Akhir</h3>
+                <p data-en="Show what you've learned in a final assessment. For kids, it's a short presentation on Show Day.">Tunjukkan kemampuanmu lewat evaluasi akhir. Untuk anak, berupa presentasi singkat di Show Day.</p>
+                <span class="jstep__chip" data-en="✓ Clear progress report">✓ Laporan kemajuan jelas</span>
+              </div>
+            </li>
+            <li class="jstep" data-jstep="3">
+              <span class="jstep__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="5.5"/><path d="m8.5 13.5-1.5 7 5-2.5 5 2.5-1.5-7"/></svg></span>
+              <div>
+                <span class="jstep__label">STEP 04</span>
+                <h3 data-en="Get Your Certificate">Terima Sertifikatmu</h3>
+                <p data-en="Receive a digital certificate once you complete the program — ready to download and share.">Dapatkan sertifikat digital setelah menyelesaikan program — siap diunduh dan dibagikan.</p>
+                <span class="jstep__chip" data-en="✓ Digital certificate">✓ Sertifikat digital</span>
+              </div>
+            </li>
+          </ol>
+
+          <!-- panel kanan yang berubah mengikuti langkah aktif -->
+          <div class="journey__mock" aria-live="polite">
+            <div class="mock">
+              <div class="mock__top">
+                <div class="mock__bar"><span></span></div>
+                <span class="mock__pct"><span data-en="Progress">Progres</span> <b>25%</b></span>
+              </div>
+              <div class="mock__stage">
+                <div class="mock__card">
+                  <div class="mock__img bg-butter"><img src="assets/img/scholar-man.png" alt="" /></div>
+                  <div class="mock__info">
+                    <span class="mock__tag">IELTS Prep</span>
+                    <b>IELTS Speaking Mastery</b>
+                    <small>★ 4.9 · <span data-en="Live class">Kelas live</span></small>
+                    <span class="mock__btn"></span>
+                  </div>
+                </div>
+                <div class="mock__toast"><span class="mock__toast-icon"></span><span class="mock__toast-text"><b></b><small></small></span></div>
+              </div>
+              <p class="mock__status"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TESTIMONI ================= -->
+    <section class="section section--soft" id="testimoni">
+      <div class="container">
+        <div class="head-split head-split--action">
+          <p class="eyebrow" data-reveal data-en="Testimonials">Testimoni</p>
+          <h2 class="h2" data-reveal style="--delay:.06s" data-en="Stories from<br/>Elevaree Learners">Cerita dari<br/>Peserta Elevaree</h2>
+          <div class="slider-nav" data-reveal style="--delay:.12s">
+            <button class="round-btn" data-slide="-1" aria-label="Sebelumnya"><svg viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+            <button class="round-btn round-btn--fill" data-slide="1" aria-label="Berikutnya"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-track" tabindex="0" aria-label="Daftar testimoni, geser ke samping">
+        <article class="tcard" data-reveal>
+          <header><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=96&h=96&fit=crop&crop=faces" alt="" /><div><b>Ibu Rina</b><span data-en="Kayla's mom, 9 y.o.">Ibu dari Kayla, 9 thn</span></div></header>
+          <p data-en="“Kayla used to be so shy about speaking English. Now she answers her teacher with confidence — even though class is just on a laptop at home.”">“Dulu Kayla malu sekali kalau disuruh bicara bahasa Inggris. Sekarang dia berani menjawab pertanyaan guru — padahal kelasnya cuma dari laptop di rumah.”</p>
+          <footer>English for Kids</footer>
+        </article>
+
+        <article class="tcard tcard--photo bg-pink" data-reveal style="--delay:.06s">
+          <img src="assets/img/kid-boy.png" alt="" loading="lazy" />
+          <span class="tcard__badge">Kids</span>
+          <div class="tcard__caption"><b data-en="“I'm not scared anymore!”">“Aku nggak takut lagi!”</b><span data-en="Raka, 8 y.o.">Raka, 8 thn</span></div>
+        </article>
+
+        <article class="tcard" data-reveal style="--delay:.12s">
+          <header><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=96&h=96&fit=crop&crop=faces" alt="" /><div><b>Dimas</b><span data-en="Scholarship hopeful, 24">Pejuang beasiswa, 24 thn</span></div></header>
+          <p data-en="“Practising IELTS speaking with my tutor made me much calmer on test day. The feedback is detailed and easy to put into practice.”">“Latihan speaking IELTS bareng tutor bikin saya jauh lebih tenang saat tes. Feedback-nya detail dan langsung bisa dipraktikkan.”</p>
+          <footer>IELTS &amp; TOEFL Prep</footer>
+        </article>
+
+        <article class="tcard tcard--photo bg-sky" data-reveal style="--delay:.18s">
+          <img src="assets/img/teen-girl.png" alt="" loading="lazy" />
+          <span class="tcard__badge">Teens</span>
+          <div class="tcard__caption"><b data-en="“Presentations are fun now.”">“Presentasi jadi seru.”</b><span data-en="Alya, 14 y.o.">Alya, 14 thn</span></div>
+        </article>
+
+        <article class="tcard" data-reveal style="--delay:.24s">
+          <header><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=96&h=96&fit=crop&crop=faces" alt="" /><div><b>Sari</b><span>Marketing Executive, 31</span></div></header>
+          <p data-en="“I now lead meetings with overseas clients with much more confidence. Classes are online, so I can join from anywhere.”">“Sekarang saya lebih percaya diri memimpin meeting dengan klien luar negeri. Kelasnya online, jadi bisa ikut dari mana saja.”</p>
+          <footer>Business English</footer>
+        </article>
+
+        <article class="tcard tcard--photo bg-butter" data-reveal style="--delay:.3s">
+          <img src="assets/img/adult-man.png" alt="" loading="lazy" />
+          <span class="tcard__badge" data-en="Adults">Dewasa</span>
+          <div class="tcard__caption"><b data-en="“Finally brave enough to chat.”">“Akhirnya berani ngobrol.”</b><span data-en="Andi, 35">Andi, 35 thn</span></div>
+        </article>
+      </div>
+
+      <div class="container">
+        <div class="stats-row">
+          <div class="stat" data-reveal><b><span data-count="5">0</span></b><span data-en="Goal-based programs">Program sesuai tujuan</span></div>
+          <div class="stat" data-reveal style="--delay:.06s"><b><span data-count="100">0</span>%</b><span data-en="Live online classes">Kelas live online</span></div>
+          <div class="stat" data-reveal style="--delay:.12s"><b><span data-count="4">0</span></b><span data-en="Core skills">Keterampilan inti</span></div>
+          <div class="stat" data-reveal style="--delay:.18s"><b>Rp<span data-count="0">0</span></b><span data-en="Commute costs">Ongkos ke tempat kursus</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= GURU ================= -->
+    <section class="section" id="guru">
+      <div class="container">
+        <div class="head-split head-split--action">
+          <p class="eyebrow" data-reveal data-en="Our teachers">Pengajar kami</p>
+          <h2 class="h2" data-reveal style="--delay:.06s" data-en="Meet the<br/>Elevaree Teachers">Kenalan dengan<br/>Guru Elevaree</h2>
+          <a href="#kontak" data-wa="teach" class="btn btn--outline btn--sm" data-reveal style="--delay:.12s" data-en="Teach with us">Jadi pengajar</a>
+        </div>
+
+        <div class="team">
+          <article class="guru" data-reveal tabindex="0" aria-label="Miss Nadia — lihat biodata" data-en-label="Miss Nadia — view profile">
+            <div class="guru__art bg-lime">
+              <img src="assets/img/guru-1.png" alt="Foto Miss Nadia" loading="lazy" />
+              <span class="guru__hint" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 11v6M12 7.5h.01"/></svg></span>
+              <div class="guru__bio">
+                <p class="guru__about" data-en="Kids&#x27; class specialist who believes children learn fastest through games, songs, and stories.">Spesialis kelas anak. Percaya anak paling cepat belajar lewat permainan, lagu, dan cerita.</p>
+                <dl class="guru__facts">
+                  <div><dt data-en="Experience">Pengalaman</dt><dd data-en="6 years teaching kids">6 tahun mengajar anak</dd></div>
+                  <div><dt data-en="Education">Pendidikan</dt><dd data-en="B.Ed. English Education">S1 Pendidikan Bahasa Inggris</dd></div>
+                </dl>
+                <ul class="guru__certs" aria-label="Sertifikat"><li><b>IELTS</b> <span>7.5</span></li><li><b>TESOL</b></li></ul>
+              </div>
+            </div>
+            <b>Miss Nadia</b><span>English for Kids</span>
+          </article>
+          <article class="guru" data-reveal style="--delay:.08s" tabindex="0" aria-label="Mr. Arif — lihat biodata" data-en-label="Mr. Arif — view profile">
+            <div class="guru__art bg-butter">
+              <img class="is-wide" src="assets/img/guru-2.png" alt="Foto Mr. Arif" loading="lazy" />
+              <span class="guru__hint" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 11v6M12 7.5h.01"/></svg></span>
+              <div class="guru__bio">
+                <p class="guru__about" data-en="Helps scholarship hopefuls build test strategy, essays, and speaking practice.">Membantu pejuang beasiswa menyusun strategi tes, esai, dan latihan speaking.</p>
+                <dl class="guru__facts">
+                  <div><dt data-en="Experience">Pengalaman</dt><dd data-en="7 years of test prep">7 tahun persiapan tes</dd></div>
+                  <div><dt data-en="Education">Pendidikan</dt><dd data-en="M.A. Applied Linguistics">S2 Linguistik Terapan</dd></div>
+                </dl>
+                <ul class="guru__certs" aria-label="Sertifikat"><li><b>IELTS</b> <span>8.5</span></li><li><b>TOEFL iBT</b> <span>112</span></li></ul>
+              </div>
+            </div>
+            <b>Mr. Arif</b><span>IELTS &amp; TOEFL</span>
+          </article>
+          <article class="guru" data-reveal style="--delay:.16s" tabindex="0" aria-label="Miss Laras — lihat biodata" data-en-label="Miss Laras — view profile">
+            <div class="guru__art bg-lilac">
+              <img src="assets/img/guru-3.png" alt="Foto Miss Laras" loading="lazy" />
+              <span class="guru__hint" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 11v6M12 7.5h.01"/></svg></span>
+              <div class="guru__bio">
+                <p class="guru__about" data-en="Former multinational professional focused on practical workplace communication.">Pernah bekerja di perusahaan multinasional; fokus pada komunikasi kerja yang praktis.</p>
+                <dl class="guru__facts">
+                  <div><dt data-en="Experience">Pengalaman</dt><dd data-en="5 years teaching professionals">5 tahun mengajar profesional</dd></div>
+                  <div><dt data-en="Education">Pendidikan</dt><dd data-en="B.A. English Literature">S1 Sastra Inggris</dd></div>
+                </dl>
+                <ul class="guru__certs" aria-label="Sertifikat"><li><b>IELTS</b> <span>8.0</span></li><li><b>CELTA</b></li></ul>
+              </div>
+            </div>
+            <b>Miss Laras</b><span>Business English</span>
+          </article>
+          <article class="guru" data-reveal style="--delay:.24s" tabindex="0" aria-label="Mr. Dani — lihat biodata" data-en-label="Mr. Dani — view profile">
+            <div class="guru__art bg-peach">
+              <img class="is-wide" src="assets/img/guru-4.png" alt="Foto Mr. Dani" loading="lazy" />
+              <span class="guru__hint" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 11v6M12 7.5h.01"/></svg></span>
+              <div class="guru__bio">
+                <p class="guru__about" data-en="Gets teens talking through discussion, friendly debate, and topics they love.">Membuat remaja berani bicara lewat diskusi, debat ringan, dan topik yang mereka sukai.</p>
+                <dl class="guru__facts">
+                  <div><dt data-en="Experience">Pengalaman</dt><dd data-en="4 years teaching teens">4 tahun mengajar remaja</dd></div>
+                  <div><dt data-en="Education">Pendidikan</dt><dd data-en="B.A. International Relations">S1 Hubungan Internasional</dd></div>
+                </dl>
+                <ul class="guru__certs" aria-label="Sertifikat"><li><b>TOEFL iBT</b> <span>108</span></li><li><b>TEFL</b></li></ul>
+              </div>
+            </div>
+            <b>Mr. Dani</b><span>Teens &amp; Conversation</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FAQ ================= -->
+    <section class="section section--soft" id="faq">
+      <div class="container">
+        <div class="head-split">
+          <p class="eyebrow" data-reveal>FAQ</p>
+          <h2 class="h2" data-reveal style="--delay:.06s" data-en="Frequently<br/>Asked Questions">Pertanyaan yang<br/>Sering Ditanyakan</h2>
+        </div>
+
+        <div class="faq">
+          <div class="faq__item is-open" data-reveal>
+            <button class="faq__q" aria-expanded="true"><span class="faq__n">(01)</span><span data-en="Are classes online or offline?">Kelasnya online atau offline?</span><i class="faq__icon"></i></button>
+            <div class="faq__a"><div><p data-en="Fully online. Classes run live over video call with a teacher, so you can join from anywhere.">Sepenuhnya online. Kelas berlangsung live lewat video call bersama guru, jadi bisa diikuti dari mana saja.</p></div></div>
+          </div>
+          <div class="faq__item" data-reveal style="--delay:.04s">
+            <button class="faq__q" aria-expanded="false"><span class="faq__n">(02)</span><span data-en="Which programs are available?">Program apa saja yang tersedia?</span><i class="faq__icon"></i></button>
+            <div class="faq__a"><div><p data-en="English for Kids (7–12), English for Teens (13–17), General English for adults, IELTS &amp; TOEFL Prep for scholarship seekers, and Business English for professionals.">English for Kids (7–12 tahun), English for Teens (13–17 tahun), General English untuk dewasa, IELTS &amp; TOEFL Prep untuk pencari beasiswa, dan Business English untuk pekerja.</p></div></div>
+          </div>
+          <div class="faq__item" data-reveal style="--delay:.08s">
+            <button class="faq__q" aria-expanded="false"><span class="faq__n">(03)</span><span data-en="What device do I need?">Perangkat apa yang dibutuhkan?</span><i class="faq__icon"></i></button>
+            <div class="faq__a"><div><p data-en="A laptop, tablet, or phone with a camera and microphone, plus a stable internet connection. For kids, a laptop or tablet is recommended.">Laptop, tablet, atau HP dengan kamera dan mikrofon, serta koneksi internet yang stabil. Untuk anak, disarankan memakai laptop atau tablet.</p></div></div>
+          </div>
+          <div class="faq__item" data-reveal style="--delay:.12s">
+            <button class="faq__q" aria-expanded="false"><span class="faq__n">(04)</span><span data-en="Is there a test before I start?">Apakah ada tes sebelum mulai?</span><i class="faq__icon"></i></button>
+            <div class="faq__a"><div><p data-en="Yes. A short online placement test helps us understand your level and goals, so you join the right class.">Ya. Ada tes penempatan singkat secara online untuk mengetahui level dan tujuan belajar, supaya kamu masuk ke kelas yang tepat.</p></div></div>
+          </div>
+          <div class="faq__item" data-reveal style="--delay:.16s">
+            <button class="faq__q" aria-expanded="false"><span class="faq__n">(05)</span><span data-en="How much does it cost?">Berapa biaya kelasnya?</span><i class="faq__icon"></i></button>
+            <div class="faq__a"><div><p data-en="Fees vary by program. Message us on WhatsApp for current prices and promos. Your first trial class is free.">Biaya berbeda untuk tiap program. Hubungi kami lewat WhatsApp untuk info harga dan promo terbaru. Kelas percobaan pertama gratis.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CTA ================= -->
+    <section class="cta-wrap">
+      <div class="container">
+        <div class="cta" data-reveal>
+          <div>
+            <p class="cta__eyebrow" data-en="Let's talk">Yuk ngobrol</p>
+            <h2 class="cta__title" data-en="Not sure which class fits?<br/>Start with a free consultation.">Bingung pilih kelas?<br/>Mulai dari konsultasi gratis.</h2>
+            <p class="cta__text" data-en="Tell us your goal — for yourself or your child. Our team will help you find the right program and level.">Ceritakan tujuan belajarmu atau anakmu. Tim kami akan membantu memilih program dan level yang paling pas.</p>
+          </div>
+          <div class="cta__btns">
+            <a href="tes-level.html" class="btn btn--butter"><span data-en="Take the free level test">Coba tes level gratis</span>
+              <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="#kontak" data-trial data-program="unsure" class="btn btn--cta-ghost"><span data-en="Book a free consultation">Jadwalkan konsultasi gratis</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer" id="kontak">
+    <div class="container">
+      <div class="footer__top" data-reveal>
+        <a href="#beranda" class="logo logo--lg" aria-label="Elevaree Academy">
+          <svg class="logo__mark" viewBox="0 0 32 32" aria-hidden="true">
+            <path d="M6 22 L16 10 L26 22" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="16" cy="26.5" r="2.6" fill="currentColor"/>
+          </svg>
+          <span>ELEVAREE</span>
+        </a>
+        <div class="footer__pitch">
+          <p data-en="We believe anyone can speak English with confidence — kids, teens, students, and professionals. Learning is online, results are real.">Kami percaya siapa pun bisa berani bicara bahasa Inggris — anak, remaja, mahasiswa, hingga profesional. Belajarnya online, hasilnya nyata.</p>
+          <a href="#kontak" data-wa="other" class="btn btn--maroon btn--sm"><span data-en="Chat on WhatsApp">Chat via WhatsApp</span>
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer__grid">
+        <div class="footer__news" data-reveal>
+          <b data-en="News &amp; Learning Tips">Kabar &amp; Tips Belajar</b>
+          <p data-en="English learning tips, scholarship info, and new classes — straight to your inbox.">Tips belajar bahasa Inggris, info beasiswa, dan kelas terbaru, langsung ke email kamu.</p>
+          <form class="newsletter" novalidate>
+            <input type="email" placeholder="Masukkan email kamu" data-en-ph="Enter your email" aria-label="Email" required />
+            <button type="submit" aria-label="Kirim"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          </form>
+          <p class="newsletter__msg" role="status" aria-live="polite"></p>
+        </div>
+        <div data-reveal style="--delay:.06s">
+          <b data-en="Links">Tautan</b>
+          <a href="#beranda" data-en="Home">Beranda</a><a href="#program" data-en="Programs">Program</a><a href="#kelas" data-en="Classes">Kelas</a><a href="#alur" data-en="How It Works">Alur Belajar</a><a href="#faq">FAQ</a><a href="tes-level.html" data-en="Level Test">Tes Level</a><a href="tentang.html" data-en="About Us">Tentang Kami</a><a href="daftar.html" data-en="Register">Daftar</a>
+        </div>
+        <div data-reveal style="--delay:.12s">
+          <b data-en="Programs">Program</b>
+          <a href="english-for-kids.html">English for Kids</a><a href="english-for-teens.html">English for Teens</a><a href="general-english.html">General English</a><a href="ielts-toefl-prep.html">IELTS &amp; TOEFL Prep</a><a href="business-english.html">Business English</a>
+        </div>
+        <div data-reveal style="--delay:.18s">
+          <b data-en="Contact Us">Hubungi Kami</b>
+          <a href="#" data-en="100% online classes">Kelas 100% online</a>
+          <a href="#">hello@elevaree.academy</a>
+          <a href="#kontak" data-wa="other">WhatsApp: +62 8xx-xxxx-xxxx</a>
+          <div class="socials">
+            <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor"/></svg></a>
+            <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M14 3c.5 2.8 2.4 4.6 5 5"/></svg></a>
+            <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24"><rect x="2.5" y="5.5" width="19" height="13" rx="4"/><path d="m10 9.5 5 2.5-5 2.5z" fill="currentColor"/></svg></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <span>© <span id="year">2026</span> Elevaree Academy</span>
+        <span><a href="kebijakan-privasi.html" data-en="Privacy Policy">Kebijakan Privasi</a> · <a href="syarat-ketentuan.html" data-en="Terms &amp; Conditions">Syarat &amp; Ketentuan</a></span>
+      </div>
+    </div>
+    <div class="footer__word" aria-hidden="true">elevaree</div>
+  </footer>
+
+  <!-- ================= TOMBOL WHATSAPP MELAYANG ================= -->
+  <div class="wa-float">
+    <div class="wa-pop" id="wa-pop" role="dialog" aria-label="Chat WhatsApp" aria-hidden="true">
+      <div class="wa-pop__head">
+        <span class="wa-pop__avatar">
+          <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 22 L16 10 L26 22" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="16" cy="26.5" r="2.6" fill="currentColor"/></svg>
+        </span>
+        <div><b>Elevaree Academy</b><small data-en="Ask us anything">Tanya apa saja ke tim kami</small></div>
+        <button type="button" class="wa-pop__close" aria-label="Tutup" data-en-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      </div>
+      <div class="wa-pop__body">
+        <p class="wa-bubble" data-en="Hi! 👋 What would you like to ask about?">Halo! 👋 Mau tanya tentang apa?</p>
+        <div class="wa-quick">
+          <button type="button" data-wa="kids" data-en="Classes for kids">Kelas untuk anak</button>
+          <button type="button" data-wa="teens" data-en="Classes for teens">Kelas untuk remaja</button>
+          <button type="button" data-wa="ielts" data-en="IELTS/TOEFL for scholarships">IELTS/TOEFL untuk beasiswa</button>
+          <button type="button" data-wa="business">Business English</button>
+          <button type="button" data-wa="price" data-en="Prices &amp; promos">Harga &amp; promo</button>
+          <button type="button" data-wa="other" data-en="Something else">Pertanyaan lain</button>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="wa-btn" aria-expanded="false" aria-controls="wa-pop" aria-label="Chat lewat WhatsApp" data-en-label="Chat on WhatsApp">
+      <svg class="wa-ico" viewBox="0 0 24 24"><path d="M20 11.6a8.3 8.3 0 0 1-12.3 7.2L3.5 20l1.3-4A8.3 8.3 0 1 1 20 11.6z"/><path d="M9 8.3c-.3.9.1 2.4 1.5 3.8s2.9 1.9 3.8 1.6l.9-1.2-1.6-.9-.8.6a4.6 4.6 0 0 1-2.1-2.1l.6-.8-.9-1.6z"/></svg>
+      <span class="wa-btn__label" data-en="Ask on WhatsApp">Tanya via WhatsApp</span>
+    </button>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/batches.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

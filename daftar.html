@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="id" data-title-en="Register — Elevaree Academy">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pendaftaran — Elevaree Academy</title>
+  <meta name="description" content="Daftar kelas bahasa Inggris online Elevaree Academy: pilih program, paket, dan jadwal, lalu selesaikan pembayaran." />
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('elv-theme');
+        if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', t);
+        if (localStorage.getItem('elv-lang') === 'en') document.documentElement.lang = 'en';
+      } catch (e) { document.documentElement.setAttribute('data-theme', 'light'); }
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="reg">
+  <div class="reg-bg" aria-hidden="true"><span></span><span></span></div>
+
+  <!-- header ringkas -->
+  <header class="reg-head">
+    <a href="index.html" class="logo" aria-label="Elevaree Academy — beranda">
+      <svg class="logo__mark" viewBox="0 0 32 32" aria-hidden="true"><path d="M6 22 L16 10 L26 22" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="16" cy="26.5" r="2.6" fill="currentColor"/></svg>
+      <span>ELEVAREE</span>
+    </a>
+    <p class="reg-head__step" aria-live="polite"><span data-en="Step">Langkah</span> <b class="js-step-no">1</b> <span data-en="of">dari</span> 4</p>
+    <div class="reg-head__right">
+      <div class="lang" role="group" aria-label="Bahasa / Language">
+        <button class="lang__btn is-active" data-lang="id" aria-pressed="true">ID</button>
+        <button class="lang__btn" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+      <button class="theme-btn" aria-label="Ganti mode gelap/terang" data-en-label="Toggle dark/light mode">
+        <svg class="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+        <svg class="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+      <a href="index.html" class="reg-exit" aria-label="Keluar dari pendaftaran" data-en-label="Leave registration">
+        <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </a>
+    </div>
+    <div class="reg-progress" aria-hidden="true"><span></span></div>
+  </header>
+
+  <main class="reg-main">
+    <div class="reg-layout">
+      <div class="reg-flow">
+        <!-- pesanan tertunda -->
+        <div class="reg-resume" hidden>
+          <span><span data-en="You have an unpaid order">Kamu punya pesanan yang belum dibayar</span> <b class="js-resume-id"></b></span>
+          <button type="button" class="link-arrow js-resume" data-en="View payment">Lihat pembayaran</button>
+        </div>
+
+        <!-- 1. PROGRAM -->
+        <section class="reg-step" data-step="0" aria-labelledby="h-step-0">
+          <p class="reg-eyebrow"><span>01</span> <span data-en="Programme">Program</span></p>
+          <h1 class="reg-title" id="h-step-0" data-en="What would you like to learn?">Mau belajar apa?</h1>
+          <p class="reg-sub" data-en="Pick the programme that fits your goal. You can change it later.">Pilih program yang paling sesuai tujuanmu. Bisa diganti nanti.</p>
+          <div class="opt-list js-programs" role="radiogroup" aria-labelledby="h-step-0"></div>
+          <p class="reg-help"><span data-en="Not sure?">Belum yakin?</span> <a href="#" class="js-consult" data-en="Ask us on WhatsApp — it's free">Tanya kami via WhatsApp, gratis</a></p>
+        </section>
+
+        <!-- 2. PAKET & JADWAL -->
+        <section class="reg-step" data-step="1" aria-labelledby="h-step-1" hidden>
+          <p class="reg-eyebrow"><span>02</span> <span data-en="Package &amp; schedule">Paket &amp; jadwal</span></p>
+          <h1 class="reg-title" id="h-step-1" data-en="Choose your package">Pilih paket belajarmu</h1>
+          <p class="reg-sub" data-en="Start with a free trial class, or register for the next batch (10 effective days over 2 weeks).">Mulai dari kelas percobaan gratis, atau langsung daftar gelombang berikutnya (10 hari efektif dalam 2 minggu).</p>
+          <div class="opt-list opt-list--packs js-packs" role="radiogroup" aria-labelledby="h-step-1"></div>
+
+          <!-- paket Gelombang: pilih gelombang & jam kelas -->
+          <div class="js-batch-wrap" hidden>
+            <fieldset class="reg-field">
+              <legend data-en="Choose a batch">Pilih gelombang</legend>
+              <div class="opt-list opt-list--batch js-batches" role="radiogroup"></div>
+            </fieldset>
+            <fieldset class="reg-field js-slot-wrap">
+              <legend data-en="Choose a class time">Pilih jam kelas</legend>
+              <div class="opt-list opt-list--slots js-slots" role="radiogroup"></div>
+            </fieldset>
+            <p class="reg-note js-batch-note"></p>
+          </div>
+
+          <!-- Kelas percobaan: preferensi hari & waktu -->
+          <div class="js-trial-only" hidden>
+          <fieldset class="reg-field">
+            <legend data-en="Preferred days">Hari yang diinginkan</legend>
+            <div class="chipset js-days"></div>
+          </fieldset>
+          <fieldset class="reg-field">
+            <legend data-en="Preferred time">Waktu yang diinginkan</legend>
+            <div class="chipset js-times"></div>
+          </fieldset>
+          <p class="reg-note" data-en="We'll confirm the exact schedule with you on WhatsApp.">Jadwal pasti akan dikonfirmasi bersama lewat WhatsApp.</p>
+          </div>
+        </section>
+
+        <!-- 3. DATA DIRI -->
+        <section class="reg-step" data-step="2" aria-labelledby="h-step-2" hidden>
+          <p class="reg-eyebrow"><span>03</span> <span data-en="Your details">Data diri</span></p>
+          <h1 class="reg-title" id="h-step-2" data-en="Tell us about the learner">Ceritakan tentang pesertanya</h1>
+          <form class="reg-form" novalidate>
+            <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <fieldset class="reg-field">
+              <legend data-en="This class is for">Kelas ini untuk</legend>
+              <div class="chipset chipset--seg">
+                <label><input type="radio" name="who" value="self" checked /><span data-en="Myself">Saya sendiri</span></label>
+                <label><input type="radio" name="who" value="child" /><span data-en="My child">Anak saya</span></label>
+              </div>
+            </fieldset>
+            <div class="ufield">
+              <input id="r-name" name="name" type="text" autocomplete="name" placeholder=" " required />
+              <label for="r-name" class="js-name-label" data-en="Full name">Nama lengkap</label>
+              <small class="err" aria-live="polite"></small>
+            </div>
+            <div class="urow child-only" hidden>
+              <div class="ufield">
+                <input id="r-child" name="child" type="text" placeholder=" " />
+                <label for="r-child" data-en="Child's name">Nama anak</label>
+                <small class="err" aria-live="polite"></small>
+              </div>
+              <div class="ufield ufield--sm">
+                <input id="r-age" name="age" type="number" inputmode="numeric" min="4" max="17" placeholder=" " />
+                <label for="r-age" data-en="Age">Usia</label>
+                <small class="err" aria-live="polite"></small>
+              </div>
+            </div>
+            <div class="urow">
+              <div class="ufield">
+                <input id="r-wa" name="wa" type="tel" inputmode="tel" autocomplete="tel" placeholder=" " required />
+                <label for="r-wa" data-en="WhatsApp number">Nomor WhatsApp</label>
+                <small class="err" aria-live="polite"></small>
+              </div>
+              <div class="ufield">
+                <input id="r-email" name="email" type="email" autocomplete="email" placeholder=" " />
+                <label for="r-email"><span>Email</span> <em class="js-email-opt" data-en="(optional)">(opsional)</em></label>
+                <small class="err" aria-live="polite"></small>
+              </div>
+            </div>
+            <div class="ufield">
+              <textarea id="r-note" name="note" rows="2" placeholder=" "></textarea>
+              <label for="r-note"><span data-en="Learning goal">Tujuan belajar</span> <em data-en="(optional)">(opsional)</em></label>
+            </div>
+          </form>
+        </section>
+
+        <!-- 4. TINJAU & BAYAR -->
+        <section class="reg-step" data-step="3" aria-labelledby="h-step-3" hidden>
+          <p class="reg-eyebrow"><span>04</span> <span class="js-step3-eyebrow" data-en="Review &amp; payment">Tinjau &amp; bayar</span></p>
+          <h1 class="reg-title js-step3-title" id="h-step-3" data-en="Almost there!">Sedikit lagi!</h1>
+          <div class="review js-review"></div>
+
+          <div class="reg-field js-promo-wrap">
+            <label class="legend" for="r-promo" data-en="Promo code">Kode promo</label>
+            <div class="promo">
+              <input id="r-promo" type="text" autocomplete="off" placeholder="Opsional" data-en-ph="Optional" />
+              <button type="button" class="btn btn--outline btn--sm js-promo-apply" data-en="Apply">Pakai</button>
+            </div>
+            <small class="promo__msg" aria-live="polite"></small>
+          </div>
+
+          <fieldset class="reg-field js-pay-wrap">
+            <legend data-en="Payment method">Metode pembayaran</legend>
+            <div class="opt-list opt-list--pay js-pay" role="radiogroup"></div>
+          </fieldset>
+
+          <label class="check">
+            <input type="checkbox" class="js-agree" />
+            <span data-en="I agree to the &lt;a href=&quot;syarat-ketentuan.html&quot; target=&quot;_blank&quot;&gt;Terms &amp; Conditions&lt;/a&gt; and &lt;a href=&quot;kebijakan-privasi.html&quot; target=&quot;_blank&quot;&gt;Privacy Policy&lt;/a&gt;, and to be contacted on WhatsApp.">Saya setuju dengan <a href="syarat-ketentuan.html" target="_blank">Syarat &amp; Ketentuan</a> dan <a href="kebijakan-privasi.html" target="_blank">Kebijakan Privasi</a>, serta bersedia dihubungi lewat WhatsApp.</span>
+          </label>
+          <small class="err js-agree-err" aria-live="polite"></small>
+        </section>
+
+        <!-- 5. PEMBAYARAN / SELESAI (diisi JS) -->
+        <section class="reg-step reg-step--final" data-step="4" aria-live="polite" hidden></section>
+
+        <!-- navigasi langkah -->
+        <div class="reg-nav">
+          <div class="reg-nav__total">
+            <small data-en="Total">Total</small>
+            <b class="js-nav-total">Rp0</b>
+          </div>
+          <button type="button" class="btn btn--outline reg-back js-back">
+            <svg viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+            <span data-en="Back">Kembali</span>
+          </button>
+          <button type="button" class="btn btn--maroon reg-next js-next">
+            <span class="js-next-label" data-en="Continue">Lanjut</span>
+            <span class="spinner" aria-hidden="true"></span>
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- ringkasan pesanan -->
+      <aside class="reg-sum" aria-label="Ringkasan pesanan">
+        <p class="reg-sum__eyebrow" data-en="Order summary">Ringkasan pesanan</p>
+        <div class="reg-sum__prog js-sum-prog">
+          <span class="reg-sum__thumb"></span>
+          <div><b class="js-sum-title" data-en="No programme yet">Belum pilih program</b><small class="js-sum-pack">—</small></div>
+        </div>
+        <dl class="reg-sum__rows js-sum-rows"></dl>
+        <div class="reg-sum__total">
+          <span data-en="Total">Total</span>
+          <b class="js-sum-total">Rp0</b>
+        </div>
+        <p class="reg-sum__note js-sum-note"></p>
+        <ul class="reg-sum__trust">
+          <li><svg viewBox="0 0 24 24"><path d="M12 2.5 19.5 6v5.5c0 4.6-3.2 8.6-7.5 10-4.3-1.4-7.5-5.4-7.5-10V6z"/><path d="m9 12 2 2 4-4"/></svg><span data-en="Data protected">Data terlindungi</span></li>
+          <li><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="3"/><path d="m16 10.5 5-3v9l-5-3"/></svg><span data-en="Live online classes">Kelas live online</span></li>
+        </ul>
+      </aside>
+    </div>
+  </main>
+
+  <div class="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/batches.js"></script>
+  <script src="js/daftar.js"></script>
+</body>
+</html>
