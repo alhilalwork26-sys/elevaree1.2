@@ -51,7 +51,7 @@
     { cat: 'work', color: 'butter', icon: 'user', title: 'Job Interview Prep', img: 'guru-2.png', tag: { id: 'Siap Tembus Perusahaan Impian', en: 'Land Your Dream Job' }, mins: 60 },
   ];
   const JOURNEY = [
-    { pct: 25, btn: { id: 'Daftar sekarang', en: 'Enroll now' }, icon: '✓', toastB: { id: 'Terdaftar', en: 'Enrolled' }, toastS: { id: 'Hasil tes penempatan: B1', en: 'Placement result: B1' }, status: { id: 'Mendaftar di IELTS Speaking Mastery…', en: 'Enrolling in IELTS Speaking Mastery…' } },
+    { pct: 25, btn: { id: 'Daftar sekarang', en: 'Enroll now' }, icon: '✓', toastB: { id: 'Terdaftar', en: 'Enrolled' }, toastS: { id: 'Hasil tes penempatan: B1', en: 'Placement result: B1' }, status: { id: 'Mendaftar di IELTS & TOEFL Prep…', en: 'Enrolling in IELTS & TOEFL Prep…' } },
     { pct: 50, btn: { id: 'Gabung kelas live', en: 'Join live class' }, icon: '●', toastB: { id: 'Kelas dimulai', en: 'Class started' }, toastS: { id: 'Guru & 8 peserta online', en: 'Teacher & 8 learners online' }, status: { id: 'Kelas live sedang berlangsung…', en: 'Live class in progress…' } },
     { pct: 75, btn: { id: 'Lihat hasil evaluasi', en: 'View evaluation' }, icon: '86', toastB: { id: 'Evaluasi selesai', en: 'Evaluation done' }, toastS: { id: 'Nilai akhir 86/100', en: 'Final score 86/100' }, status: { id: 'Menilai evaluasi akhir…', en: 'Grading the final evaluation…' } },
     { pct: 100, btn: { id: 'Unduh sertifikat', en: 'Download certificate' }, icon: '★', toastB: { id: 'Sertifikat terbit', en: 'Certificate issued' }, toastS: { id: 'ID: ELV-2026-0142', en: 'ID: ELV-2026-0142' }, status: { id: 'Sertifikat siap diunduh', en: 'Certificate ready to download' } },
