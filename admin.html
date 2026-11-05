@@ -82,6 +82,7 @@
       <p>Masukkan kata sandi admin untuk mengatur isi website.</p>
       <form class="js-login-form">
         <label class="field"><span>Kata sandi</span><input type="password" class="js-pw" autocomplete="current-password" required /></label>
+        <p class="hint js-login-demo" hidden><b>Mode demo.</b> Kata sandi: <code>Admin123</code>. Perubahan hanya tersimpan di browser ini dan tidak terlihat oleh pengunjung lain.</p>
         <button class="btn" type="submit">Masuk</button>
         <p class="err js-login-err" role="alert"></p>
       </form>
@@ -89,6 +90,7 @@
 
     <!-- PANEL -->
     <section class="js-panel" hidden>
+      <div class="hint js-demo" hidden><b>Mode demo:</b> perubahan hanya tersimpan di browser ini, jadi pengunjung lain tidak melihatnya. Untuk menyimpan sungguhan, hubungkan Google Apps Script (isi <code>formEndpoint</code> di <code>js/config.js</code>).</div>
       <div class="tabs" role="tablist">
         <button class="tab" role="tab" aria-selected="true" data-tab="text">Teks website</button>
         <button class="tab" role="tab" aria-selected="false" data-tab="settings">Pengaturan</button>

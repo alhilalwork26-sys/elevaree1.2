@@ -42,8 +42,28 @@
   var currentFile = PAGES[0][0];
   var settingsDirty = false;
 
+  /* ---------- mode demo ----------
+     Selama formEndpoint kosong, admin berjalan tanpa server: kata sandi demo, editan disimpan di
+     localStorage browser ini saja (dibaca js/content.js). Kata sandi demo ini tampak di kode publik,
+     jadi JANGAN dipakai untuk produksi — isi formEndpoint dan buat ADMIN_PASSWORD di Apps Script. */
+  var DEMO = !C.formEndpoint;
+  var DEMO_PASSWORD = 'Admin123';
+  function demoRead() { try { return JSON.parse(localStorage.getItem('elv-content')) || { content: {}, settings: {} }; } catch (e) { return { content: {}, settings: {} }; } }
+  function demoPost(action, payload) {
+    if (password !== DEMO_PASSWORD) return Promise.resolve({ ok: false, error: 'auth' });
+    if (action === 'saveContent') {
+      var d = demoRead();
+      Object.keys(payload).forEach(function (k) { if (payload[k] === null) delete d.content[k]; else d.content[k] = payload[k]; });
+      H.cache(d);
+    } else if (action === 'saveSettings') {
+      var e = demoRead(); e.settings = payload; H.cache(e);
+    }
+    return Promise.resolve({ ok: true });
+  }
+
   /* ---------- server ---------- */
   function post(action, payload) {
+    if (DEMO) return demoPost(action, payload);
     var body = new URLSearchParams({ type: 'admin', password: password, action: action });
     if (payload !== undefined) body.set('payload', JSON.stringify(payload));
     return fetch(C.formEndpoint, { method: 'POST', body: body })
@@ -51,6 +71,7 @@
       .catch(function () { return { ok: false, error: 'network' }; });
   }
   function load() {
+    if (DEMO) { var d = demoRead(); remote = { content: d.content || {}, settings: d.settings || {} }; return Promise.resolve(); }
     return fetch(C.formEndpoint + (C.formEndpoint.indexOf('?') >= 0 ? '&' : '?') + 'action=content&t=' + Date.now())
       .then(function (r) { return r.json(); })
       .then(function (d) { if (d && d.ok) remote = { content: d.content || {}, settings: d.settings || {} }; })
@@ -63,12 +84,12 @@
     $('.js-panel').hidden = false;
     $('.js-logout').hidden = false;
     $('.js-savebar').hidden = false;
+    $('.js-demo').hidden = !DEMO;
     load().then(function () { buildPageSelect(); renderRows(); renderSettings(); });
   }
   $('.js-login-form').addEventListener('submit', function (e) {
     e.preventDefault();
     var err = $('.js-login-err');
-    if (!C.formEndpoint) { err.textContent = 'formEndpoint di js/config.js masih kosong. Pasang Google Apps Script dulu (lihat tools/google-sheets-form.gs).'; return; }
     password = $('.js-pw').value;
     err.textContent = 'Memeriksa…';
     post('verify').then(function (r) {
@@ -82,13 +103,14 @@
   });
   try {
     var saved = sessionStorage.getItem('elv-admin');
-    if (saved && C.formEndpoint) {
+    if (saved) {
       password = saved;
       post('verify').then(function (r) { if (r.ok) showPanel(); else password = ''; });
     }
   } catch (x) { /* abaikan */ }
 
   /* ---------- tab ---------- */
+  if (DEMO) $('.js-login-demo').hidden = false;
   document.querySelectorAll('.tab').forEach(function (t) {
     t.addEventListener('click', function () {
       document.querySelectorAll('.tab').forEach(function (o) { o.setAttribute('aria-selected', o === t); });
@@ -325,7 +347,7 @@
       if (settings) remote.settings = settings;
       pending = {}; settingsDirty = false;
       H.cache({ content: remote.content, settings: remote.settings });
-      msg('Tersimpan ✓ Muat ulang website untuk melihat hasilnya.', true);
+      msg(DEMO ? 'Tersimpan di browser ini ✓ Buka website di browser yang sama untuk melihatnya.' : 'Tersimpan ✓ Muat ulang website untuk melihat hasilnya.', true);
       btn.disabled = true;
       renderRows();
     });
