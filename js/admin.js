@@ -237,13 +237,29 @@
     sel.appendChild(g1); sel.appendChild(g2);
     sel.value = currentFile;
   }
-  function ctxLabel(el) {
-    var c = el.closest('nav, header, footer, section, main, aside, form');
-    if (!c) return 'Halaman';
-    if (c.tagName === 'NAV') return 'Menu atas';
-    if (c.tagName === 'FOOTER') return 'Footer';
-    if (c.id) return '#' + c.id;
-    return (c.className && String(c.className).split(' ')[0]) || c.tagName.toLowerCase();
+  var SEC_ID = {
+    beranda: 'Bagian utama (paling atas)', program: 'Daftar program', guru: 'Tutor', alur: 'Alur belajar',
+    testimoni: 'Testimoni', kelas: 'Katalog kelas', faq: 'Pertanyaan umum (FAQ)', kontak: 'Footer & kontak',
+    ringkasan: 'Ringkasan program', mentor: 'Mentor', kurikulum: 'Kurikulum', jadwal: 'Jadwal & harga',
+  };
+  function groupOf(el) {
+    var c = el.closest('section, footer, nav, aside, .nav, .reg-head, .legal__head');
+    if (!c) return 'Lainnya';
+    if (c.matches('.crumbs')) return 'Jejak halaman (breadcrumb)';
+    if (c.matches('.pd-tabs')) return 'Tab di halaman';
+    if (c.matches('nav, .nav')) return 'Menu atas';
+    if (c.matches('footer')) return 'Footer & kontak';
+    if (c.matches('.reg-head')) return 'Header halaman';
+    if (c.matches('.legal__head')) return 'Judul dokumen';
+    if (c.matches('.legal__toc')) return 'Daftar isi';
+    if (c.matches('.cta-wrap')) return 'Ajakan mendaftar';
+    if (c.matches('.buy')) return 'Kotak pendaftaran';
+    if (c.matches('.reg-sum')) return 'Ringkasan pesanan';
+    if (c.id && SEC_ID[c.id]) return SEC_ID[c.id];
+    if (c.matches('.hero, .pd-hero')) return 'Bagian utama (paling atas)';
+    var h = c.querySelector('h1, h2, h3');
+    var t = h ? plain(h.innerHTML) : '';
+    return t ? 'Bagian: ' + (t.length > 40 ? t.slice(0, 40) + '…' : t) : 'Bagian lain';
   }
   function unq(lit) {
     return lit.slice(1, -1).replace(/\\(u[0-9a-fA-F]{4}|x[0-9a-fA-F]{2}|[\s\S])/g, function (m, c) {
@@ -259,7 +275,7 @@
       function add(k, id, en, ctx, q) { if (seen[k] || !H.norm(id)) return; seen[k] = 1; rows.push({ k: k, id: id, en: en, ctx: ctx, q: q }); }
       if (!quiz) {
         re = new RegExp('\\{\\s*id:\\s*(' + STR + ')\\s*,\\s*en:\\s*(' + STR + ')\\s*\\}', 'g');
-        while ((m = re.exec(src))) { var id = unq(m[1]); add(H.hash(H.norm(id)), id, unq(m[2]), 'Skrip', false); }
+        while ((m = re.exec(src))) { var id = unq(m[1]); add(H.hash(H.norm(id)), id, unq(m[2]), 'Teks dinamis', false); }
       } else {
         var one = new RegExp('\\b[qp]:\\s*(' + STR + ')', 'g');
         while ((m = one.exec(src))) { var q = unq(m[1]); add('q' + H.hash(H.norm(q)), q, '', 'Soal / bacaan', true); }
@@ -282,86 +298,144 @@
         var inner = el.innerHTML;
         if (!H.norm(inner)) return;
         var k = H.hash(H.norm(inner));
-        if (seen[k]) return;
-        seen[k] = 1;
-        rows.push({ k: k, id: inner.trim(), en: (el.getAttribute('data-en') || '').trim(), ctx: ctxLabel(el) });
+        if (seen[k]) { seen[k].places++; return; }
+        seen[k] = { places: 1 };
+        seen[k].row = { k: k, id: inner.trim(), en: (el.getAttribute('data-en') || '').trim(), ctx: groupOf(el), places: 1 };
+        seen[k].row._s = seen[k];
+        rows.push(seen[k].row);
       });
+      rows.forEach(function (r) { r.places = r._s.places; delete r._s; });
       pageCache[file] = rows;
       return rows;
     });
   }
+
+  var renderToken = 0, editLang = 'id', guideOn = true;
   function valueOf(row) { return pending[row.k] || remote.content[row.k] || { id: row.id, en: row.en }; }
   function isLive(row) { return !!remote.content[row.k]; }
+  function isChanged(row) { return !!pending[row.k] || isLive(row); }
 
-  var renderToken = 0;
-  function renderRows() {
+  function renderRows(openKey) {
     var box = $('.js-rows'), token = ++renderToken;
     box.innerHTML = '';
-    for (var i = 0; i < 5; i++) { var sk = document.createElement('div'); sk.className = 'skel'; box.appendChild(sk); }
+    for (var i = 0; i < 4; i++) { var sk = document.createElement('div'); sk.className = 'skel'; box.appendChild(sk); }
     scan(currentFile).then(function (rows) {
       if (token !== renderToken) return;
       var q = $('.js-q').value.trim().toLowerCase();
       var only = $('.js-only').checked;
       box.innerHTML = '';
-      var shown = 0;
+      var groups = [], byName = {}, shown = 0;
       rows.forEach(function (row) {
         var v = valueOf(row);
-        if (only && !pending[row.k] && !isLive(row)) return;
+        if (only && !isChanged(row)) return;
         if (q && (v.id + ' ' + v.en + ' ' + row.id).toLowerCase().indexOf(q) < 0) return;
-        var el = rowEl(row);
-        el.style.setProperty('--n', Math.min(shown, 14));
-        box.appendChild(el); shown++;
+        var g = byName[row.ctx];
+        if (!g) { g = byName[row.ctx] = { name: row.ctx, rows: [] }; groups.push(g); }
+        g.rows.push(row); shown++;
       });
-      if (!shown) { var e = document.createElement('div'); e.className = 'empty'; e.textContent = 'Tidak ada teks yang cocok.'; box.appendChild(e); }
+      $('.js-count').textContent = rows.length + ' teks di halaman ini';
+      if (!shown) { var e = document.createElement('div'); e.className = 'empty'; e.textContent = only ? 'Belum ada teks yang diubah di halaman ini.' : 'Tidak ada teks yang cocok dengan pencarian.'; box.appendChild(e); return; }
+      groups.forEach(function (g, gi) {
+        var d = document.createElement('details'); d.className = 'grp';
+        d.open = groups.length === 1 || !!q || only || gi === 0 || (openKey && g.rows.some(function (r) { return r.k === openKey; }));
+        var sm = document.createElement('summary');
+        var nm = document.createElement('span'); nm.className = 'grp__name'; nm.textContent = g.name;
+        var cnt = document.createElement('span'); cnt.className = 'grp__count';
+        sm.appendChild(nm); sm.appendChild(cnt); d.appendChild(sm);
+        var body = document.createElement('div'); body.className = 'grp__body';
+        g.rows.forEach(function (row, n) { var el = rowEl(row, d); el.style.setProperty('--n', Math.min(n, 8)); body.appendChild(el); });
+        d.appendChild(body); box.appendChild(d);
+        badge(d, g.rows);
+        d.__rows = g.rows;
+      });
     }).catch(function () { if (token === renderToken) box.innerHTML = '<div class="empty">Gagal membaca halaman ini.</div>'; });
   }
-  function field(label, value) {
-    var l = document.createElement('label');
-    var s = document.createElement('span'); s.textContent = label;
-    var a = document.createElement('textarea'); a.value = value; a.rows = Math.max(2, Math.min(7, Math.ceil(value.length / 34)));
-    l.appendChild(s); l.appendChild(a);
-    return { label: l, area: a };
+  function badge(d, rows) {
+    var n = rows.filter(isChanged).length;
+    d.querySelector('.grp__count').textContent = rows.length + ' teks' + (n ? ' · ' + n + ' diubah' : '');
+    d.classList.toggle('has-changes', n > 0);
   }
-  function rowEl(row) {
+  function field(value, rows) {
+    var a = document.createElement('textarea'); a.value = value; a.rows = rows || 2;
+    function grow() { a.style.height = 'auto'; a.style.height = Math.min(220, a.scrollHeight + 2) + 'px'; }
+    a.addEventListener('input', grow);
+    setTimeout(grow, 0);
+    return a;
+  }
+  function rowEl(row, details) {
     var el = document.createElement('div');
-    var v = valueOf(row);
-    el.className = 'row' + (pending[row.k] ? ' is-dirty' : '');
-    var meta = document.createElement('div'); meta.className = 'row__meta';
-    var tag = document.createElement('span'); tag.className = 'tag'; tag.textContent = row.ctx; meta.appendChild(tag);
+    el.className = 'row'; el.dataset.k = row.k;
+    var quiz = !!row.q, other = editLang === 'id' ? 'en' : 'id';
+    var head = document.createElement('div'); head.className = 'row__head';
+    var lab = document.createElement('span'); lab.className = 'row__lab';
+    lab.textContent = quiz ? (row.ctx === 'Pilihan jawaban' ? 'Pilihan jawaban' : 'Teks soal') : (editLang === 'id' ? 'Teks Indonesia' : 'Teks English');
     var state = document.createElement('span');
-    function setState() {
+    head.appendChild(lab); head.appendChild(state);
+    if (row.places > 1) { var pl = document.createElement('span'); pl.className = 'row__places'; pl.textContent = 'tampil di ' + row.places + ' tempat'; head.appendChild(pl); }
+    if (/<[a-z]/i.test(row.id)) { var fm = document.createElement('span'); fm.className = 'row__fmt'; fm.textContent = 'Ada format khusus (tag <…>), jangan dihapus'; head.appendChild(fm); }
+    el.appendChild(head);
+    var v = valueOf(row);
+    var area = field(quiz ? v.id : v[editLang], 2);
+    el.appendChild(area);
+    var cap = document.createElement('div'); cap.className = 'row__cap';
+    var foot = document.createElement('div'); foot.className = 'row__foot';
+    var orig = document.createElement('span'); orig.className = 'row__orig';
+    var reset = document.createElement('button'); reset.type = 'button'; reset.className = 'link'; reset.textContent = '↺ Kembalikan ke teks asli';
+    foot.appendChild(orig); foot.appendChild(reset);
+    if (!quiz) el.appendChild(cap);
+    el.appendChild(foot);
+
+    function paint() {
+      var cur = valueOf(row), changed = isChanged(row);
       if (pending[row.k]) { state.className = 'tag tag--dirty'; state.textContent = 'belum disimpan'; }
       else if (isLive(row)) { state.className = 'tag tag--live'; state.textContent = 'sudah diubah'; }
       else { state.className = ''; state.textContent = ''; }
+      el.classList.toggle('is-dirty', !!pending[row.k]);
+      cap.textContent = (other === 'en' ? 'English: ' : 'Indonesia: ') + (plain(cur[other]) || '— belum diisi —');
+      var po = plain(editLang === 'en' && !quiz ? row.en : row.id);
+      orig.textContent = changed ? 'Asli: ' + po.slice(0, 60) + (po.length > 60 ? '…' : '') : '';
+      reset.hidden = !changed;
+      if (details) badge(details, details.__rows || []);
     }
-    setState(); meta.appendChild(state); el.appendChild(meta);
-    var cols = document.createElement('div'); cols.className = 'row__cols';
-    var tid = field(row.q ? 'Teks' : 'Indonesia', v.id), ten = field('English', v.en);
-    cols.appendChild(tid.label);
-    if (row.q) cols.style.gridTemplateColumns = '1fr'; else cols.appendChild(ten.label);
-    el.appendChild(cols);
-    var foot = document.createElement('div'); foot.className = 'row__foot';
-    var orig = document.createElement('span');
-    var po = plain(row.id);
-    orig.textContent = 'Asli: ' + po.slice(0, 70) + (po.length > 70 ? '…' : '');
-    var reset = document.createElement('button'); reset.type = 'button'; reset.className = 'link'; reset.textContent = 'Kembalikan ke asli';
-    foot.appendChild(orig); foot.appendChild(reset); el.appendChild(foot);
-
-    function change() {
-      pending[row.k] = { id: tid.area.value, en: row.q ? '' : ten.area.value };
-      el.classList.add('is-dirty'); setState(); updateBar(); schedulePush();
-    }
-    tid.area.addEventListener('input', change);
-    ten.area.addEventListener('input', change);
-    tid.area.addEventListener('focus', function () { focusPreview(row, 'id'); });
-    ten.area.addEventListener('focus', function () { focusPreview(row, 'en'); });
+    paint();
+    area.addEventListener('input', function () {
+      var cur = Object.assign({}, valueOf(row));
+      if (quiz) { cur.id = area.value; cur.en = ''; } else cur[editLang] = area.value;
+      pending[row.k] = cur;
+      paint(); updateBar(); schedulePush();
+    });
+    area.addEventListener('focus', function () { focusPreview(row); });
     reset.addEventListener('click', function () {
       pending[row.k] = { id: row.id, en: row.en };
-      tid.area.value = row.id; ten.area.value = row.en;
-      el.classList.add('is-dirty'); setState(); updateBar(); schedulePush();
+      area.value = quiz ? row.id : row[editLang];
+      area.style.height = 'auto'; area.style.height = Math.min(220, area.scrollHeight + 2) + 'px';
+      paint(); updateBar(); schedulePush();
     });
     return el;
   }
+  /* pilih satu teks dari pratinjau: buka kelompoknya, gulir, fokus */
+  function selectRow(k) {
+    var go = function () {
+      var el = $('.js-rows [data-k="' + k + '"]');
+      if (!el) return false;
+      var d = el.closest('details'); if (d) d.open = true;
+      el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash');
+      var ta = el.querySelector('textarea'); if (ta) ta.focus({ preventScroll: true });
+      return true;
+    };
+    if (go()) return;
+    if ($('.js-q').value || $('.js-only').checked) { $('.js-q').value = ''; $('.js-only').checked = false; renderRows(k); setTimeout(go, 350); }
+  }
+  function setEditLang(l) {
+    editLang = l;
+    $$('[data-el]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.el === l); });
+    setPreviewLang(l);
+    renderRows();
+  }
+  $$('[data-el]').forEach(function (b) { b.addEventListener('click', function () { if (b.dataset.el !== editLang) setEditLang(b.dataset.el); }); });
+  $('.js-guide-x').addEventListener('click', function () { $('.js-guide').hidden = true; try { localStorage.setItem('elv-admin-guide', '1'); } catch (e) { /* abaikan */ } });
+  try { if (localStorage.getItem('elv-admin-guide')) $('.js-guide').hidden = true; } catch (e) { /* abaikan */ }
   $('.js-page').addEventListener('change', function (e) { location.hash = '#teks/' + e.target.value; });
   var qTimer;
   $('.js-q').addEventListener('input', function () { clearTimeout(qTimer); qTimer = setTimeout(renderRows, 200); });
@@ -405,22 +479,42 @@
   function setPreviewLang(l) {
     previewLang = l;
     $$('[data-pl]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.pl === l); });
+    $$('[data-el]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.el === l); });
+    if (view === 'teks' && editLang !== l) { editLang = l; renderRows(); }
     try {
       var b = frame.contentDocument.querySelector('.lang__btn[data-lang="' + l + '"]');
       if (b && !b.classList.contains('is-active')) b.click();
       pushDraft();
     } catch (e) { /* belum siap */ }
   }
-  function focusPreview(row, lang) {
+  function focusPreview(row) {
     if (row.q) return;
-    setPreviewLang(lang);
     try { frame.contentWindow.ELV_CONTENT.locate(row.k); } catch (e) { /* abaikan */ }
   }
+  /* klik teks langsung di pratinjau → pilih kotak editnya; tautan dimatikan agar pratinjau tidak pindah halaman */
+  function wirePreview() {
+    try {
+      var d = frame.contentDocument;
+      if (d.__elvWired) return;
+      d.__elvWired = true;
+      var st = d.createElement('style');
+      st.textContent = '[data-ck]{cursor:pointer}[data-ck]:hover{outline:2px dashed #e8496a;outline-offset:3px;border-radius:4px}';
+      d.head.appendChild(st);
+      d.addEventListener('click', function (e) {
+        var t = e.target.closest ? e.target : e.target.parentElement;
+        var hit = t.closest('[data-ck]');
+        if (hit) { e.preventDefault(); e.stopPropagation(); selectRow(hit.getAttribute('data-ck')); return; }
+        var a = t.closest('a[href]');
+        if (a && !/^#/.test(a.getAttribute('href'))) { e.preventDefault(); toast('Tautan dimatikan di pratinjau. Pilih halaman lain lewat daftar di kiri.'); }
+      }, true);
+    } catch (err) { /* abaikan */ }
+  }
   frame.addEventListener('load', function () {
+    wirePreview();
     fitFrame();
     fw.classList.add('is-ready');
     pushDraft();
-    if (previewLang === 'en') setPreviewLang('en');
+    if (previewLang !== 'id') setPreviewLang(previewLang);
   });
   $$('[data-pl]').forEach(function (b) { b.addEventListener('click', function () { setPreviewLang(b.dataset.pl); }); });
   $$('[data-pd]').forEach(function (b) {
