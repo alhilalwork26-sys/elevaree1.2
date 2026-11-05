@@ -42,8 +42,31 @@
     return t.innerHTML;
   }
 
+  /* ---- teks yang dibuat oleh skrip ({id, en} dan soal tes level) ---- */
+  var store = {};
+  var memo = new WeakMap();
+  function plain(html) { var d = document.createElement('div'); d.innerHTML = clean(html); return d.textContent; }
+  /* Teks asli yang memuat markup tetap boleh memuat markup; selain itu hanya teks biasa. */
+  function fit(orig, next) { return /[<&]/.test(orig) ? clean(next) : plain(next); }
+  function ov(o) {
+    if (!o || typeof o !== 'object' || typeof o.id !== 'string') return o;
+    var hit = store[hash(norm(o.id))];
+    if (!hit) return o;
+    var m = memo.get(o);
+    if (m && m.src === hit) return m.out;
+    var out = { id: hit.id ? fit(o.id, hit.id) : o.id, en: hit.en ? fit(o.en || '', hit.en) : o.en };
+    memo.set(o, { src: hit, out: out });
+    return out;
+  }
+  function ovq(str) {
+    if (typeof str !== 'string') return str;
+    var hit = store['q' + hash(norm(str))];
+    return hit && hit.id ? plain(hit.id) : str;
+  }
+
   function applyText(content) {
     if (!content) return;
+    store = content;
     var en = document.documentElement.lang === 'en';
     Array.prototype.forEach.call(document.querySelectorAll('[data-en]'), function (el) {
       var o = content[keyOf(el)];
@@ -79,7 +102,7 @@
   var cached = read();
   if (cached) { applySettings(cached.settings); applyText(cached.content); }
 
-  window.ELV_CONTENT = { hash: hash, norm: norm, clean: clean, keyOf: keyOf, cache: write };
+  window.ELV_CONTENT = { hash: hash, norm: norm, clean: clean, keyOf: keyOf, cache: write, ov: ov, ovq: ovq };
 
   if (!C.formEndpoint) return;
   var ctrl = window.AbortController ? new AbortController() : null;
@@ -95,6 +118,7 @@
       if (!changed) return;
       applySettings(fresh.settings);
       applyText(fresh.content);
+      window.dispatchEvent(new Event('elv:content')); // gambar ulang teks buatan skrip
       window.dispatchEvent(new Event('elv:seats')); // gambar ulang harga & gelombang
     })
     .catch(function () { clearTimeout(timer); });

@@ -125,7 +125,7 @@
   const day = (d, lang = 'id') => `${d.getDate()} ${MONTHS[lang][d.getMonth()]}`;
   const range = (b, lang = 'id') => `${day(b.start, lang)} – ${day(b.end, lang)} ${b.end.getFullYear()}`;
   const timeLabel = (s) => `${s.start.replace(':', '.')}–${s.end.replace(':', '.')}`;
-  const tt = (o, lang) => (o == null ? '' : typeof o === 'string' ? o : o[lang] || o.id);
+  const tt = (o, lang) => (o == null ? '' : typeof o === 'string' ? o : ((o = window.ELV_CONTENT ? window.ELV_CONTENT.ov(o) : o), o[lang] || o.id));
 
   window.ELV_BATCH = {
     all, forProgram, next, find, slots: slotsOf, loadSeats,

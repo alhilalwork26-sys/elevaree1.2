@@ -9,7 +9,8 @@
     set: (k, v) => { try { localStorage.setItem(k, v); } catch (e) { /* abaikan */ } },
   };
   let lang = document.documentElement.lang === 'en' ? 'en' : 'id';
-  const t = (o) => (typeof o === 'string' ? o : o[lang] || o.id);
+  const ovr = (o) => (window.ELV_CONTENT ? window.ELV_CONTENT.ov(o) : o);
+  const t = (o) => (typeof o === 'string' ? o : ((o = ovr(o)), o[lang] || o.id));
 
   /* =========================================================
      PENGATURAN — isi dua hal ini sebelum website dipublikasikan
@@ -1005,6 +1006,7 @@
   renderBatches();
   renderPrices();
   window.addEventListener('elv:seats', () => { renderBatches(); renderPrices(); });
+  window.addEventListener('elv:content', () => { renderCatalog(currentCat, false); renderJourney(activeStep, false); renderRelated(); });
   // banner program: kuota maksimum per kelas diambil dari jadwal di config.js
   $$('[data-capacity]').forEach((el) => {
     const caps = (window.ELV_BATCH ? ELV_BATCH.slots(el.dataset.capacity) : []).map((c) => c.capacity);

@@ -18,7 +18,13 @@
     ['kebijakan-privasi.html', 'Kebijakan privasi'],
     ['syarat-ketentuan.html', 'Syarat & ketentuan'],
     ['404.html', 'Halaman 404'],
+    ['js:main.js', 'Beranda — teks dinamis (katalog, journey, dll.)'],
+    ['js:daftar.js', 'Pendaftaran — teks dinamis (langkah, ringkasan, pesan)'],
+    ['js:tes-level.js', 'Tes level — teks dinamis (hasil, level, rekomendasi)'],
+    ['quiz:tes-level.js', 'Tes level — soal & pilihan jawaban'],
+    ['js:config.js', 'Catatan libur / gelombang'],
   ];
+  var STR = "'(?:[^'\\\\\\n]|\\\\.)*'|\"(?:[^\"\\\\\\n]|\\\\.)*\"";
   var PRICE_LABELS = { kids: 'English for Kids', teens: 'English for Teens', general: 'General English', ielts: 'IELTS & TOEFL Prep', business: 'Business English' };
   var ERRORS = {
     auth: 'Kata sandi salah.',
@@ -106,7 +112,34 @@
     if (c.id) return '#' + c.id;
     return (c.className && String(c.className).split(' ')[0]) || c.tagName.toLowerCase();
   }
+  function unq(lit) {
+    return lit.slice(1, -1).replace(/\\(u[0-9a-fA-F]{4}|x[0-9a-fA-F]{2}|[\s\S])/g, function (m, c) {
+      if (c[0] === 'u' && c.length === 5) return String.fromCharCode(parseInt(c.slice(1), 16));
+      if (c[0] === 'x' && c.length === 3) return String.fromCharCode(parseInt(c.slice(1), 16));
+      return c === 'n' ? '\n' : c === 't' ? '\t' : c;
+    });
+  }
+  function scanJs(file, quiz) {
+    if (pageCache[file]) return Promise.resolve(pageCache[file]);
+    return fetch(file.replace(/^(js|quiz):/, 'js/') + '?t=' + Date.now()).then(function (r) { return r.text(); }).then(function (src) {
+      var seen = {}, rows = [], m, re;
+      function add(k, id, en, ctx, q) { if (seen[k] || !H.norm(id)) return; seen[k] = 1; rows.push({ k: k, id: id, en: en, ctx: ctx, q: q }); }
+      if (!quiz) {
+        re = new RegExp('\\{\\s*id:\\s*(' + STR + ')\\s*,\\s*en:\\s*(' + STR + ')\\s*\\}', 'g');
+        while ((m = re.exec(src))) { var id = unq(m[1]); add(H.hash(H.norm(id)), id, unq(m[2]), 'Skrip', false); }
+      } else {
+        var one = new RegExp('\\b[qp]:\\s*(' + STR + ')', 'g');
+        while ((m = one.exec(src))) { var q = unq(m[1]); add('q' + H.hash(H.norm(q)), q, '', 'Soal / bacaan', true); }
+        var arr = /\bo:\s*\[([^\]]*)\]/g, lit = new RegExp(STR, 'g'), a, b;
+        while ((a = arr.exec(src))) { lit.lastIndex = 0; while ((b = lit.exec(a[1]))) { var o = unq(b[0]); add('q' + H.hash(H.norm(o)), o, '', 'Pilihan jawaban', true); } }
+      }
+      pageCache[file] = rows;
+      return rows;
+    });
+  }
   function scan(file) {
+    if (/^js:/.test(file)) return scanJs(file, false);
+    if (/^quiz:/.test(file)) return scanJs(file, true);
     if (pageCache[file]) return Promise.resolve(pageCache[file]);
     return fetch(file + '?t=' + Date.now()).then(function (r) { return r.text(); }).then(function (html) {
       var doc = new DOMParser().parseFromString(html, 'text/html');
@@ -160,8 +193,9 @@
     el.appendChild(meta);
     var cols = document.createElement('div');
     cols.className = 'row__cols';
-    var tid = field('Indonesia', v.id), ten = field('English', v.en);
-    cols.appendChild(tid.label); cols.appendChild(ten.label);
+    var tid = field(row.q ? 'Teks' : 'Indonesia', v.id), ten = field('English', v.en);
+    cols.appendChild(tid.label);
+    if (row.q) cols.style.gridTemplateColumns = '1fr'; else cols.appendChild(ten.label);
     el.appendChild(cols);
     var foot = document.createElement('div');
     foot.className = 'row__foot';
@@ -173,7 +207,7 @@
     el.appendChild(foot);
 
     function change() {
-      pending[row.k] = { id: tid.area.value, en: ten.area.value };
+      pending[row.k] = { id: tid.area.value, en: row.q ? '' : ten.area.value };
       el.classList.add('is-dirty');
       updateBar();
     }
@@ -275,7 +309,7 @@
     Object.keys(pending).forEach(function (k) {
       var o = originalOf(k), v = pending[k];
       if (!v.id.trim() && !v.en.trim()) return;
-      changes[k] = (o && v.id === o.id && v.en === o.en) ? null : { id: v.id, en: v.en };
+      changes[k] = (o && v.id === o.id && (o.q || v.en === o.en)) ? null : { id: v.id, en: v.en };
       n++;
     });
     var settings = settingsDirty ? collectSettings() : null;

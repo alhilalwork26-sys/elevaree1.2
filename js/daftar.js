@@ -12,7 +12,8 @@
     raw(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } return null; },
   };
   let lang = document.documentElement.lang === 'en' ? 'en' : 'id';
-  const t = (o) => (o == null ? '' : typeof o === 'string' ? o : o[lang] || o.id);
+  const ovr = (o) => (window.ELV_CONTENT ? window.ELV_CONTENT.ov(o) : o);
+  const t = (o) => (o == null ? '' : typeof o === 'string' ? o : ((o = ovr(o)), o[lang] || o.id));
   const fmt = (n) => 'Rp' + Math.round(n).toLocaleString('id-ID');
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 

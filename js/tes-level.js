@@ -12,7 +12,8 @@
     raw(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } return null; },
   };
   let lang = document.documentElement.lang === 'en' ? 'en' : 'id';
-  const t = (o) => (o == null ? '' : typeof o === 'string' ? o : o[lang] || o.id);
+  const ovr = (o) => (window.ELV_CONTENT ? window.ELV_CONTENT.ov(o) : o);
+  const t = (o) => (o == null ? '' : typeof o === 'string' ? o : ((o = ovr(o)), o[lang] || o.id));
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
   /* ---------- Bank soal ----------
@@ -198,11 +199,12 @@
   }
 
   /* ---------- Soal ---------- */
+  const ovq = (x) => (window.ELV_CONTENT ? window.ELV_CONTENT.ovq(x) : x);
   function buildQuiz() {
     const bank = isKids() ? BANK_KIDS : BANK_ADULT;
     state.quiz = bank.map((q) => {
-      const opts = shuffle(q.o.map((text, idx) => ({ text, ok: idx === q.a })));
-      return { l: q.l, s: q.s, p: q.p, q: q.q, opts };
+      const opts = shuffle(q.o.map((text, idx) => ({ text: ovq(text), ok: idx === q.a })));
+      return { l: q.l, s: q.s, p: ovq(q.p), q: ovq(q.q), opts };
     });
     state.i = 0; state.picked = null; state.answers = [];
   }
