@@ -54,12 +54,12 @@
       <section class="reg-step lv-view" data-view="intro" aria-labelledby="lv-h-intro">
         <p class="reg-eyebrow"><span>CEFR</span> <span data-en="Free level test">Tes level gratis</span></p>
         <h1 class="reg-title" id="lv-h-intro" data-en="What's your English level?">Seberapa jauh bahasa Inggrismu?</h1>
-        <p class="reg-sub" data-en="Answer a few short questions. You'll get your level (A1–C1) and the programme that fits you best. No sign-up needed.">Jawab beberapa soal singkat. Kamu akan tahu levelmu (A1–C1) dan program yang paling cocok. Tanpa daftar akun.</p>
+        <p class="reg-sub" data-en="Answer a few short questions. You'll get your level (A1–C1) and the programme that fits you best. You'll fill in a few details first.">Jawab beberapa soal singkat. Kamu akan tahu levelmu (A1–C1) dan program yang paling cocok. Sebelum mulai, kamu mengisi data diri singkat.</p>
 
         <ul class="lv-meta">
           <li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg><span class="js-meta-time">±5 menit</span></li>
           <li><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg><span class="js-meta-q">20 soal</span></li>
-          <li><svg viewBox="0 0 24 24"><path d="M12 2.5 19.5 6v5.5c0 4.6-3.2 8.6-7.5 10-4.3-1.4-7.5-5.4-7.5-10V6z"/><path d="m9 12 2 2 4-4"/></svg><span data-en="Free, nothing is saved on our server">Gratis, tidak disimpan di server kami</span></li>
+          <li><svg viewBox="0 0 24 24"><path d="M12 2.5 19.5 6v5.5c0 4.6-3.2 8.6-7.5 10-4.3-1.4-7.5-5.4-7.5-10V6z"/><path d="m9 12 2 2 4-4"/></svg><span data-en="Free · your details are used to send your result and programme info">Gratis · data dipakai untuk mengirim hasil &amp; info program</span></li>
         </ul>
 
         <fieldset class="reg-field">
@@ -81,10 +81,88 @@
         </div>
       </section>
 
-      <!-- 2. SOAL -->
+
+      <!-- 2. DATA DIRI -->
+      <section class="reg-step lv-view" data-view="data" aria-labelledby="lv-h-data" hidden>
+        <p class="reg-eyebrow"><span>2</span> <span data-en="Your details">Data diri</span></p>
+        <h1 class="reg-title" id="lv-h-data" tabindex="-1" data-en="Before we start, tell us about you">Sebelum mulai, isi data dirimu</h1>
+        <p class="reg-sub" data-en="We use it to send your result and suggest the right class. Please use your real details.">Data ini dipakai untuk mengirim hasil dan merekomendasikan kelas yang pas. Isi dengan data yang benar ya.</p>
+
+        <form class="reg-form js-lead-form" novalidate>
+          <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <div class="ufield">
+            <input id="l-name" name="name" type="text" autocomplete="name" placeholder=" " maxlength="60" required />
+            <label for="l-name" class="js-l-namelab" data-en="Full name">Nama lengkap</label>
+            <small class="err" aria-live="polite"></small>
+          </div>
+          <div class="urow js-kid-only" hidden>
+            <div class="ufield">
+              <input id="l-child" name="child" type="text" placeholder=" " maxlength="60" />
+              <label for="l-child" data-en="Child's name">Nama anak</label>
+              <small class="err" aria-live="polite"></small>
+            </div>
+            <div class="ufield ufield--sm">
+              <input id="l-age" name="age" type="number" inputmode="numeric" min="7" max="12" placeholder=" " />
+              <label for="l-age" data-en="Age">Usia</label>
+              <small class="err" aria-live="polite"></small>
+            </div>
+          </div>
+          <div class="urow">
+            <div class="ufield">
+              <input id="l-wa" name="wa" type="tel" inputmode="tel" autocomplete="tel" placeholder=" " maxlength="20" required />
+              <label for="l-wa" data-en="WhatsApp number">Nomor WhatsApp</label>
+              <small class="err" aria-live="polite"></small>
+            </div>
+            <div class="ufield">
+              <input id="l-email" name="email" type="email" autocomplete="email" placeholder=" " maxlength="100" required />
+              <label for="l-email">Email</label>
+              <small class="err" aria-live="polite"></small>
+            </div>
+          </div>
+          <div class="urow">
+            <div class="ufield">
+              <input id="l-city" name="city" type="text" autocomplete="address-level2" placeholder=" " maxlength="60" />
+              <label for="l-city"><span data-en="City">Kota</span> <em data-en="(optional)">(opsional)</em></label>
+            </div>
+            <div class="ufield ufield--sel">
+              <select id="l-source" name="source" aria-label="Dari mana kamu tahu Elevaree?">
+                <option value="" data-en="How did you hear about us? (optional)">Tahu Elevaree dari mana? (opsional)</option>
+                <option value="instagram">Instagram</option>
+                <option value="tiktok">TikTok</option>
+                <option value="teman" data-en="Friend / family">Teman / keluarga</option>
+                <option value="google">Google</option>
+                <option value="whatsapp">WhatsApp</option>
+                <option value="lainnya" data-en="Other">Lainnya</option>
+              </select>
+            </div>
+          </div>
+
+          <label class="lv-consent">
+            <input type="checkbox" name="consent" />
+            <span><span data-en="I agree that Elevaree may store my details and contact me via WhatsApp or email about my result and learning programmes. I can ask to stop at any time.">Saya setuju Elevaree menyimpan data saya dan menghubungi saya lewat WhatsApp atau email terkait hasil tes dan program belajar. Saya bisa meminta berhenti kapan saja.</span> <a href="kebijakan-privasi.html" target="_blank" rel="noopener" data-en="Privacy Policy">Kebijakan Privasi</a></span>
+          </label>
+          <small class="err js-consent-err" aria-live="polite"></small>
+
+          <div class="lv-rules" role="note">
+            <h2 data-en="Test rules">Aturan tes</h2>
+            <ul class="js-rules"></ul>
+          </div>
+
+          <div class="lv-nav">
+            <button type="button" class="btn btn--outline js-data-back"><span data-en="Back">Kembali</span></button>
+            <button type="submit" class="btn btn--maroon js-data-go">
+              <span data-en="Start the test">Mulai tes</span>
+              <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- 3. SOAL -->
       <section class="reg-step lv-view" data-view="quiz" aria-labelledby="lv-q" hidden>
         <div class="lv-qhead">
           <span class="lv-badge js-skill"></span>
+          <span class="lv-timer js-timer" role="timer" aria-live="off" hidden></span>
           <span class="lv-qn js-qn"></span>
         </div>
         <div class="lv-passage js-passage" hidden></div>
@@ -99,7 +177,7 @@
         </div>
       </section>
 
-      <!-- 3. HASIL -->
+      <!-- 4. HASIL -->
       <section class="reg-step lv-view" data-view="result" aria-labelledby="lv-h-res" hidden>
         <p class="reg-eyebrow"><span>✓</span> <span data-en="Your result">Hasil tes kamu</span></p>
         <div class="lv-hero">
@@ -124,8 +202,28 @@
         <p class="reg-note" data-en="This is an indicative placement, not an official certificate. Your teacher will confirm your level in the first session.">Ini hasil penempatan awal, bukan sertifikat resmi. Tutor akan memastikan levelmu di pertemuan pertama.</p>
       </section>
 
+
+      <!-- TES DIHENTIKAN -->
+      <section class="reg-step lv-view" data-view="stopped" aria-labelledby="lv-h-stop" hidden>
+        <p class="reg-eyebrow"><span>!</span> <span data-en="Test stopped">Tes dihentikan</span></p>
+        <h1 class="reg-title" id="lv-h-stop" tabindex="-1"></h1>
+        <p class="reg-sub js-stop-desc"></p>
+        <div class="lv-actions">
+          <a href="#" class="btn btn--maroon btn--sm js-stop-wa"><span data-en="Contact us on WhatsApp">Hubungi kami via WhatsApp</span></a>
+          <a href="index.html" class="btn btn--outline btn--sm"><span data-en="Back to home">Kembali ke beranda</span></a>
+        </div>
+      </section>
+
     </div>
   </main>
+
+  <div class="lv-modal" role="alertdialog" aria-modal="true" aria-labelledby="lv-m-t" hidden>
+    <div class="lv-modal__card">
+      <h2 id="lv-m-t"></h2>
+      <p class="js-m-body"></p>
+      <button type="button" class="btn btn--maroon js-m-ok"></button>
+    </div>
+  </div>
 
   <div class="toast" role="status" aria-live="polite"></div>
 

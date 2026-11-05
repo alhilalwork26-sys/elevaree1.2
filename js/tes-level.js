@@ -118,6 +118,42 @@
     waMsg: { id: 'Halo Elevaree! Hasil tes level saya: {code} ({name}), skor {n}/{t}. Rekomendasi: {prog}. Saya ingin konsultasi jadwal dan program yang cocok.', en: 'Hi Elevaree! My level test result: {code} ({name}), score {n}/{t}. Recommended: {prog}. I would like advice on the right schedule and programme.' },
   };
 
+  /* ---------- Mode ketat & data diri ---------- */
+  const ST = Object.assign({ strict: true, blockPaste: true, maxWarnings: 3, minutesAdult: 15, minutesKids: 8, cooldownHours: 24 }, C.levelTest || {});
+  const cooldownMs = C.formEndpoint ? (Number(ST.cooldownHours) || 0) * 3600e3 : 0; // mode demo: tanpa jeda
+  const LT = {
+    nameParent: { id: 'Nama orang tua / wali', en: "Parent's / guardian's name" },
+    nameFull: { id: 'Nama lengkap', en: 'Full name' },
+    eName: { id: 'Tulis nama lengkap dengan huruf (min. 3 karakter).', en: 'Enter your full name using letters (min. 3 characters).' },
+    eChild: { id: 'Tulis nama anak.', en: "Enter your child's name." },
+    eAge: { id: 'Usia anak 7–12 tahun.', en: 'Child age must be 7–12.' },
+    eWa: { id: 'Nomor WhatsApp tidak valid. Contoh: 0812 3456 7890.', en: 'Invalid WhatsApp number. Example: 0812 3456 7890.' },
+    eEmail: { id: 'Alamat email tidak valid.', en: 'Invalid email address.' },
+    eConsent: { id: 'Centang persetujuan untuk melanjutkan.', en: 'Please tick the consent box to continue.' },
+    blocked: { id: 'Copy-paste & salin teks dimatikan selama tes.', en: 'Copy, paste and text selection are disabled during the test.' },
+    rulesTitle: { id: 'Aturan tes', en: 'Test rules' },
+    ruleTime: { id: 'Waktu {m} menit. Hitung mundur berjalan dan tes berhenti otomatis saat waktu habis.', en: '{m} minutes. The countdown runs and the test ends automatically when time is up.' },
+    ruleNoBack: { id: 'Satu soal sekali jawab, tidak bisa kembali ke soal sebelumnya.', en: 'One try per question, no going back.' },
+    ruleTab: { id: 'Jangan pindah tab atau jendela. Peringatan ke-{n} menghentikan tes.', en: "Don't switch tabs or windows. Warning {n} ends the test." },
+    ruleCopy: { id: 'Copy, paste, klik kanan, dan cetak dimatikan.', en: 'Copy, paste, right-click and printing are disabled.' },
+    ruleReload: { id: 'Memuat ulang atau menutup halaman akan menghentikan tes.', en: 'Reloading or closing the page ends the test.' },
+    ruleOnce: { id: 'Tes bisa diulang lagi setelah {h} jam.', en: 'You can retake the test after {h} hours.' },
+    warnT: { id: 'Peringatan {n} dari {m}', en: 'Warning {n} of {m}' },
+    warnB: { id: 'Kamu meninggalkan halaman tes. Jika terjadi {m} kali, tes dihentikan.', en: 'You left the test page. If this happens {m} times, the test will end.' },
+    warnOk: { id: 'Lanjutkan tes', en: 'Continue the test' },
+    stopLeft: { id: 'Tes dihentikan', en: 'Test stopped' },
+    stopLeftD: { id: 'Kamu meninggalkan halaman tes terlalu sering, jadi tes dihentikan agar penilaian tetap adil. Hubungi kami jika ada kendala.', en: 'You left the test page too often, so the test was stopped to keep it fair. Contact us if you ran into a problem.' },
+    stopReload: { id: 'Tes dihentikan', en: 'Test stopped' },
+    stopReloadD: { id: 'Halaman dimuat ulang saat tes berjalan, jadi tes dihentikan. Hubungi kami jika ada kendala.', en: 'The page was reloaded during the test, so the test was stopped. Contact us if you ran into a problem.' },
+    locked: { id: 'Kamu sudah mengerjakan tes. Tes berikutnya bisa dikerjakan lagi dalam {h} jam.', en: 'You have already taken the test. You can take it again in {h} hours.' },
+    iam: { id: 'Saya', en: "I'm" },
+    stopWa: { id: 'Halo Elevaree! Tes level saya terhenti. Bisa dibantu?', en: 'Hi Elevaree! My level test stopped. Could you help?' },
+    timeUp: { id: 'Waktu habis, jawabanmu dinilai.', en: "Time's up, scoring your answers." },
+  };
+  const lead = { current: store.get('elv-lead') || null };
+  let warns = 0, lastWarn = 0, tick = null, runId = '';
+  const strictView = () => ST.strict && (state.view === 'data' || state.view === 'quiz');
+
   /* ---------- State ---------- */
   const state = { aud: '', goal: '', quiz: [], i: 0, picked: null, answers: [], view: 'intro' };
   const views = $$('.lv-view');
@@ -157,6 +193,7 @@
     const enter = () => {
       views.forEach((v) => { v.hidden = v !== target; v.classList.remove('is-in-right', 'is-in-left', 'is-out'); });
       state.view = name;
+      document.body.classList.toggle('is-strict', strictView());
       void target.offsetWidth;
       target.classList.add(dir < 0 ? 'is-in-left' : 'is-in-right');
       window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
@@ -169,11 +206,12 @@
 
   function setProgress() {
     const bar = $('.reg-progress span');
-    const f = state.view === 'intro' ? 0.03 : state.view === 'quiz' ? (state.i + (state.picked != null ? 1 : 0.4)) / state.quiz.length : 1;
+    const f = state.view === 'intro' ? 0.03 : state.view === 'data' ? 0.1 : state.view === 'quiz' ? (state.i + (state.picked != null ? 1 : 0.4)) / state.quiz.length : 1;
     bar.style.setProperty('--progress', Math.min(1, f));
     const count = $('.js-count');
     if (state.view === 'quiz') count.innerHTML = `<b>${state.i + 1}</b> / ${state.quiz.length}`;
     else if (state.view === 'result') count.innerHTML = `<span>${lang === 'en' ? 'Result' : 'Hasil'}</span>`;
+    else if (state.view === 'data') count.innerHTML = `<span>${lang === 'en' ? 'Your details' : 'Data diri'}</span>`;
     else count.innerHTML = `<span>${lang === 'en' ? 'Level test' : 'Tes level'}</span>`;
   }
 
@@ -193,9 +231,10 @@
     const n = isKids() ? BANK_KIDS.length : BANK_ADULT.length;
     $('.js-meta-q').textContent = `${state.aud ? n : BANK_ADULT.length} ${t(TX.qUnit)}`;
     $('.js-meta-time').textContent = t(isKids() ? TX.timeKids : TX.timeAdult);
-    const ready = !!state.aud && (isKids() || !!state.goal);
+    const lockH = lockHours();
+    const ready = !!state.aud && (isKids() || !!state.goal) && !lockH;
     $('.js-start').disabled = !ready;
-    $('.js-start-hint').textContent = ready ? t(TX.hintReady) : t(state.aud ? TX.hintGoal : TX.hintAud);
+    $('.js-start-hint').textContent = lockH ? t(LT.locked).replace('{h}', lockH) : ready ? t(TX.hintReady) : t(state.aud ? TX.hintGoal : TX.hintAud);
   }
 
   /* ---------- Soal ---------- */
@@ -228,13 +267,14 @@
     $('.js-next').disabled = state.picked == null;
   }
   function pick(n) {
+    if (state.view !== 'quiz') return;
     state.picked = n;
     $$('.lv-opt').forEach((b) => { const on = +b.dataset.n === n; b.classList.toggle('is-on', on); b.setAttribute('aria-checked', on); });
     $('.js-next').disabled = false;
     setProgress();
   }
   function advance() {
-    if (state.picked == null) return;
+    if (state.view !== 'quiz' || state.picked == null) return;
     const q = state.quiz[state.i];
     const o = q.opts[state.picked];
     state.answers.push({ l: q.l, s: q.s, ok: !!(o && o.ok), idk: !o });
@@ -274,12 +314,15 @@
     return { prog: 'general' };
   }
   let result = null;
-  function finish() {
+  function finish(reason) {
     const sc = score();
     const lv = (isKids() ? KID_LEVELS : LEVELS)[sc.idx];
     const rec = recommend(sc.idx);
     result = { ...sc, level: lv, rec };
     store.set('elv-level', { code: lv.code, name: lv.name.id, program: rec.prog, score: `${sc.right}/${sc.total}`, aud: state.aud, goal: state.goal, at: Date.now() });
+    endRun();
+    sendLead(reason === 'waktu' ? 'selesai (waktu habis)' : 'selesai', { level: lv.code, score: `${sc.right}/${sc.total}`, program: PROGS[rec.prog].title });
+    setLock();
     show('result');
   }
   function ringAnimate(frac) {
@@ -294,7 +337,8 @@
   }
   function waText() {
     const p = PROGS[result.rec.prog];
-    return t(TX.waMsg).replace('{code}', result.level.code).replace('{name}', t(result.level.name)).replace('{n}', result.right).replace('{t}', result.total).replace('{prog}', p.title);
+    const hi = lead.current ? ` ${t(LT.iam)} ${lead.current.name}.` : '';
+    return t(TX.waMsg).replace(/^(Halo Elevaree!|Hi Elevaree!)/, `$1${hi}`).replace('{code}', result.level.code).replace('{name}', t(result.level.name)).replace('{n}', result.right).replace('{t}', result.total).replace('{prog}', p.title);
   }
   function renderResult() {
     if (!result) return;
@@ -344,8 +388,209 @@
     if (state.view === 'intro') renderIntro();
     else if (state.view === 'quiz') renderQuiz();
     else if (state.view === 'result') renderResult();
+    else if (state.view === 'data') renderData();
+    else if (state.view === 'stopped') renderStopped();
     setProgress();
   }
+
+  /* ---------- Data diri ---------- */
+  const waNorm = (v) => {
+    let d = String(v).replace(/\D/g, '');
+    if (d.startsWith('0')) d = '62' + d.slice(1); else if (d.startsWith('8')) d = '62' + d;
+    return /^628\d{8,11}$/.test(d) ? d : '';
+  };
+  const lockHours = () => {
+    if (!cooldownMs) return 0;
+    const l = store.get('elv-lv-lock');
+    return l && l.until > Date.now() ? Math.ceil((l.until - Date.now()) / 3600e3) : 0;
+  };
+  const setLock = () => { if (cooldownMs) store.set('elv-lv-lock', { until: Date.now() + cooldownMs }); };
+
+  function renderData() {
+    const kids = isKids();
+    const form = $('.js-lead-form');
+    $('.js-l-namelab').textContent = t(kids ? LT.nameParent : LT.nameFull);
+    $('.js-kid-only').hidden = !kids;
+    const mins = kids ? ST.minutesKids : ST.minutesAdult;
+    const rules = [];
+    if (ST.strict) {
+      rules.push(t(LT.ruleTime).replace('{m}', mins), t(LT.ruleNoBack), t(LT.ruleTab).replace('{n}', ST.maxWarnings), t(LT.ruleCopy), t(LT.ruleReload));
+    } else rules.push(t(LT.ruleNoBack));
+    if (cooldownMs) rules.push(t(LT.ruleOnce).replace('{h}', ST.cooldownHours));
+    $('.js-rules').innerHTML = rules.map((r) => `<li>${esc(r)}</li>`).join('');
+    // isi awal dari kunjungan sebelumnya
+    const c = lead.current;
+    if (c && !form.dataset.filled) {
+      form.dataset.filled = '1';
+      form.elements.namedItem('name').value = c.name || ''; form.wa.value = c.waRaw || ''; form.email.value = c.email || ''; form.city.value = c.city || '';
+    }
+  }
+  function fieldErr(input, msg) {
+    const f = input.closest('.ufield');
+    if (!f) return;
+    f.classList.toggle('is-invalid', !!msg);
+    const e = $('.err', f); if (e) e.textContent = msg || '';
+  }
+  function validateLead() {
+    const f = $('.js-lead-form');
+    const kids = isKids();
+    let ok = true, first = null;
+    const bad = (input, msg) => { fieldErr(input, msg); if (msg) { ok = false; first = first || input; } };
+    const nameEl = f.elements.namedItem('name');
+    const name = nameEl.value.trim().replace(/\s+/g, ' ');
+    bad(nameEl, /^[\p{L}][\p{L} .'’-]{2,59}$/u.test(name) ? '' : t(LT.eName));
+    if (kids) {
+      const child = f.child.value.trim();
+      bad(f.child, /^[\p{L}][\p{L} .'’-]{1,59}$/u.test(child) ? '' : t(LT.eChild));
+      const age = Number(f.age.value);
+      bad(f.age, Number.isInteger(age) && age >= 7 && age <= 12 ? '' : t(LT.eAge));
+    }
+    const wa = waNorm(f.wa.value);
+    bad(f.wa, wa ? '' : t(LT.eWa));
+    const email = f.email.value.trim();
+    bad(f.email, /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) && email.length <= 100 ? '' : t(LT.eEmail));
+    const consent = f.consent.checked;
+    $('.lv-consent').classList.toggle('is-invalid', !consent);
+    $('.js-consent-err').textContent = consent ? '' : t(LT.eConsent);
+    if (!consent) { ok = false; first = first || f.consent; }
+    if (first) first.focus();
+    return ok ? { name, wa, waRaw: f.wa.value.trim(), email, city: f.city.value.trim(), source: f.source.value, child: kids ? f.child.value.trim() : '', age: kids ? String(f.age.value) : '' } : null;
+  }
+  function sendLead(status, extra = {}) {
+    const d = lead.current;
+    if (!d) return;
+    const body = new URLSearchParams({
+      type: 'level', id: d.id, status, name: d.name, child: d.child || '', age: d.age || '', wa: d.wa, email: d.email,
+      city: d.city || '', source: d.source || '', aud: state.aud, goal: state.goal || '', lang, warnings: String(warns), ...extra,
+    });
+    if (C.formEndpoint) { try { fetch(C.formEndpoint, { method: 'POST', mode: 'no-cors', body }); } catch (e) { /* abaikan */ } }
+    else { // mode demo: simpan salinan di browser ini
+      const all = store.get('elv-leads') || [];
+      const rec = Object.fromEntries(body); rec.at = new Date().toISOString();
+      const i = all.findIndex((x) => x.id === d.id);
+      if (i >= 0) all[i] = { ...all[i], ...rec }; else all.push(rec);
+      store.set('elv-leads', all.slice(-20));
+    }
+  }
+  $('.js-lead-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const f = e.target;
+    if (f.website && f.website.value) return; // kolom jebakan bot
+    if (lockHours()) return;
+    const d = validateLead();
+    if (!d) return;
+    d.aud = state.aud; d.goal = state.goal;
+    d.id = 'LV' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2, 5).toUpperCase();
+    lead.current = d;
+    store.set('elv-lead', d);
+    beginRun();
+  });
+  $$('.js-lead-form input, .js-lead-form select').forEach((el) => el.addEventListener('input', () => fieldErr(el, '')));
+
+  /* ---------- Tes berjalan: waktu, peringatan, penghentian ---------- */
+  function beginRun() {
+    warns = 0; lastWarn = 0;
+    runId = lead.current.id;
+    try { sessionStorage.setItem('elv-lv-run', runId); } catch (e) { /* abaikan */ }
+    sendLead('mulai');
+    buildQuiz();
+    startTimer();
+    show('quiz');
+  }
+  function endRun() {
+    clearInterval(tick); tick = null;
+    try { sessionStorage.removeItem('elv-lv-run'); } catch (e) { /* abaikan */ }
+    hideModal();
+    $('.js-timer').hidden = true;
+  }
+  function startTimer() {
+    clearInterval(tick);
+    if (!ST.strict) return;
+    state.deadline = Date.now() + (isKids() ? ST.minutesKids : ST.minutesAdult) * 60000;
+    tick = setInterval(updateTimer, 500);
+    updateTimer();
+  }
+  function updateTimer() {
+    const el = $('.js-timer');
+    const left = Math.max(0, state.deadline - Date.now());
+    const s = Math.ceil(left / 1000);
+    el.hidden = false;
+    el.textContent = `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
+    el.classList.toggle('is-low', s <= 60);
+    if (left <= 0 && state.view === 'quiz') timeUp();
+  }
+  function timeUp() {
+    clearInterval(tick); tick = null;
+    toast(t(LT.timeUp));
+    // jawaban yang sudah dipilih dihitung, sisanya dianggap tidak dijawab
+    if (state.picked != null) {
+      const q = state.quiz[state.i], o = q.opts[state.picked];
+      state.answers.push({ l: q.l, s: q.s, ok: !!(o && o.ok), idk: !o });
+      state.i++;
+    }
+    for (let i = state.answers.length; i < state.quiz.length; i++) { const q = state.quiz[i]; state.answers.push({ l: q.l, s: q.s, ok: false, idk: true }); }
+    state.picked = null;
+    finish('waktu');
+  }
+  function showModal(title, body) {
+    const m = $('.lv-modal');
+    $('#lv-m-t').textContent = title; $('.js-m-body').textContent = body; $('.js-m-ok').textContent = t(LT.warnOk);
+    m.hidden = false; $('.js-m-ok').focus();
+  }
+  function hideModal() { $('.lv-modal').hidden = true; }
+  function leftPage() {
+    if (!ST.strict || state.view !== 'quiz') return;
+    const now = Date.now();
+    if (now - lastWarn < 1200) return;
+    lastWarn = now;
+    warns++;
+    if (warns >= ST.maxWarnings) stopTest('left');
+    else showModal(t(LT.warnT).replace('{n}', warns).replace('{m}', ST.maxWarnings), t(LT.warnB).replace('{m}', ST.maxWarnings));
+  }
+  document.addEventListener('visibilitychange', () => { if (document.hidden) leftPage(); });
+  window.addEventListener('blur', leftPage);
+  window.addEventListener('beforeunload', (e) => { if (ST.strict && state.view === 'quiz') { e.preventDefault(); e.returnValue = ''; } });
+
+  let stopReason = 'left';
+  function stopTest(reason) {
+    stopReason = reason;
+    endRun();
+    sendLead('dihentikan', { reason: reason === 'reload' ? 'halaman dimuat ulang' : 'pindah tab/jendela' });
+    setLock();
+    show('stopped');
+  }
+  function renderStopped() {
+    const reload = stopReason === 'reload';
+    $('#lv-h-stop').textContent = t(reload ? LT.stopReload : LT.stopLeft);
+    $('.js-stop-desc').textContent = t(reload ? LT.stopReloadD : LT.stopLeftD);
+    $('.js-stop-wa').href = `https://wa.me/${C.waNumber || ''}?text=${encodeURIComponent(t(LT.stopWa))}`;
+  }
+
+  /* ---------- Pembatasan salin / tempel ---------- */
+  let lastNote = 0;
+  const blockedNote = () => { const n = Date.now(); if (n - lastNote > 2500) { lastNote = n; toast(t(LT.blocked)); } };
+  ['copy', 'cut', 'paste', 'dragstart', 'drop', 'contextmenu'].forEach((ev) => document.addEventListener(ev, (e) => {
+    if (!strictView()) return;
+    if (ev === 'paste' && !ST.blockPaste && state.view === 'data') return;
+    e.preventDefault(); blockedNote();
+  }, true));
+  document.addEventListener('selectstart', (e) => {
+    if (!strictView()) return;
+    const n = e.target.nodeType === 3 ? e.target.parentElement : e.target;
+    if (!n || !n.closest('input, textarea, select')) e.preventDefault();
+  }, true);
+  document.addEventListener('keydown', (e) => {
+    if (!strictView()) return;
+    const k = (e.key || '').toLowerCase();
+    const inField = e.target.closest && e.target.closest('input, textarea');
+    const mod = e.ctrlKey || e.metaKey;
+    if ((mod && ['c', 'x', 'p', 's', 'u'].includes(k)) || (mod && k === 'v' && (ST.blockPaste || state.view === 'quiz')) || (mod && k === 'a' && !inField) || (e.shiftKey && k === 'insert')) {
+      e.preventDefault(); blockedNote();
+    }
+  }, true);
+  document.addEventListener('keyup', (e) => {
+    if (strictView() && e.key === 'PrintScreen') { try { navigator.clipboard.writeText(''); } catch (err) { /* abaikan */ } }
+  });
 
   /* ---------- Interaksi ---------- */
   document.addEventListener('click', (e) => {
@@ -353,7 +598,9 @@
     if (a) { state.aud = a.dataset.key; if (isKids()) state.goal = ''; renderIntro(); return; }
     const g = e.target.closest('.js-goal .lv-choice');
     if (g) { state.goal = g.dataset.key; renderIntro(); return; }
-    if (e.target.closest('.js-start')) { buildQuiz(); show('quiz'); return; }
+    if (e.target.closest('.js-start')) { if (!lockHours()) show('data'); return; }
+    if (e.target.closest('.js-data-back')) { show('intro', -1); return; }
+    if (e.target.closest('.js-m-ok')) { hideModal(); return; }
     const o = e.target.closest('.lv-opt');
     if (o) { pick(+o.dataset.n); return; }
     if (e.target.closest('.js-next')) { advance(); return; }
@@ -370,5 +617,19 @@
   /* ---------- Mulai ---------- */
   const params = new URLSearchParams(location.search);
   if (params.get('untuk') === 'anak' || params.get('for') === 'kids') state.aud = 'kids';
+  // halaman dimuat ulang saat tes berjalan -> tes dihentikan
+  let interrupted = null;
+  try { interrupted = ST.strict ? sessionStorage.getItem('elv-lv-run') : null; } catch (e) { /* abaikan */ }
+  if (interrupted) {
+    try { sessionStorage.removeItem('elv-lv-run'); } catch (e) { /* abaikan */ }
+    if (lead.current && lead.current.id === interrupted) {
+      state.aud = lead.current.aud || (lead.current.child ? 'kids' : ''); state.goal = lead.current.goal || '';
+      stopReason = 'reload';
+      sendLead('dihentikan', { reason: 'halaman dimuat ulang' });
+      setLock();
+      state.view = 'stopped';
+      views.forEach((v) => { v.hidden = v.dataset.view !== 'stopped'; });
+    }
+  }
   if (lang === 'en') applyLang('en'); else renderAll();
 })();

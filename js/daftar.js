@@ -85,6 +85,12 @@
   /* ---------- Status ---------- */
   const blank = { step: 0, program: '', pack: '', batch: '', slot: '', days: [], times: [], who: 'self', name: '', child: '', age: '', wa: '', email: '', note: '', promo: '', method: METHODS[0] ? METHODS[0].key : 'transfer' };
   let state = Object.assign({}, blank, store.get('elv-reg') || {});
+  // data dari tes level (jika sudah mengisi) dipakai untuk mengisi awal
+  const lead = store.get('elv-lead');
+  if (lead && !state.name && !state.wa) {
+    state.name = lead.name || ''; state.wa = lead.waRaw || ''; state.email = lead.email || '';
+    if (lead.child) { state.who = 'child'; state.child = lead.child; state.age = lead.age || ''; }
+  }
   let order = store.get('elv-order');
   // data dari versi lama (paket Bulanan/Program Penuh) tidak dipakai lagi
   if (!PACKS[state.pack]) state.pack = '';

@@ -29,6 +29,10 @@
  * - Cukup ubah kolom Status di Sheet "Pesanan" menjadi "lunas" setelah cek mutasi. Selesai.
  * - Murid yang daftar lewat WhatsApp (bukan website): tambahkan di js/config.js → batches.booked.
  *
+ * TES LEVEL (tes-level.html): peserta mengisi data diri dulu. Datanya masuk ke sheet "Tes Level"
+ *   (satu baris per peserta; kolom Status berubah mulai → selesai / dihentikan, plus level, skor, rekomendasi program).
+ *   Dipakai untuk marketing: hubungi peserta lewat WhatsApp/email sesuai persetujuan yang mereka berikan.
+ *
  * HALAMAN ADMIN (admin.html):
  * - Di Apps Script buka Project Settings (ikon roda) → Script properties → Add script property:
  *     Property: ADMIN_PASSWORD   Value: (kata sandi panjang pilihan Anda, mis. 4 kata acak)
@@ -73,6 +77,13 @@ const ORDER_COLUMNS = [
 const HOLD_HOURS = 48; // lama kursi ditahan untuk pesanan yang belum lunas
 const PAID_STATUS = 'lunas';
 const HOLD_STATUS = ['menunggu pembayaran', 'konfirmasi dikirim'];
+
+const LEVEL_SHEET = 'Tes Level';
+const LEVEL_COLUMNS = [
+  ['sentAt', 'Waktu'], ['id', 'ID tes'], ['status', 'Status'], ['name', 'Nama'], ['child', 'Nama anak'], ['age', 'Usia anak'],
+  ['wa', 'WhatsApp'], ['email', 'Email'], ['city', 'Kota'], ['source', 'Tahu dari'], ['aud', 'Untuk'], ['goal', 'Tujuan'],
+  ['level', 'Level'], ['score', 'Skor'], ['program', 'Rekomendasi program'], ['warnings', 'Peringatan pindah tab'], ['reason', 'Alasan berhenti'], ['lang', 'Bahasa'],
+];
 
 const LEAD_SHEET = 'Pendaftar';
 const LEAD_COLUMNS = [
@@ -129,6 +140,7 @@ function doPost(e) {
     const p = (e && e.parameter) || {};
     if (p.website) return ok_(); // kiriman bot
     if (p.type === 'admin') return admin_(p);
+    if (p.type === 'level') return saveLevel_(p);
     if (p.type === 'order') return saveOrder_(p);
     appendRow_(sheet_(LEAD_SHEET, LEAD_COLUMNS), LEAD_COLUMNS, p);
     return ok_();
@@ -234,6 +246,26 @@ function saveSettings_(p) {
   const sheet = sheet_(SETTINGS_SHEET, [['key', 'Kunci'], ['value', 'Nilai (JSON)']]);
   sheet.getRange(2, 1, 1, 2).setNumberFormat('@').setValues([['settings', JSON.stringify(clean)]]);
   return json_({ ok: true });
+}
+
+/* Tes level: satu baris per peserta (data marketing). Status diperbarui: mulai → selesai / dihentikan. */
+function saveLevel_(p) {
+  const sheet = sheet_(LEVEL_SHEET, LEVEL_COLUMNS);
+  const col = (key) => LEVEL_COLUMNS.findIndex((c) => c[0] === key) + 1;
+  const id = String(p.id || '').slice(0, 40);
+  if (!/^LV[A-Z0-9]{4,30}$/.test(id)) return ok_();
+  const ids = sheet.getLastRow() > 1 ? sheet.getRange(2, col('id'), sheet.getLastRow() - 1, 1).getValues() : [];
+  for (let i = 0; i < ids.length; i++) {
+    if (ids[i][0] === id) {
+      ['status', 'level', 'score', 'program', 'warnings', 'reason'].forEach((k) => {
+        if (p[k] !== undefined && (k === 'status' || p[k] !== '')) sheet.getRange(i + 2, col(k)).setValue(String(p[k]).slice(0, 200));
+      });
+      return ok_();
+    }
+  }
+  p.sentAt = new Date().toISOString();
+  appendRow_(sheet, LEVEL_COLUMNS, p);
+  return ok_();
 }
 
 function saveOrder_(p) {

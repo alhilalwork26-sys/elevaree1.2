@@ -1775,3 +1775,34 @@ body:has(.nav.is-scrolled:not(.is-hidden)) .pd-tabs { top: 68px; }
 .mock__info { padding: 44px 22px 22px 14px; }
 .mock__toast { top: -30px; right: 10px; z-index: 2; }
 @media (max-width: 640px) { .mock { padding: 20px; } .mock__info { padding: 40px 16px 18px 10px; } .mock__toast { right: 6px; } }
+
+
+/* ---------- Tes level: data diri, aturan, mode ketat ---------- */
+.ufield select { width: 100%; padding: 24px 40px 9px 16px; border-radius: 16px; border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; font-size: .95rem; outline: none; appearance: none; transition: border-color .25s, box-shadow .25s;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a8999d' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; background-size: 18px; }
+.ufield select:focus { border-color: var(--accent-text); box-shadow: 0 0 0 4px var(--blush); }
+.ufield--sel select { padding-top: 16px; padding-bottom: 16px; }
+.ufield small.err { display: block; min-height: 0; margin-top: 4px; font-size: .78rem; color: var(--rose); }
+.ufield.is-invalid select, .ufield.is-invalid input { border-color: var(--rose); }
+.lv-consent { display: flex; gap: 12px; align-items: flex-start; margin-top: 6px; padding: 14px 16px; border-radius: 16px; background: var(--soft); border: 1.5px solid var(--line); font-size: .86rem; line-height: 1.5; color: var(--muted); cursor: pointer; transition: border-color .25s; }
+.lv-consent:has(input:checked) { border-color: var(--accent-text); }
+.lv-consent input { margin-top: 3px; width: 18px; height: 18px; accent-color: var(--accent-text); flex: none; }
+.lv-consent a { color: var(--accent-text); font-weight: 600; white-space: nowrap; }
+.lv-consent.is-invalid { border-color: var(--rose); animation: shake .35s; }
+.js-consent-err { color: var(--rose); font-size: .78rem; min-height: 0; }
+.lv-rules { margin-top: 8px; padding: 18px 20px; border-radius: 18px; background: var(--blush); }
+.lv-rules h2 { margin: 0 0 8px; font-size: .95rem; color: var(--accent-text); }
+.lv-rules ul { margin: 0; padding-left: 18px; font-size: .86rem; line-height: 1.6; color: var(--ink); }
+.lv-rules li::marker { color: var(--accent-text); }
+.lv-timer { font-variant-numeric: tabular-nums; font-weight: 700; font-size: .85rem; padding: 4px 12px; border-radius: 999px; background: var(--blush); color: var(--accent-text); margin-left: auto; }
+.lv-timer.is-low { background: var(--rose); color: #fff; animation: lvPulse 1s infinite; }
+@keyframes lvPulse { 50% { opacity: .6; } }
+.lv-modal { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; padding: 20px; background: rgba(31, 26, 28, .55); backdrop-filter: blur(6px); }
+.lv-modal[hidden] { display: none; }
+.lv-modal__card { width: min(420px, 100%); background: var(--surface); border-radius: 24px; padding: 28px; text-align: center; box-shadow: var(--shadow); animation: lvRise .5s var(--ease) both; }
+@keyframes lvRise { from { opacity: 0; transform: translateY(18px) scale(.97); } }
+.lv-modal__card h2 { margin: 0 0 8px; font-size: 1.2rem; color: var(--accent-text); }
+.lv-modal__card p { margin: 0 0 20px; color: var(--muted); font-size: .92rem; }
+body.is-strict .lv-wrap { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+body.is-strict .lv-wrap input, body.is-strict .lv-wrap textarea, body.is-strict .lv-wrap select { -webkit-user-select: text; user-select: text; }
+@media print { body.is-strict .lv-wrap { display: none !important; } body.is-strict::after { content: 'Pencetakan dimatikan selama tes.'; display: block; padding: 40px; } }

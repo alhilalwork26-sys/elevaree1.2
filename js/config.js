@@ -10,6 +10,18 @@ window.ELEVAREE = {
   // URL Web App Google Apps Script (tools/google-sheets-form.gs) agar pendaftar & pesanan tercatat di Google Sheets.
   formEndpoint: '',
 
+  // ---- TES LEVEL (tes-level.html) ----
+  // Peserta mengisi data diri dulu (jadi data marketing, masuk Sheet "Tes Level"), lalu tes berjalan ketat.
+  // Pembatasan di browser hanya pencegah, bukan jaminan mutlak.
+  levelTest: {
+    strict: true,          // matikan copy/cut/paste/seleksi/klik kanan/cetak & pantau pindah tab
+    blockPaste: true,      // false = tempel (paste) diizinkan di kolom data diri
+    maxWarnings: 3,        // pindah tab/jendela sebanyak ini -> tes dihentikan
+    minutesAdult: 15,      // batas waktu tes dewasa/remaja
+    minutesKids: 8,        // batas waktu tes anak
+    cooldownHours: 24,     // jeda sebelum perangkat yang sama boleh tes lagi (0 = tanpa jeda; otomatis nonaktif saat formEndpoint kosong / mode demo)
+  },
+
   // ---- HARGA PER GELOMBANG (10 sesi) ----
   // CONTOH: 150.000 untuk semua program — belum ada keputusan final. Ganti per program jika berbeda.
   prices: {
