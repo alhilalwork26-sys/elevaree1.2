@@ -29,6 +29,14 @@
  * - Cukup ubah kolom Status di Sheet "Pesanan" menjadi "lunas" setelah cek mutasi. Selesai.
  * - Murid yang daftar lewat WhatsApp (bukan website): tambahkan di js/config.js → batches.booked.
  *
+ * HALAMAN ADMIN (admin.html):
+ * - Di Apps Script buka Project Settings (ikon roda) → Script properties → Add script property:
+ *     Property: ADMIN_PASSWORD   Value: (kata sandi panjang pilihan Anda, mis. 4 kata acak)
+ *   Lalu buka  https://<domain-anda>/admin.html  dan masuk dengan kata sandi itu.
+ * - Teks hasil edit disimpan di sheet "Konten", pengaturan (WhatsApp, harga, rekening, kursi manual) di sheet "Pengaturan".
+ *   Keduanya dibuat otomatis. Jangan ubah isinya langsung kecuali Anda tahu caranya; pakai admin.html.
+ * - Salah kata sandi 5x berturut-turut mengunci login admin selama 10 menit.
+ *
  * Jika Anda mengubah kode ini, buat versi baru: Deploy → Manage deployments → Edit → New version.
  */
 
@@ -73,10 +81,15 @@ const LEAD_COLUMNS = [
   ['lang', 'Bahasa'], ['page', 'Halaman'],
 ];
 
+const CONTENT_SHEET = 'Konten';
+const CONTENT_COLUMNS = [['key', 'Kunci'], ['id', 'Indonesia'], ['en', 'English'], ['at', 'Diubah']];
+const SETTINGS_SHEET = 'Pengaturan';
+
 /** GET ?action=seats → { ok, booked: { '2026-11-10': { 'kids-pagi': 3 } } } */
 function doGet(e) {
   const action = e && e.parameter && e.parameter.action;
   if (action === 'seats') return json_({ ok: true, booked: seats_() });
+  if (action === 'content') return json_({ ok: true, content: content_(), settings: settings_() });
   return json_({ ok: true });
 }
 
@@ -115,12 +128,112 @@ function doPost(e) {
   try {
     const p = (e && e.parameter) || {};
     if (p.website) return ok_(); // kiriman bot
+    if (p.type === 'admin') return admin_(p);
     if (p.type === 'order') return saveOrder_(p);
     appendRow_(sheet_(LEAD_SHEET, LEAD_COLUMNS), LEAD_COLUMNS, p);
     return ok_();
   } finally {
     lock.releaseLock();
   }
+}
+
+/* ---------- ADMIN: teks website & pengaturan ---------- */
+function content_() {
+  const cache = CacheService.getScriptCache();
+  const hit = cache.get('content');
+  if (hit) return JSON.parse(hit);
+  const out = {};
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONTENT_SHEET);
+  if (sheet && sheet.getLastRow() > 1) {
+    sheet.getRange(2, 1, sheet.getLastRow() - 1, 3).getValues().forEach((r) => {
+      if (r[0]) out[String(r[0])] = { id: String(r[1]), en: String(r[2]) };
+    });
+  }
+  try { cache.put('content', JSON.stringify(out), 60); } catch (err) { /* terlalu besar untuk cache */ }
+  return out;
+}
+
+function settings_() {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SETTINGS_SHEET);
+  if (!sheet || sheet.getLastRow() < 2) return {};
+  try { return JSON.parse(sheet.getRange(2, 2).getValue()) || {}; } catch (err) { return {}; }
+}
+
+function safeEq_(a, b) {
+  let diff = a.length ^ b.length;
+  for (let i = 0; i < Math.max(a.length, b.length); i++) diff |= (a.charCodeAt(i) || 0) ^ (b.charCodeAt(i) || 0);
+  return diff === 0;
+}
+
+function admin_(p) {
+  const pw = PropertiesService.getScriptProperties().getProperty('ADMIN_PASSWORD');
+  if (!pw) return json_({ ok: false, error: 'no-password' });
+  const cache = CacheService.getScriptCache();
+  const fails = Number(cache.get('adminFails') || 0);
+  if (fails >= 5) return json_({ ok: false, error: 'locked' });
+  if (!safeEq_(String(p.password || ''), pw)) {
+    cache.put('adminFails', String(fails + 1), 600);
+    return json_({ ok: false, error: 'auth' });
+  }
+  cache.remove('adminFails');
+  if (p.action === 'verify') return json_({ ok: true });
+  if (p.action === 'saveContent') return saveContent_(p);
+  if (p.action === 'saveSettings') return saveSettings_(p);
+  return json_({ ok: false, error: 'action' });
+}
+
+function saveContent_(p) {
+  let changes;
+  try { changes = JSON.parse(p.payload); } catch (err) { return json_({ ok: false, error: 'payload' }); }
+  const sheet = sheet_(CONTENT_SHEET, CONTENT_COLUMNS);
+  const rows = {};
+  if (sheet.getLastRow() > 1) {
+    sheet.getRange(2, 1, sheet.getLastRow() - 1, 4).getValues().forEach((r) => { if (r[0]) rows[String(r[0])] = r; });
+  }
+  const now = new Date().toISOString();
+  Object.keys(changes).forEach((k) => {
+    if (!/^[a-z0-9]{1,12}$/.test(k)) return;
+    const v = changes[k];
+    if (v === null) { delete rows[k]; return; }
+    if (typeof v.id !== 'string' || typeof v.en !== 'string') return;
+    rows[k] = [k, v.id.slice(0, 3000), v.en.slice(0, 3000), now];
+  });
+  const list = Object.keys(rows).slice(0, 3000).map((k) => rows[k]);
+  if (sheet.getLastRow() > 1) sheet.getRange(2, 1, sheet.getLastRow() - 1, 4).clearContent();
+  if (list.length) sheet.getRange(2, 1, list.length, 4).setNumberFormat('@').setValues(list);
+  CacheService.getScriptCache().remove('content');
+  return json_({ ok: true, count: list.length });
+}
+
+function saveSettings_(p) {
+  let s;
+  try { s = JSON.parse(p.payload); } catch (err) { return json_({ ok: false, error: 'payload' }); }
+  const clean = {};
+  if (typeof s.waNumber === 'string') clean.waNumber = s.waNumber.replace(/\D/g, '').slice(0, 20);
+  if (s.prices && typeof s.prices === 'object') {
+    clean.prices = {};
+    Object.keys(s.prices).forEach((k) => {
+      const n = Number(s.prices[k]);
+      if (/^[a-z]{1,20}$/.test(k) && isFinite(n) && n >= 0 && n <= 100000000) clean.prices[k] = Math.round(n);
+    });
+  }
+  if (s.payment && typeof s.payment === 'object') {
+    clean.payment = {};
+    const h = Number(s.payment.deadlineHours);
+    if (isFinite(h) && h > 0 && h <= 720) clean.payment.deadlineHours = h;
+    if (Array.isArray(s.payment.banks)) {
+      clean.payment.banks = s.payment.banks.slice(0, 6).map((b) => ({
+        bank: String((b && b.bank) || '').slice(0, 40),
+        number: String((b && b.number) || '').replace(/[^0-9 \-]/g, '').slice(0, 40),
+        holder: String((b && b.holder) || '').slice(0, 80),
+      }));
+    }
+    if (typeof s.payment.qrisImage === 'string') clean.payment.qrisImage = s.payment.qrisImage.slice(0, 300);
+  }
+  if (s.booked && typeof s.booked === 'object') clean.booked = s.booked;
+  const sheet = sheet_(SETTINGS_SHEET, [['key', 'Kunci'], ['value', 'Nilai (JSON)']]);
+  sheet.getRange(2, 1, 1, 2).setNumberFormat('@').setValues([['settings', JSON.stringify(clean)]]);
+  return json_({ ok: true });
 }
 
 function saveOrder_(p) {
