@@ -524,7 +524,7 @@ def page(p, head, nav, tail):
             <h1 class="hero__title pdh__title"><span class="line"><span>{esc(p["title"])}</span></span></h1>
             {tx("p", p["lead"], "pdh__lead fade-in", ' style="--d:.5s"')}
             <ul class="pdh__meta fade-in" style="--d:.65s">
-              <li class="pdh__rating"><b>{b["rating"]}</b><span class="stars" aria-hidden="true">{STARS}</span><u>({b["reviews"]} {tx("span", UI["reviews"])})</u></li>
+              <li class="pdh__rating"><b>{b["rating"]}</b><span class="stars" aria-hidden="true">{STARS}</span><u>(<span>{b["reviews"]}</span> {tx("span", UI["reviews"])})</u></li>
               <li>{ICO_USERS}<span>{tx("span", UI["max"])} <span data-capacity="{p["key"]}">6</span> {tx("span", UI["per_class"])}</span></li>
               <li>{ICO_CLOCK}{tx("span", b["length"])}</li>
             </ul>

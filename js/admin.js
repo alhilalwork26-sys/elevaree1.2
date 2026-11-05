@@ -293,16 +293,22 @@
     return fetch(file + '?t=' + Date.now()).then(function (r) { return r.text(); }).then(function (html) {
       var doc = new DOMParser().parseFromString(html, 'text/html');
       var seen = {}, rows = [];
-      doc.querySelectorAll('[data-en]').forEach(function (el) {
-        if (el.closest('script, template, noscript')) return;
-        var inner = el.innerHTML;
-        if (!H.norm(inner)) return;
-        var k = H.hash(H.norm(inner));
+      function add(k, el, row) {
         if (seen[k]) { seen[k].places++; return; }
-        seen[k] = { places: 1 };
-        seen[k].row = { k: k, id: inner.trim(), en: (el.getAttribute('data-en') || '').trim(), ctx: groupOf(el), places: 1 };
-        seen[k].row._s = seen[k];
-        rows.push(seen[k].row);
+        row._s = seen[k] = { places: 1 };
+        rows.push(row);
+      }
+      Array.prototype.forEach.call(doc.body.querySelectorAll('*'), function (el) {
+        if (el.hasAttribute('data-en')) {
+          if (el.closest('script, template, noscript')) return;
+          var inner = el.innerHTML;
+          if (!H.norm(inner)) return;
+          var k = H.hash(H.norm(inner));
+          add(k, el, { k: k, id: inner.trim(), en: (el.getAttribute('data-en') || '').trim(), ctx: groupOf(el), places: 1 });
+        } else if (H.isLeaf(el)) {
+          var txt = H.norm(el.textContent), pk = 'p' + H.hash(txt);
+          add(pk, el, { k: pk, id: txt, en: '', ctx: groupOf(el), places: 1, q: true, p: true });
+        }
       });
       rows.forEach(function (r) { r.places = r._s.places; delete r._s; });
       pageCache[file] = rows;
@@ -368,7 +374,7 @@
     var quiz = !!row.q, other = editLang === 'id' ? 'en' : 'id';
     var head = document.createElement('div'); head.className = 'row__head';
     var lab = document.createElement('span'); lab.className = 'row__lab';
-    lab.textContent = quiz ? (row.ctx === 'Pilihan jawaban' ? 'Pilihan jawaban' : 'Teks soal') : (editLang === 'id' ? 'Teks Indonesia' : 'Teks English');
+    lab.textContent = quiz ? (row.p ? 'Teks (sama di semua bahasa)' : row.ctx === 'Pilihan jawaban' ? 'Pilihan jawaban' : 'Teks soal') : (editLang === 'id' ? 'Teks Indonesia' : 'Teks English');
     var state = document.createElement('span');
     head.appendChild(lab); head.appendChild(state);
     if (row.places > 1) { var pl = document.createElement('span'); pl.className = 'row__places'; pl.textContent = 'tampil di ' + row.places + ' tempat'; head.appendChild(pl); }
@@ -488,7 +494,7 @@
     } catch (e) { /* belum siap */ }
   }
   function focusPreview(row) {
-    if (row.q) return;
+    if (row.q && !row.p) return;
     try { frame.contentWindow.ELV_CONTENT.locate(row.k); } catch (e) { /* abaikan */ }
   }
   /* klik teks langsung di pratinjau → pilih kotak editnya; tautan dimatikan agar pratinjau tidak pindah halaman */

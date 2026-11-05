@@ -22,6 +22,23 @@
     return el.getAttribute('data-ck');
   }
 
+  /* Teks "polos" tanpa pasangan bahasa (nama tutor, angka rating, judul, dll.): elemen paling dalam
+     yang hanya berisi teks. Berlaku sama untuk semua bahasa. Kuncinya diawali "p". */
+  function isLeaf(el) {
+    if (el.hasAttribute('data-en') || el.children.length) return false;
+    if (!norm(el.textContent)) return false;
+    if (el.closest('svg, script, style, noscript, template, textarea, select, option, [data-en], [aria-hidden="true"], .toast, .confetti')) return false;
+    for (var i = 0; i < el.attributes.length; i++) {
+      var n = el.attributes[i].name;
+      if (n.indexOf('data-') === 0 && n !== 'data-ck') return false; /* diatur oleh skrip */
+    }
+    return true;
+  }
+  function leafKey(el) {
+    if (!el.hasAttribute('data-ck')) el.setAttribute('data-ck', 'p' + hash(norm(el.textContent)));
+    return el.getAttribute('data-ck');
+  }
+
   /* hanya tag teks sederhana yang boleh lewat; semua yang lain jadi teks biasa */
   var OK = { B: 1, STRONG: 1, I: 1, EM: 1, BR: 1, SMALL: 1, SPAN: 1 };
   function walk(node) {
@@ -74,6 +91,11 @@
       if (typeof o.en === 'string' && o.en) el.setAttribute('data-en', clean(o.en));
       if (typeof o.id === 'string' && o.id) { el.__elvId = clean(o.id); el.innerHTML = el.__elvId; }
       if (en && typeof o.en === 'string' && o.en) el.innerHTML = clean(o.en);
+    });
+    Array.prototype.forEach.call(document.body.querySelectorAll('*'), function (el) {
+      if (!isLeaf(el)) return;
+      var o = content[leafKey(el)];
+      if (o && typeof o.id === 'string' && o.id) el.textContent = plain(o.id);
     });
   }
 
@@ -141,7 +163,7 @@
   }
   adminPill();
 
-  window.ELV_CONTENT = { preview: preview, locate: locate, hash: hash, norm: norm, clean: clean, keyOf: keyOf, cache: write, ov: ov, ovq: ovq };
+  window.ELV_CONTENT = { isLeaf: isLeaf, preview: preview, locate: locate, hash: hash, norm: norm, clean: clean, keyOf: keyOf, cache: write, ov: ov, ovq: ovq };
 
   if (!C.formEndpoint) return;
   var ctrl = window.AbortController ? new AbortController() : null;
