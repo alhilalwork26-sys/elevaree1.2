@@ -136,7 +136,7 @@
     document.documentElement.lang = next;
     $$('[data-en]').forEach((el) => {
       if (!original.has(el)) original.set(el, el.innerHTML);
-      el.innerHTML = next === 'en' ? el.dataset.en : original.get(el);
+      el.innerHTML = next === 'en' ? el.dataset.en : (el.__elvId != null ? el.__elvId : original.get(el));
     });
     $$('[data-en-label]').forEach((el) => { if (!el.dataset.idLabel) el.dataset.idLabel = el.getAttribute('aria-label'); el.setAttribute('aria-label', next === 'en' ? el.dataset.enLabel : el.dataset.idLabel); });
     document.title = next === 'en' ? document.documentElement.dataset.titleEn : titleId;

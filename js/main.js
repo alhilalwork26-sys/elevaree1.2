@@ -87,7 +87,7 @@
     document.documentElement.lang = next;
     $$('[data-en]').forEach((el) => {
       if (!original.has(el)) original.set(el, el.innerHTML);
-      el.innerHTML = next === 'en' ? el.dataset.en : original.get(el);
+      el.innerHTML = next === 'en' ? el.dataset.en : (el.__elvId != null ? el.__elvId : original.get(el));
     });
     $$('[data-en-ph]').forEach((el) => {
       if (!el.dataset.idPh) el.dataset.idPh = el.placeholder;

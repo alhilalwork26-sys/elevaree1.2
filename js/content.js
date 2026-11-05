@@ -72,7 +72,7 @@
       var o = content[keyOf(el)];
       if (!o) return;
       if (typeof o.en === 'string' && o.en) el.setAttribute('data-en', clean(o.en));
-      if (typeof o.id === 'string' && o.id) el.innerHTML = clean(o.id);
+      if (typeof o.id === 'string' && o.id) { el.__elvId = clean(o.id); el.innerHTML = el.__elvId; }
       if (en && typeof o.en === 'string' && o.en) el.innerHTML = clean(o.en);
     });
   }
@@ -102,7 +102,46 @@
   var cached = read();
   if (cached) { applySettings(cached.settings); applyText(cached.content); }
 
-  window.ELV_CONTENT = { hash: hash, norm: norm, clean: clean, keyOf: keyOf, cache: write, ov: ov, ovq: ovq };
+  /* ---- dipakai halaman admin: pratinjau langsung di dalam iframe ---- */
+  function preview(draft) {
+    store = draft || {};
+    applyText(store);
+    window.dispatchEvent(new Event('elv:content'));
+  }
+  function locate(k) {
+    var all = document.querySelectorAll('[data-ck="' + k + '"]');
+    var el = null;
+    Array.prototype.forEach.call(all, function (e) { if (!el && e.offsetParent !== null && !e.closest('nav')) el = e; });
+    el = el || all[0];
+    if (!el) return false;
+    if (!document.getElementById('elv-hl-css')) {
+      var st = document.createElement('style'); st.id = 'elv-hl-css';
+      st.textContent = '.elv-hl{outline:3px solid #e8496a !important;outline-offset:5px;border-radius:8px;transition:outline-color .3s}';
+      document.head.appendChild(st);
+    }
+    el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    el.classList.add('elv-hl');
+    setTimeout(function () { el.classList.remove('elv-hl'); }, 1800);
+    return true;
+  }
+
+  /* ---- tombol "Edit di admin" bagi admin yang sedang masuk ---- */
+  function adminPill() {
+    var on = false;
+    try { on = !!localStorage.getItem('elv-admin-on'); } catch (e) { /* abaikan */ }
+    if (!on || window.top !== window || /\/admin\.html$/.test(location.pathname)) return;
+    var file = (location.pathname.split('/').pop() || 'index.html');
+    var a = document.createElement('a');
+    a.href = 'admin.html#teks/' + file;
+    a.textContent = '✎ Edit halaman ini';
+    a.setAttribute('style', 'position:fixed;left:16px;bottom:16px;z-index:9999;background:#7a2438;color:#fff;font:700 13px/1 "Plus Jakarta Sans",system-ui,sans-serif;padding:11px 16px;border-radius:999px;text-decoration:none;box-shadow:0 10px 30px -10px rgba(90,30,45,.6);transition:transform .25s');
+    a.addEventListener('mouseenter', function () { a.style.transform = 'translateY(-2px)'; });
+    a.addEventListener('mouseleave', function () { a.style.transform = ''; });
+    document.body.appendChild(a);
+  }
+  adminPill();
+
+  window.ELV_CONTENT = { preview: preview, locate: locate, hash: hash, norm: norm, clean: clean, keyOf: keyOf, cache: write, ov: ov, ovq: ovq };
 
   if (!C.formEndpoint) return;
   var ctrl = window.AbortController ? new AbortController() : null;
