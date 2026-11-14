@@ -130,7 +130,6 @@
     const vh = window.innerHeight;
     const max = document.documentElement.scrollHeight - vh;
     nav.classList.toggle('is-scrolled', y > 10);
-    if (!nav.classList.contains('is-open')) nav.classList.toggle('is-hidden', y > lastY && y > 400);
     lastY = y;
     progress.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
     if (footerWord && !reduceMotion) {
