@@ -106,6 +106,7 @@
       b.setAttribute('aria-pressed', on);
     });
     renderCatalog(currentCat, false);
+    renderTesti(false);
     renderJourney(activeStep, false);
     renderRelated();
     renderBatches();
@@ -471,37 +472,46 @@
   }, { rootMargin: '-45% 0px -45% 0px' });
   jsteps.forEach((s) => stepObserver.observe(s));
 
-  /* ---------- Testimoni: tombol & seret ---------- */
-  const tTrack = $('.testi-track');
-  if (tTrack) {
-    const step = () => ($('.tcard', tTrack)?.offsetWidth || 300) + 20;
-    $$('[data-slide]').forEach((b) => b.addEventListener('click', () => {
-      tTrack.scrollBy({ left: step() * parseInt(b.dataset.slide, 10), behavior: reduceMotion ? 'auto' : 'smooth' });
-    }));
-    let down = false, startX = 0, startLeft = 0, moved = false;
-    tTrack.addEventListener('pointerdown', (e) => {
-      if (e.pointerType !== 'mouse') return;
-      down = true; moved = false; startX = e.clientX; startLeft = tTrack.scrollLeft;
+  /* ---------- Testimoni: kartu utama + daftar bergulir ---------- */
+  const testi = $('.testi');
+  let renderTesti = () => {};
+  if (testi) {
+    const feat = $('.tfeat', testi);
+    const trackEl = $('.tq-list__track', testi);
+    const items = $$('.tq', trackEl);
+    let cur = 0;
+    let timer = 0;
+    // gandakan daftar agar gulirannya mulus tanpa putus
+    if (!reduceMotion) items.forEach((it) => { const c = it.cloneNode(true); c.classList.add('is-clone'); c.setAttribute('aria-hidden', 'true'); c.tabIndex = -1; trackEl.appendChild(c); });
+    const all = () => $$('.tq', trackEl);
+    renderTesti = (swap) => {
+      const it = items[cur];
+      if (!it) return;
+      const paint = () => {
+        $('.tfeat__img', feat).src = `assets/img/${it.dataset.img}`;
+        feat.style.setProperty('--c', `var(--${it.dataset.bg})`);
+        $('.tfeat__q', feat).innerHTML = $('.tq__text', it).innerHTML;
+        $('.tfeat__by b', feat).textContent = $('.tq__by b', it).textContent;
+        $('.tfeat__by span', feat).innerHTML = `${$('.tq__by small', it).innerHTML} · ${$('.tq__by em', it).textContent}`;
+        all().forEach((x) => x.classList.toggle('is-active', x.dataset.img === it.dataset.img));
+        feat.classList.remove('is-swap');
+      };
+      if (swap && !reduceMotion) { feat.classList.add('is-swap'); setTimeout(paint, 220); } else paint();
+    };
+    const go = (i, swap = true) => { cur = (i + items.length) % items.length; renderTesti(swap); };
+    trackEl.addEventListener('click', (e) => {
+      const b = e.target.closest('.tq');
+      if (!b) return;
+      go(items.findIndex((x) => x.dataset.img === b.dataset.img));
+      restart();
     });
-    window.addEventListener('pointermove', (e) => {
-      if (!down) return;
-      const dx = e.clientX - startX;
-      if (!moved && Math.abs(dx) > 4) { moved = true; tTrack.classList.add('is-dragging'); }
-      if (moved) tTrack.scrollLeft = startLeft - dx;
-    });
-    window.addEventListener('pointerup', () => {
-      if (!down) return;
-      down = false;
-      if (moved) {
-        tTrack.classList.remove('is-dragging');
-        const s = step();
-        tTrack.scrollTo({ left: Math.round(tTrack.scrollLeft / s) * s, behavior: 'smooth' });
-      }
-    });
-    tTrack.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight') tTrack.scrollBy({ left: step(), behavior: 'smooth' });
-      if (e.key === 'ArrowLeft') tTrack.scrollBy({ left: -step(), behavior: 'smooth' });
-    });
+    const restart = () => {
+      clearInterval(timer);
+      if (reduceMotion) return;
+      timer = setInterval(() => { if (!testi.matches(':hover, :focus-within')) go(cur + 1); }, 7000);
+    };
+    renderTesti(false);
+    restart();
   }
 
   /* ---------- FAQ ---------- */
@@ -1005,7 +1015,7 @@
   renderBatches();
   renderPrices();
   window.addEventListener('elv:seats', () => { renderBatches(); renderPrices(); });
-  window.addEventListener('elv:content', () => { renderCatalog(currentCat, false); renderJourney(activeStep, false); renderRelated(); });
+  window.addEventListener('elv:content', () => { renderCatalog(currentCat, false); renderTesti(false); renderJourney(activeStep, false); renderRelated(); });
   // banner program: kuota maksimum per kelas diambil dari jadwal di config.js
   $$('[data-capacity]').forEach((el) => {
     const caps = (window.ELV_BATCH ? ELV_BATCH.slots(el.dataset.capacity) : []).map((c) => c.capacity);

@@ -53,7 +53,6 @@
         </div>
 
         <a href="tes-level.html" data-en="Level Test">Tes Level</a>
-        <a href="#kelas" data-en="Classes">Kelas</a>
         <a href="#alur" data-en="How It Works">Alur Belajar</a>
         <a href="#testimoni" data-en="Stories">Testimoni</a>
         <a href="#faq">FAQ</a>
@@ -276,37 +275,6 @@
       </div>
     </section>
 
-    <!-- ================= KATALOG KELAS ================= -->
-    <section class="section section--soft" id="kelas">
-      <div class="container">
-        <div class="head-split">
-          <p class="eyebrow" data-reveal data-en="Classes">Kelas</p>
-          <div>
-            <h2 class="h2" data-reveal style="--delay:.06s" data-en="Most Popular<br/>Classes">Kelas Paling<br/>Diminati</h2>
-            <div class="filters" role="tablist" data-reveal style="--delay:.12s">
-              <button class="filter cat-tab is-active" data-cat="all" role="tab" aria-selected="true" data-en="All Classes">Semua Kelas</button>
-              <button class="filter cat-tab" data-cat="kids" role="tab" aria-selected="false" data-en="Kids">Anak</button>
-              <button class="filter cat-tab" data-cat="teens" role="tab" aria-selected="false" data-en="Teens">Remaja</button>
-              <button class="filter cat-tab" data-cat="adult" role="tab" aria-selected="false" data-en="Adults">Dewasa</button>
-              <button class="filter cat-tab" data-cat="whv" role="tab" aria-selected="false" data-en="Australia WHV">Australia WHV</button>
-              <button class="filter cat-tab" data-cat="work" role="tab" aria-selected="false" data-en="Professionals">Pekerja</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- diisi oleh js/main.js dari data kelas -->
-      <div class="catalog" data-reveal>
-        <div class="catalog__track"></div>
-      </div>
-
-      <div class="container center" data-reveal>
-        <a href="#kontak" data-wa="schedule" class="btn btn--outline btn--sm"><span data-en="Ask about the full schedule">Tanya jadwal lengkap</span>
-          <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-      </div>
-    </section>
-
     <!-- ================= ALUR BELAJAR ================= -->
     <section class="section" id="alur">
       <div class="container">
@@ -382,54 +350,59 @@
     </section>
 
     <!-- ================= TESTIMONI ================= -->
+    <!-- CONTOH: semua testimoni di bawah masih contoh. Ganti dengan cerita peserta asli (izin tertulis) lewat admin. -->
     <section class="section section--soft" id="testimoni">
       <div class="container">
-        <div class="head-split head-split--action">
-          <p class="eyebrow" data-reveal data-en="Testimonials">Testimoni</p>
-          <h2 class="h2" data-reveal style="--delay:.06s" data-en="Stories from<br/>Elevaree Learners">Cerita dari<br/>Peserta Elevaree</h2>
-          <div class="slider-nav" data-reveal style="--delay:.12s">
-            <button class="round-btn" data-slide="-1" aria-label="Sebelumnya"><svg viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
-            <button class="round-btn round-btn--fill" data-slide="1" aria-label="Berikutnya"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        <div class="testi">
+          <div class="testi__intro">
+            <p class="eyebrow" data-reveal data-en="Testimonials">Testimoni</p>
+            <h2 class="h2" data-reveal style="--delay:.06s" data-en="Stories from<br/>Elevaree Learners">Cerita dari<br/>Peserta Elevaree</h2>
+            <p class="testi__lead" data-reveal style="--delay:.12s" data-en="From kids who now dare to speak up to learners getting ready for their Australian adventure, hear it in their own words.">Dari anak-anak yang kini berani bicara sampai peserta yang bersiap ke Australia, dengarkan cerita mereka.</p>
+          </div>
+
+          <figure class="tfeat" data-reveal style="--delay:.1s" aria-live="polite">
+            <img class="tfeat__img" src="assets/img/kid-girl.png" alt="" />
+            <figcaption>
+              <blockquote class="tfeat__q"></blockquote>
+              <div class="tfeat__by"><b></b><span></span></div>
+            </figcaption>
+          </figure>
+
+          <div class="tq-list" data-reveal style="--delay:.16s" role="list" aria-label="Daftar testimoni">
+            <div class="tq-list__track">
+              <button type="button" class="tq" role="listitem" data-img="kid-girl.png" data-bg="butter">
+                <span class="tq__text" data-en="“Kayla used to be so shy about speaking English. Now she answers her teacher with confidence, even though class is just on a laptop at home.”">“Dulu Kayla malu sekali kalau disuruh bicara bahasa Inggris. Sekarang dia berani menjawab pertanyaan guru, padahal kelasnya cuma lewat laptop di rumah.”</span>
+                <span class="tq__stars" aria-label="5 dari 5 bintang">★★★★★</span>
+                <span class="tq__by"><img class="tq__av" style="--c:var(--butter)" src="assets/img/kid-girl.png" alt="" loading="lazy" /><span><b>Ibu Rina</b><small data-en="Kayla's mom, 9 y.o.">Ibu dari Kayla, 9 thn</small></span><em>English for Kids</em></span>
+              </button>
+              <button type="button" class="tq" role="listitem" data-img="kid-boy.png" data-bg="pink">
+                <span class="tq__text" data-en="“I'm not scared anymore! Speaking English with my friends in class is fun.”">“Aku nggak takut lagi! Ngomong bahasa Inggris bareng teman-teman di kelas itu seru.”</span>
+                <span class="tq__stars" aria-label="5 dari 5 bintang">★★★★★</span>
+                <span class="tq__by"><img class="tq__av" style="--c:var(--pink)" src="assets/img/kid-boy.png" alt="" loading="lazy" /><span><b>Raka</b><small data-en="8 y.o.">8 thn</small></span><em>English for Kids</em></span>
+              </button>
+              <button type="button" class="tq" role="listitem" data-img="scholar-man.png" data-bg="peach">
+                <span class="tq__text" data-en="“Practising PTE speaking with my tutor made me much calmer on test day. The feedback is detailed and easy to put into practice.”">“Latihan speaking PTE bareng tutor bikin saya jauh lebih tenang saat tes. Feedback-nya detail dan langsung bisa dipraktikkan.”</span>
+                <span class="tq__stars" aria-label="5 dari 5 bintang">★★★★★</span>
+                <span class="tq__by"><img class="tq__av" style="--c:var(--peach)" src="assets/img/scholar-man.png" alt="" loading="lazy" /><span><b>Dimas</b><small data-en="WHV applicant, 24">Calon peserta WHV, 24 thn</small></span><em>PTE for WHV</em></span>
+              </button>
+              <button type="button" class="tq" role="listitem" data-img="teen-girl.png" data-bg="sky">
+                <span class="tq__text" data-en="“Presentations are fun now. I'm no longer nervous when I have to speak in front of the class.”">“Presentasi jadi seru. Sekarang aku nggak grogi lagi kalau harus bicara di depan kelas.”</span>
+                <span class="tq__stars" aria-label="5 dari 5 bintang">★★★★★</span>
+                <span class="tq__by"><img class="tq__av" style="--c:var(--sky)" src="assets/img/teen-girl.png" alt="" loading="lazy" /><span><b>Alya</b><small data-en="14 y.o.">14 thn</small></span><em>English for Teens</em></span>
+              </button>
+              <button type="button" class="tq" role="listitem" data-img="worker-woman.png" data-bg="lilac">
+                <span class="tq__text" data-en="“I now lead meetings with overseas clients with much more confidence. Classes are online, so I can join from anywhere.”">“Sekarang saya lebih percaya diri memimpin meeting dengan klien luar negeri. Kelasnya online, jadi bisa ikut dari mana saja.”</span>
+                <span class="tq__stars" aria-label="5 dari 5 bintang">★★★★★</span>
+                <span class="tq__by"><img class="tq__av" style="--c:var(--lilac)" src="assets/img/worker-woman.png" alt="" loading="lazy" /><span><b>Sari</b><small>Marketing Executive, 31</small></span><em>Business English</em></span>
+              </button>
+              <button type="button" class="tq" role="listitem" data-img="adult-man.png" data-bg="sage">
+                <span class="tq__text" data-en="“Finally brave enough to chat with foreigners. The tutor is patient and the class is relaxed.”">“Akhirnya berani ngobrol dengan orang asing. Tutornya sabar dan kelasnya santai.”</span>
+                <span class="tq__stars" aria-label="5 dari 5 bintang">★★★★★</span>
+                <span class="tq__by"><img class="tq__av" style="--c:var(--sage)" src="assets/img/adult-man.png" alt="" loading="lazy" /><span><b>Andi</b><small data-en="35 y.o.">35 thn</small></span><em>General English</em></span>
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-
-      <div class="testi-track" tabindex="0" aria-label="Daftar testimoni, geser ke samping">
-        <article class="tcard" data-reveal>
-          <header><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=96&h=96&fit=crop&crop=faces" alt="" /><div><b>Ibu Rina</b><span data-en="Kayla's mom, 9 y.o.">Ibu dari Kayla, 9 thn</span></div></header>
-          <p data-en="“Kayla used to be so shy about speaking English. Now she answers her teacher with confidence — even though class is just on a laptop at home.”">“Dulu Kayla malu sekali kalau disuruh bicara bahasa Inggris. Sekarang dia berani menjawab pertanyaan guru — padahal kelasnya cuma dari laptop di rumah.”</p>
-          <footer>English for Kids</footer>
-        </article>
-
-        <article class="tcard tcard--photo bg-pink" data-reveal style="--delay:.06s">
-          <img src="assets/img/kid-boy.png" alt="" loading="lazy" />
-          <span class="tcard__badge">Kids</span>
-          <div class="tcard__caption"><b data-en="“I'm not scared anymore!”">“Aku nggak takut lagi!”</b><span data-en="Raka, 8 y.o.">Raka, 8 thn</span></div>
-        </article>
-
-        <article class="tcard" data-reveal style="--delay:.12s">
-          <header><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=96&h=96&fit=crop&crop=faces" alt="" /><div><b>Dimas</b><span data-en="WHV applicant, 24">Calon peserta WHV, 24 thn</span></div></header>
-          <p data-en="“Practising PTE speaking with my tutor made me much calmer on test day. The feedback is detailed and easy to put into practice.”">“Latihan speaking PTE bareng tutor bikin saya jauh lebih tenang saat tes. Feedback-nya detail dan langsung bisa dipraktikkan.”</p>
-          <footer>PTE for WHV</footer>
-        </article>
-
-        <article class="tcard tcard--photo bg-sky" data-reveal style="--delay:.18s">
-          <img src="assets/img/teen-girl.png" alt="" loading="lazy" />
-          <span class="tcard__badge">Teens</span>
-          <div class="tcard__caption"><b data-en="“Presentations are fun now.”">“Presentasi jadi seru.”</b><span data-en="Alya, 14 y.o.">Alya, 14 thn</span></div>
-        </article>
-
-        <article class="tcard" data-reveal style="--delay:.24s">
-          <header><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=96&h=96&fit=crop&crop=faces" alt="" /><div><b>Sari</b><span>Marketing Executive, 31</span></div></header>
-          <p data-en="“I now lead meetings with overseas clients with much more confidence. Classes are online, so I can join from anywhere.”">“Sekarang saya lebih percaya diri memimpin meeting dengan klien luar negeri. Kelasnya online, jadi bisa ikut dari mana saja.”</p>
-          <footer>Business English</footer>
-        </article>
-
-        <article class="tcard tcard--photo bg-butter" data-reveal style="--delay:.3s">
-          <img src="assets/img/adult-man.png" alt="" loading="lazy" />
-          <span class="tcard__badge" data-en="Adults">Dewasa</span>
-          <div class="tcard__caption"><b data-en="“Finally brave enough to chat.”">“Akhirnya berani ngobrol.”</b><span data-en="Andi, 35">Andi, 35 thn</span></div>
-        </article>
       </div>
 
       <div class="container">
@@ -597,7 +570,7 @@
         </div>
         <div data-reveal style="--delay:.06s">
           <b data-en="Links">Tautan</b>
-          <a href="#beranda" data-en="Home">Beranda</a><a href="#program" data-en="Programs">Program</a><a href="#kelas" data-en="Classes">Kelas</a><a href="#alur" data-en="How It Works">Alur Belajar</a><a href="#faq">FAQ</a><a href="tes-level.html" data-en="Level Test">Tes Level</a><a href="tentang.html" data-en="About Us">Tentang Kami</a><a href="daftar.html" data-en="Register">Daftar</a>
+          <a href="#beranda" data-en="Home">Beranda</a><a href="#program" data-en="Programs">Program</a><a href="#alur" data-en="How It Works">Alur Belajar</a><a href="#faq">FAQ</a><a href="tes-level.html" data-en="Level Test">Tes Level</a><a href="tentang.html" data-en="About Us">Tentang Kami</a><a href="daftar.html" data-en="Register">Daftar</a>
         </div>
         <div data-reveal style="--delay:.12s">
           <b data-en="Programs">Program</b>
