@@ -264,8 +264,8 @@ PROGRAMS = [
                    "length": ("60 menit · 10 sesi", "60 min · 10 sessions"), "teacher": "Miss Laras", "teacher_img": "guru-3.png", "teacher_bg": "lilac"},
         "key": "business", "wa": "business", "cat": "work",
         "color": "lilac",
-        "img": "worker-woman.png",
-        "img_alt": ("Pekerja profesional tersenyum", "A smiling professional"),
+        "img": "prog-business.webp",
+        "img_alt": ("Tiga rekan kerja bersorak gembira di depan laptop", "Three colleagues cheering together in front of a laptop"),
         "title": "Business English",
         "tag": ("Untuk pekerja", "For professionals"),
         "lead": (

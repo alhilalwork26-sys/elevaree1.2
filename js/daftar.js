@@ -24,7 +24,7 @@
     { key: 'teens', title: 'English for Teens', img: 'prog-teens.webp', color: 'lime', tag: { id: 'Usia 13–17 · Diskusi & presentasi', en: 'Ages 13–17 · Discussion & presentation' } },
     { key: 'general', title: 'General English', img: 'adult-man.png', color: 'sage', tag: { id: 'Dewasa · Percakapan sehari-hari', en: 'Adults · Everyday conversation' } },
     { key: 'pte', title: 'PTE for WHV', img: 'prog-whv.webp', color: 'peach', tag: { id: 'Calon peserta WHV Australia · Strategi & simulasi tes PTE', en: 'Australia WHV applicants · PTE strategy & mock tests' } },
-    { key: 'business', title: 'Business English', img: 'worker-woman.png', color: 'lilac', tag: { id: 'Pekerja · Meeting, email & interview', en: 'Professionals · Meetings, emails & interviews' } },
+    { key: 'business', title: 'Business English', img: 'prog-business.webp', color: 'lilac', tag: { id: 'Pekerja · Meeting, email & interview', en: 'Professionals · Meetings, emails & interviews' } },
   ];
   const BT = window.ELV_BATCH;
   const SESSIONS = BT ? BT.sessions : 10;

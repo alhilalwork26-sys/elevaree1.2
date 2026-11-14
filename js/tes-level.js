@@ -73,7 +73,7 @@
     teens: { title: 'English for Teens', slug: 'english-for-teens', img: 'prog-teens.webp', color: 'lime' },
     general: { title: 'General English', slug: 'general-english', img: 'adult-man.png', color: 'sage' },
     pte: { title: 'PTE for WHV', slug: 'pte-for-whv', img: 'prog-whv.webp', color: 'peach' },
-    business: { title: 'Business English', slug: 'business-english', img: 'worker-woman.png', color: 'lilac' },
+    business: { title: 'Business English', slug: 'business-english', img: 'prog-business.webp', color: 'lilac' },
   };
 
   const AUD = [
