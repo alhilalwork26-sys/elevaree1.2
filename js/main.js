@@ -26,7 +26,7 @@
     kids: { id: 'Anak', en: 'Kids' },
     teens: { id: 'Remaja', en: 'Teens' },
     adult: { id: 'Dewasa', en: 'Adults' },
-    scholar: { id: 'Beasiswa', en: 'Scholarship' },
+    whv: { id: 'Australia WHV', en: 'Australia WHV' },
     work: { id: 'Pekerja', en: 'Professionals' },
   };
   const ICONS = {
@@ -46,20 +46,20 @@
     { cat: 'teens', color: 'lime', icon: 'mic', title: 'Debate & Presentation', img: 'teen-hood.png', tag: { id: 'Tampil Percaya Diri di Depan', en: 'Speak Up with Confidence' }, mins: 60 },
     { cat: 'teens', color: 'sky', icon: 'pen', title: 'Grammar Booster', img: 'teen-girl.png', tag: { id: 'Tata Bahasa Tanpa Pusing', en: 'Grammar Without the Headache' }, mins: 60 },
     { cat: 'adult', color: 'sage', icon: 'coffee', title: 'Daily Conversation', img: 'adult-man.png', tag: { id: 'Lancar Ngobrol Sehari-hari', en: 'Everyday Talk, Made Easy' }, mins: 60 },
-    { cat: 'scholar', color: 'peach', icon: 'cap', title: 'IELTS Preparation', img: 'scholar-man.png', tag: { id: 'Kejar Skor Impianmu', en: 'Chase Your Target Band' }, mins: 90 },
-    { cat: 'scholar', color: 'lilac', icon: 'doc', title: 'TOEFL ITP Strategy', img: 'guru-1.png', tag: { id: 'Skor Naik, Peluang Terbuka', en: 'Higher Score, More Doors' }, mins: 90 },
+    { cat: 'whv', color: 'peach', icon: 'cap', title: 'PTE Academic Prep', img: 'prog-whv.webp', tag: { id: 'Siap Tes untuk Visa Australia', en: 'Test-Ready for Your Australian Visa' }, mins: 90 },
+    { cat: 'whv', color: 'lilac', icon: 'doc', title: 'English for WHV Life', img: 'guru-1.png', tag: { id: 'Siap Kerja & Hidup di Australia', en: 'Ready to Work & Live in Australia' }, mins: 60 },
     { cat: 'work', color: 'mustard', icon: 'brief', title: 'Business Communication', img: 'worker-woman.png', tag: { id: 'Profesional di Meeting & Email', en: 'Polished Meetings & Emails' }, mins: 60 },
     { cat: 'work', color: 'butter', icon: 'user', title: 'Job Interview Prep', img: 'guru-2.png', tag: { id: 'Siap Tembus Perusahaan Impian', en: 'Land Your Dream Job' }, mins: 60 },
   ];
   const JOURNEY = [
-    { pct: 25, btn: { id: 'Daftar sekarang', en: 'Enroll now' }, icon: '✓', toastB: { id: 'Terdaftar', en: 'Enrolled' }, toastS: { id: 'Hasil tes penempatan: B1', en: 'Placement result: B1' }, status: { id: 'Mendaftar di IELTS & TOEFL Prep…', en: 'Enrolling in IELTS & TOEFL Prep…' } },
+    { pct: 25, btn: { id: 'Daftar sekarang', en: 'Enroll now' }, icon: '✓', toastB: { id: 'Terdaftar', en: 'Enrolled' }, toastS: { id: 'Hasil tes penempatan: B1', en: 'Placement result: B1' }, status: { id: 'Mendaftar di PTE for WHV…', en: 'Enrolling in PTE for WHV…' } },
     { pct: 50, btn: { id: 'Gabung kelas live', en: 'Join live class' }, icon: '●', toastB: { id: 'Kelas dimulai', en: 'Class started' }, toastS: { id: 'Guru & 8 peserta online', en: 'Teacher & 8 learners online' }, status: { id: 'Kelas live sedang berlangsung…', en: 'Live class in progress…' } },
     { pct: 75, btn: { id: 'Lihat hasil evaluasi', en: 'View evaluation' }, icon: '86', toastB: { id: 'Evaluasi selesai', en: 'Evaluation done' }, toastS: { id: 'Nilai akhir 86/100', en: 'Final score 86/100' }, status: { id: 'Menilai evaluasi akhir…', en: 'Grading the final evaluation…' } },
     { pct: 100, btn: { id: 'Unduh sertifikat', en: 'Download certificate' }, icon: '★', toastB: { id: 'Sertifikat terbit', en: 'Certificate issued' }, toastS: { id: 'ID: ELV-2026-0142', en: 'ID: ELV-2026-0142' }, status: { id: 'Sertifikat siap diunduh', en: 'Certificate ready to download' } },
   ];
   const UI = {
     title: { id: 'Elevaree Academy — Kursus Bahasa Inggris Online', en: 'Elevaree Academy — Online English Courses' },
-    desc: { id: 'Kursus bahasa Inggris online dengan kelas live bersama guru, untuk anak, remaja, dewasa, pencari beasiswa, dan pekerja.', en: 'Online English courses with live classes and real teachers, for kids, teens, adults, scholarship seekers, and professionals.' },
+    desc: { id: 'Kursus bahasa Inggris online dengan kelas live bersama guru, untuk anak, remaja, dewasa, calon peserta WHV Australia, dan pekerja.', en: 'Online English courses with live classes and real teachers, for kids, teens, adults, Australia WHV applicants, and professionals.' },
     perMonth: { id: '/gelombang', en: '/batch' },
     sessions: { id: 'sesi', en: 'sessions' },
     mins: { id: 'mnt', en: 'min' },
@@ -384,7 +384,7 @@
   let currentCat = 'all';
   function cardHTML(c, i, clone) {
     const hidden = clone ? ' aria-hidden="true" tabindex="-1"' : '';
-    const prog = { kids: 'kids', teens: 'teens', adult: 'general', scholar: 'ielts', work: 'business' }[c.cat];
+    const prog = { kids: 'kids', teens: 'teens', adult: 'general', whv: 'pte', work: 'business' }[c.cat];
     const nSess = window.ELV_BATCH ? ELV_BATCH.sessions : 10;
     const priceK = 'Rp' + Math.round(((CONFIG.prices || {})[prog] || 0) / 1000) + 'K';
     return `<a href="#kontak" class="ccard" data-trial data-program="${prog}" data-class="${c.title}" style="--i:${i}"${hidden}>
@@ -532,7 +532,7 @@
     kids: { id: 'English for Kids', en: 'English for Kids' },
     teens: { id: 'English for Teens', en: 'English for Teens' },
     general: { id: 'General English (dewasa)', en: 'General English (adults)' },
-    ielts: { id: 'IELTS & TOEFL Prep', en: 'IELTS & TOEFL Prep' },
+    pte: { id: 'PTE for WHV', en: 'PTE for WHV' },
     business: { id: 'Business English', en: 'Business English' },
     unsure: { id: 'Belum tahu — minta rekomendasi', en: 'Not sure yet — please recommend' },
   };
@@ -543,7 +543,7 @@
   const WA_MSG = {
     kids: { id: 'Halo Elevaree! Saya ingin tanya kelas bahasa Inggris untuk anak saya.', en: "Hi Elevaree! I'd like to ask about English classes for my child." },
     teens: { id: 'Halo Elevaree! Saya ingin tanya kelas bahasa Inggris untuk remaja.', en: "Hi Elevaree! I'd like to ask about English classes for teens." },
-    ielts: { id: 'Halo Elevaree! Saya sedang persiapan beasiswa dan ingin tanya kelas IELTS/TOEFL.', en: "Hi Elevaree! I'm preparing for a scholarship and would like to ask about IELTS/TOEFL classes." },
+    pte: { id: 'Halo Elevaree! Saya berencana mengajukan WHV Australia dan ingin tanya kelas PTE.', en: "Hi Elevaree! I'm planning an Australia WHV application and would like to ask about PTE classes." },
     business: { id: 'Halo Elevaree! Saya ingin tanya kelas Business English.', en: "Hi Elevaree! I'd like to ask about Business English classes." },
     price: { id: 'Halo Elevaree! Boleh minta info harga dan promo kelas terbaru?', en: 'Hi Elevaree! Could I get the latest class prices and promos?' },
     schedule: { id: 'Halo Elevaree! Boleh minta jadwal lengkap kelas yang tersedia?', en: 'Hi Elevaree! Could I get the full schedule of available classes?' },
@@ -605,7 +605,7 @@
     if (e.target === modal || e.target.closest('[data-close]')) closeTrial();
   });
 
-  // halaman daftar: pilih program dari tautan, contoh daftar.html?program=ielts
+  // halaman daftar: pilih program dari tautan, contoh daftar.html?program=pte
   if (isTrialPage) {
     const q = new URLSearchParams(location.search).get('program');
     if (q && PROGRAMS[q]) field('program').value = q;

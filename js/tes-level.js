@@ -59,7 +59,7 @@
     { code: 'A2', name: { id: 'Pra-menengah', en: 'Pre-intermediate' }, desc: { id: 'Kamu bisa bercakap dalam situasi yang akrab: belanja, bertanya arah, bercerita singkat. Selanjutnya: menyampaikan pendapat dan alasan dengan lebih lancar.', en: 'You can hold conversations in familiar situations: shopping, directions, short stories. Next: giving opinions and reasons more fluently.' } },
     { code: 'B1', name: { id: 'Menengah', en: 'Intermediate' }, desc: { id: 'Kamu cukup mandiri: bisa mengobrol topik umum, menulis teks sederhana, dan memahami inti percakapan. Selanjutnya: ketepatan tata bahasa dan kosakata yang lebih kaya.', en: 'You are fairly independent: you can chat about general topics, write simple texts and follow the main points. Next: grammatical accuracy and richer vocabulary.' } },
     { code: 'B2', name: { id: 'Menengah atas', en: 'Upper-intermediate' }, desc: { id: 'Kamu lancar dan spontan di banyak situasi, termasuk topik kerja atau akademik. Selanjutnya: nuansa, struktur argumen, dan gaya formal.', en: 'You are fluent and spontaneous in many situations, including work or academic topics. Next: nuance, argument structure and formal style.' } },
-    { code: 'C1', name: { id: 'Mahir', en: 'Advanced' }, desc: { id: 'Bahasa Inggrismu sudah sangat kuat. Selanjutnya: pengasahan untuk tujuan khusus seperti IELTS/TOEFL skor tinggi, presentasi, atau negosiasi.', en: 'Your English is very strong. Next: polish for specific goals such as a high IELTS/TOEFL score, presentations or negotiation.' } },
+    { code: 'C1', name: { id: 'Mahir', en: 'Advanced' }, desc: { id: 'Bahasa Inggrismu sudah sangat kuat. Selanjutnya: pengasahan untuk tujuan khusus seperti skor tinggi di tes PTE atau IELTS, presentasi, atau negosiasi.', en: 'Your English is very strong. Next: polish for specific goals such as a high PTE or IELTS score, presentations or negotiation.' } },
   ];
   const KID_LEVELS = [
     { code: 'Pre-A1', name: { id: 'Starter', en: 'Starter' }, desc: { id: 'Si kecil baru mulai mengenal bahasa Inggris. Lewat lagu, cerita, dan permainan, ia akan cepat berani bicara.', en: 'Your child is just meeting English. Through songs, stories and games, they will soon gain the courage to speak.' } },
@@ -69,10 +69,10 @@
   const SKILLS = { g: { id: 'Tata bahasa', en: 'Grammar' }, v: { id: 'Kosakata', en: 'Vocabulary' }, r: { id: 'Membaca', en: 'Reading' } };
 
   const PROGS = {
-    kids: { title: 'English for Kids', slug: 'english-for-kids', img: 'kids-trio.png', color: 'mustard' },
-    teens: { title: 'English for Teens', slug: 'english-for-teens', img: 'teen-girl.png', color: 'lime' },
+    kids: { title: 'English for Kids', slug: 'english-for-kids', img: 'prog-kids.webp', color: 'mustard' },
+    teens: { title: 'English for Teens', slug: 'english-for-teens', img: 'prog-teens.webp', color: 'lime' },
     general: { title: 'General English', slug: 'general-english', img: 'adult-man.png', color: 'sage' },
-    ielts: { title: 'IELTS & TOEFL Prep', slug: 'ielts-toefl-prep', img: 'scholar-man.png', color: 'peach' },
+    pte: { title: 'PTE for WHV', slug: 'pte-for-whv', img: 'prog-whv.webp', color: 'peach' },
     business: { title: 'Business English', slug: 'business-english', img: 'worker-woman.png', color: 'lilac' },
   };
 
@@ -83,7 +83,7 @@
   ];
   const GOAL = [
     { key: 'general', title: { id: 'Percakapan sehari-hari', en: 'Everyday conversation' }, sub: { id: 'Lancar ngobrol, traveling, pergaulan', en: 'Fluent chat, travel, socialising' } },
-    { key: 'ielts', title: { id: 'Beasiswa / IELTS-TOEFL', en: 'Scholarship / IELTS-TOEFL' }, sub: { id: 'Skor tes untuk kuliah atau beasiswa', en: 'Test score for study or scholarships' } },
+    { key: 'pte', title: { id: 'Visa Australia (WHV) / PTE', en: 'Australia visa (WHV) / PTE' }, sub: { id: 'Siapkan tes PTE untuk Working Holiday Visa', en: 'Prepare the PTE test for a Working Holiday Visa' } },
     { key: 'business', title: { id: 'Karier & pekerjaan', en: 'Career & work' }, sub: { id: 'Meeting, email, presentasi, interview', en: 'Meetings, emails, presentations, interviews' } },
   ];
 
@@ -111,7 +111,7 @@
       kids: { id: 'Belajar sambil bermain dengan tutor ramah anak, kelas 60 menit pagi atau malam.', en: 'Learn through play with a kid-friendly tutor in 60-minute morning or evening classes.' },
       teens: { id: 'Fokus diskusi, presentasi, dan percaya diri bicara, sesuai dunia remaja.', en: 'Focused on discussion, presentation and speaking confidence, made for teenagers.' },
       general: { id: 'Percakapan sehari-hari dengan tutor yang menyesuaikan levelmu.', en: 'Everyday conversation with a tutor who adapts to your level.' },
-      ielts: { id: 'Strategi, latihan soal, dan simulasi tes IELTS/TOEFL sesuai levelmu.', en: 'Strategy, practice and mock tests for IELTS/TOEFL matched to your level.' },
+      pte: { id: 'Strategi, latihan soal, dan simulasi tes PTE Academic sesuai levelmu, untuk aplikasi visa Australia.', en: 'Strategy, practice and mock tests for PTE Academic matched to your level, for your Australian visa application.' },
       business: { id: 'Meeting, email, presentasi, dan interview kerja dalam bahasa Inggris.', en: 'Meetings, emails, presentations and job interviews in English.' },
     },
     foundation: { id: 'Levelmu masih di bawah B1, jadi kami sarankan mulai dari General English untuk membangun fondasi, lalu lanjut ke {p}.', en: "Your level is still below B1, so we suggest starting with General English to build a foundation, then moving on to {p}." },
@@ -225,14 +225,14 @@
   }
   function renderIntro() {
     $('.js-aud').innerHTML = choiceHTML(AUD, state.aud, 0);
-    const needGoal = state.aud && !isKids();
+    const needGoal = state.aud === 'adult';
     $('.js-goal-wrap').hidden = !needGoal;
     $('.js-goal').innerHTML = needGoal ? choiceHTML(GOAL, state.goal, 0) : '';
     const n = isKids() ? BANK_KIDS.length : BANK_ADULT.length;
     $('.js-meta-q').textContent = `${state.aud ? n : BANK_ADULT.length} ${t(TX.qUnit)}`;
     $('.js-meta-time').textContent = t(isKids() ? TX.timeKids : TX.timeAdult);
     const lockH = lockHours();
-    const ready = !!state.aud && (isKids() || !!state.goal) && !lockH;
+    const ready = !!state.aud && (state.aud !== 'adult' || !!state.goal) && !lockH;
     $('.js-start').disabled = !ready;
     $('.js-start-hint').textContent = lockH ? t(LT.locked).replace('{h}', lockH) : ready ? t(TX.hintReady) : t(state.aud ? TX.hintGoal : TX.hintAud);
   }
@@ -308,8 +308,8 @@
   }
   function recommend(idx) {
     if (isKids()) return { prog: 'kids' };
-    if (state.aud === 'teens') return state.goal === 'ielts' && idx >= 3 ? { prog: 'ielts' } : { prog: 'teens' };
-    if (state.goal === 'ielts') return idx >= 3 ? { prog: 'ielts' } : { prog: 'general', then: 'ielts' };
+    if (state.aud === 'teens') return { prog: 'teens' };
+    if (state.goal === 'pte') return idx >= 3 ? { prog: 'pte' } : { prog: 'general', then: 'pte' };
     if (state.goal === 'business') return idx >= 2 ? { prog: 'business' } : { prog: 'general', then: 'business' };
     return { prog: 'general' };
   }
@@ -596,7 +596,7 @@
   /* ---------- Interaksi ---------- */
   document.addEventListener('click', (e) => {
     const a = e.target.closest('.js-aud .lv-choice');
-    if (a) { state.aud = a.dataset.key; if (isKids()) state.goal = ''; renderIntro(); return; }
+    if (a) { state.aud = a.dataset.key; if (state.aud !== 'adult') state.goal = ''; renderIntro(); return; }
     const g = e.target.closest('.js-goal .lv-choice');
     if (g) { state.goal = g.dataset.key; renderIntro(); return; }
     if (e.target.closest('.js-start')) { if (!lockHours()) show('data'); return; }

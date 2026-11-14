@@ -74,7 +74,7 @@ def page_tentang(head, nav, tail):
         ("video", ("Kelas live interaktif", "Live, interactive classes"), ("Belajar langsung bersama guru lewat video call — bisa bertanya dan berlatih bicara.", "Learn directly with a teacher over video call — ask questions and practise speaking.")),
         ("doc", ("Tes penempatan", "Placement test"), ("Setiap peserta mulai dari level yang sesuai kemampuan dan tujuannya.", "Every learner starts at the level that fits their ability and goals.")),
         ("chart", ("Laporan kemajuan", "Progress reports"), ("Perkembangan dipantau supaya peserta dan orang tua tahu hasilnya.", "Progress is tracked so learners and parents can see results.")),
-        ("star", ("Praktik nyata", "Real-world practice"), ("Show Day untuk anak, simulasi tes untuk beasiswa, simulasi meeting untuk pekerja.", "Show Day for kids, mock tests for scholarships, mock meetings for professionals.")),
+        ("star", ("Praktik nyata", "Real-world practice"), ("Show Day untuk anak, simulasi tes PTE untuk calon peserta WHV, simulasi meeting untuk pekerja.", "Show Day for kids, PTE mock tests for WHV applicants, mock meetings for professionals.")),
     ]
     icons = {
         "video": '<rect x="3" y="6" width="13" height="12" rx="3"/><path d="m16 10.5 5-3v9l-5-3"/>',
@@ -108,7 +108,7 @@ def page_tentang(head, nav, tail):
               <span class="line"><span>{tx("span", ("Berani Bicara", "Speak English"))}</span></span>
               <span class="line"><span><em class="scribble">{tx("span", ("Bahasa Inggris", "with Confidence"))}<svg viewBox="0 0 220 24" preserveAspectRatio="none" aria-hidden="true"><path d="M3 15 C 50 4, 110 4, 217 12 M 20 20 C 80 13, 140 14, 200 18"/></svg></em></span></span>
             </h1>
-            {tx("p", ("Elevaree Academy adalah kursus bahasa Inggris online untuk anak, remaja, dewasa, pencari beasiswa, dan pekerja. Fokus kami sederhana: membuat peserta berani bicara, bukan sekadar hafal teori.", "Elevaree Academy is an online English course for kids, teens, adults, scholarship seekers, and professionals. Our focus is simple: help learners speak up, not just memorise theory."), "hero__lead fade-in", ' style="--d:.7s"')}
+            {tx("p", ("Elevaree Academy adalah kursus bahasa Inggris online untuk anak, remaja, dewasa, calon peserta Working Holiday Visa (WHV) Australia, dan pekerja. Fokus kami sederhana: membuat peserta berani bicara, bukan sekadar hafal teori.", "Elevaree Academy is an online English course for kids, teens, adults, Australia WHV applicants, and professionals. Our focus is simple: help learners speak up, not just memorise theory."), "hero__lead fade-in", ' style="--d:.7s"')}
             <div class="hero__actions fade-in" style="--d:.85s">
               <a href="daftar.html?paket=trial" class="btn btn--maroon">{tx("span", ("Coba Kelas Gratis", "Try a Free Class"))}{ARROW}</a>
               <a href="index.html#program" class="link-arrow" data-en="See programs">Lihat program</a>
@@ -131,7 +131,7 @@ def page_tentang(head, nav, tail):
           <div class="about-story">
             {tx("h2", ("Berawal dari<br/>Kelas Gratis", "It Started with<br/>Free Classes"), "h2", " data-reveal", raw=True)}
             {tx("p", ("Elevaree berawal dari kelas bahasa Inggris gratis. Dari situ kami melihat pola yang sama: banyak orang sebenarnya paham bahasa Inggris, tapi tidak berani memakainya — takut salah, malu, dan jarang punya kesempatan praktik.", "Elevaree started with free English classes. We kept seeing the same pattern: many people understand English but don't dare to use it — afraid of mistakes, shy, and rarely able to practise."), "", ' data-reveal style="--delay:.06s"')}
-            {tx("p", ("Karena itu kami membangun kelas yang berbeda: live, interaktif, dan memberi setiap peserta kesempatan untuk bicara. Dimulai dari program untuk anak, kini Elevaree juga mendampingi remaja, dewasa, pencari beasiswa, dan pekerja.", "So we built a different kind of class: live, interactive, and giving every learner a chance to speak. We began with kids, and now Elevaree also supports teens, adults, scholarship seekers, and professionals."), "", ' data-reveal style="--delay:.12s"')}
+            {tx("p", ("Karena itu kami membangun kelas yang berbeda: live, interaktif, dan memberi setiap peserta kesempatan untuk bicara. Dimulai dari program untuk anak, kini Elevaree juga mendampingi remaja, dewasa, calon peserta WHV Australia, dan pekerja.", "So we built a different kind of class: live, interactive, and giving every learner a chance to speak. We began with kids, and now Elevaree also supports teens, adults, Australia WHV applicants, and professionals."), "", ' data-reveal style="--delay:.12s"')}
             <blockquote class="about-quote" data-reveal style="--delay:.18s">{tx("span", ("“Berani dulu, sempurna kemudian.”", "“Confidence first, perfection later.”"))}</blockquote>
           </div>
         </div>

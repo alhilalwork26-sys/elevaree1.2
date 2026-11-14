@@ -28,7 +28,7 @@ window.ELEVAREE = {
     kids: 150000,
     teens: 150000,
     general: 150000,
-    ielts: 150000,
+    pte: 150000,
     business: 150000,
   },
 
@@ -65,9 +65,9 @@ window.ELEVAREE = {
         { id: 'general-pagi', time: 'pagi', start: '08:00', end: '09:00', teacher: 'Mr. Dani', capacity: 8 },
         { id: 'general-malam', time: 'malam', start: '20:00', end: '21:00', teacher: 'Mr. Dani', capacity: 8 },
       ],
-      ielts: [
-        { id: 'ielts-pagi', time: 'pagi', start: '09:00', end: '10:30', teacher: 'Mr. Arif', capacity: 6 },
-        { id: 'ielts-malam', time: 'malam', start: '19:00', end: '20:30', teacher: 'Mr. Arif', capacity: 6 },
+      pte: [
+        { id: 'pte-pagi', time: 'pagi', start: '09:00', end: '10:30', teacher: 'Mr. Arif', capacity: 6 },
+        { id: 'pte-malam', time: 'malam', start: '19:00', end: '20:30', teacher: 'Mr. Arif', capacity: 6 },
       ],
       business: [
         { id: 'business-siang', time: 'siang', start: '12:00', end: '13:00', teacher: 'Miss Laras', capacity: 6 },
@@ -79,8 +79,8 @@ window.ELEVAREE = {
     // Update angka ini setiap ada pembayaran yang terverifikasi. Tidak ditulis = 0 terisi.
     // Jika terisi >= kapasitas, jam kelas tampil "Penuh". CONTOH angka di bawah.
     booked: {
-      '2026-11-10': { 'kids-pagi': 4, 'kids-malam': 6, 'ielts-pagi': 6, 'ielts-malam': 6, 'teens-sore': 3, 'general-pagi': 7, 'business-siang': 2 },
-      '2026-11-25': { 'kids-pagi': 1, 'kids-malam': 2, 'teens-sore': 1, 'ielts-pagi': 2, 'general-pagi': 1 },
+      '2026-11-10': { 'kids-pagi': 4, 'kids-malam': 6, 'pte-pagi': 6, 'pte-malam': 6, 'teens-sore': 3, 'general-pagi': 7, 'business-siang': 2 },
+      '2026-11-25': { 'kids-pagi': 1, 'kids-malam': 2, 'teens-sore': 1, 'pte-pagi': 2, 'general-pagi': 1 },
       '2026-12-10': { 'kids-pagi': 0 },
     },
   },

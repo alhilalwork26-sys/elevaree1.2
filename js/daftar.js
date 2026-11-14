@@ -20,10 +20,10 @@
   /* ---------- Data ---------- */
   const PRICES = C.prices || {};
   const PROGS = [
-    { key: 'kids', title: 'English for Kids', img: 'kids-trio.png', color: 'mustard', tag: { id: 'Usia 7–12 · Belajar sambil bermain', en: 'Ages 7–12 · Learn through play' } },
-    { key: 'teens', title: 'English for Teens', img: 'teen-girl.png', color: 'lime', tag: { id: 'Usia 13–17 · Diskusi & presentasi', en: 'Ages 13–17 · Discussion & presentation' } },
+    { key: 'kids', title: 'English for Kids', img: 'prog-kids.webp', color: 'mustard', tag: { id: 'Usia 7–12 · Belajar sambil bermain', en: 'Ages 7–12 · Learn through play' } },
+    { key: 'teens', title: 'English for Teens', img: 'prog-teens.webp', color: 'lime', tag: { id: 'Usia 13–17 · Diskusi & presentasi', en: 'Ages 13–17 · Discussion & presentation' } },
     { key: 'general', title: 'General English', img: 'adult-man.png', color: 'sage', tag: { id: 'Dewasa · Percakapan sehari-hari', en: 'Adults · Everyday conversation' } },
-    { key: 'ielts', title: 'IELTS & TOEFL Prep', img: 'scholar-man.png', color: 'peach', tag: { id: 'Pencari beasiswa · Strategi & simulasi tes', en: 'Scholarship seekers · Strategy & mock tests' } },
+    { key: 'pte', title: 'PTE for WHV', img: 'prog-whv.webp', color: 'peach', tag: { id: 'Calon peserta WHV Australia · Strategi & simulasi tes PTE', en: 'Australia WHV applicants · PTE strategy & mock tests' } },
     { key: 'business', title: 'Business English', img: 'worker-woman.png', color: 'lilac', tag: { id: 'Pekerja · Meeting, email & interview', en: 'Professionals · Meetings, emails & interviews' } },
   ];
   const BT = window.ELV_BATCH;
@@ -96,6 +96,7 @@
   if (!PACKS[state.pack]) state.pack = '';
   if (order && !PACKS[order.pack]) { order = null; store.del('elv-order'); }
   const params = new URLSearchParams(location.search);
+  if (params.get('program') === 'ielts') params.set('program', 'pte'); // tautan lama
   if (params.get('program') && PROGS.some((p) => p.key === params.get('program'))) { state.program = params.get('program'); if (state.step === 0) state.step = 1; }
   if (params.get('paket') && PACKS[params.get('paket')]) state.pack = params.get('paket');
   // dari jadwal gelombang di halaman program: gelombang & jam kelas langsung terpilih

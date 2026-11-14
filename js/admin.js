@@ -12,7 +12,7 @@
     ['english-for-kids.html', 'English for Kids'],
     ['english-for-teens.html', 'English for Teens'],
     ['general-english.html', 'General English'],
-    ['ielts-toefl-prep.html', 'IELTS & TOEFL Prep'],
+    ['pte-for-whv.html', 'PTE for WHV'],
     ['business-english.html', 'Business English'],
     ['daftar.html', 'Pendaftaran'],
     ['tes-level.html', 'Tes level'],
@@ -28,7 +28,7 @@
     ['quiz:tes-level.js', 'Tes level — soal & pilihan jawaban', 'tes-level.html'],
     ['js:config.js', 'Catatan libur / gelombang', 'index.html'],
   ];
-  var PRICE_LABELS = { kids: 'English for Kids', teens: 'English for Teens', general: 'General English', ielts: 'IELTS & TOEFL Prep', business: 'Business English' };
+  var PRICE_LABELS = { kids: 'English for Kids', teens: 'English for Teens', general: 'General English', pte: 'PTE for WHV', business: 'Business English' };
   var TITLES = { ringkasan: 'Ringkasan', teks: 'Teks website', pengaturan: 'Pengaturan' };
   var ERRORS = {
     auth: 'Kata sandi salah.',
