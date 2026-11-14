@@ -381,7 +381,13 @@
     if (/<[a-z]/i.test(row.id)) { var fm = document.createElement('span'); fm.className = 'row__fmt'; fm.textContent = 'Ada format khusus (tag <…>), jangan dihapus'; head.appendChild(fm); }
     el.appendChild(head);
     var v = valueOf(row);
-    var area = field(quiz ? v.id : v[editLang], 2);
+    /* teks Indonesia tanpa tag tampil sebagai teks biasa (&amp; → &), disimpan kembali sebagai HTML aman */
+    var plainId = !quiz && !/<[a-z]/i.test(row.id);
+    var dec = function (h) { var d = document.createElement('textarea'); d.innerHTML = h; return d.value; };
+    var enc = function (x) { return x.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
+    var disp = function (val) { return plainId && editLang === 'id' ? dec(val) : val; };
+    var keep = function (val) { return plainId && editLang === 'id' ? enc(val) : val; };
+    var area = field(quiz ? v.id : disp(v[editLang]), 2);
     el.appendChild(area);
     var cap = document.createElement('div'); cap.className = 'row__cap';
     var foot = document.createElement('div'); foot.className = 'row__foot';
@@ -406,14 +412,14 @@
     paint();
     area.addEventListener('input', function () {
       var cur = Object.assign({}, valueOf(row));
-      if (quiz) { cur.id = area.value; cur.en = ''; } else cur[editLang] = area.value;
+      if (quiz) { cur.id = area.value; cur.en = ''; } else cur[editLang] = keep(area.value);
       pending[row.k] = cur;
       paint(); updateBar(); schedulePush();
     });
     area.addEventListener('focus', function () { focusPreview(row); });
     reset.addEventListener('click', function () {
       pending[row.k] = { id: row.id, en: row.en };
-      area.value = quiz ? row.id : row[editLang];
+      area.value = quiz ? row.id : disp(row[editLang]);
       area.style.height = 'auto'; area.style.height = Math.min(220, area.scrollHeight + 2) + 'px';
       paint(); updateBar(); schedulePush();
     });

@@ -344,6 +344,7 @@
     if (!result) return;
     const { level, right, total, skills, rec } = result;
     const kids = isKids();
+    $('.js-retake').hidden = !!cooldownMs;
     $('.js-lv').textContent = level.code;
     $('.js-score').textContent = t(TX.score).replace('{n}', right).replace('{t}', total);
     $('.lv-ring').setAttribute('aria-label', `${level.code}, ${right}/${total}`);
@@ -463,7 +464,7 @@
       type: 'level', id: d.id, status, name: d.name, child: d.child || '', age: d.age || '', wa: d.wa, email: d.email,
       city: d.city || '', source: d.source || '', aud: state.aud, goal: state.goal || '', lang, warnings: String(warns), ...extra,
     });
-    if (C.formEndpoint) { try { fetch(C.formEndpoint, { method: 'POST', mode: 'no-cors', body }); } catch (e) { /* abaikan */ } }
+    if (C.formEndpoint) { try { fetch(C.formEndpoint, { method: 'POST', mode: 'no-cors', body }).catch(() => {}); } catch (e) { /* abaikan */ } }
     else { // mode demo: simpan salinan di browser ini
       const all = store.get('elv-leads') || [];
       const rec = Object.fromEntries(body); rec.at = new Date().toISOString();
@@ -607,7 +608,7 @@
     if (e.target.closest('.js-retake')) { result = null; state.aud = ''; state.goal = ''; show('intro', -1); return; }
   });
   document.addEventListener('keydown', (e) => {
-    if (state.view !== 'quiz' || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (state.view !== 'quiz' || e.metaKey || e.ctrlKey || e.altKey || !$('.lv-modal').hidden) return;
     const q = state.quiz[state.i];
     if (/^[1-9]$/.test(e.key) && q && +e.key <= q.opts.length) { pick(+e.key - 1); e.preventDefault(); }
     else if (e.key === '0' || e.key === '-') { pick(q.opts.length); e.preventDefault(); }

@@ -27,6 +27,7 @@
   function isLeaf(el) {
     if (el.hasAttribute('data-en') || el.children.length) return false;
     if (!norm(el.textContent)) return false;
+    if (/(^|\s)js-/.test(el.getAttribute('class') || '')) return false; /* kelas js-… = diisi skrip */
     if (el.closest('svg, script, style, noscript, template, textarea, select, option, [data-en], [aria-hidden="true"], .toast, .confetti')) return false;
     for (var i = 0; i < el.attributes.length; i++) {
       var n = el.attributes[i].name;
